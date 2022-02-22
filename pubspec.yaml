@@ -39,8 +39,8 @@ dependencies:
 
 
   #local packages
-  polindrome:
-    path: ./packages/polindrome
+  presentation:
+    path: packages/polindrome/presentation
 
 dev_dependencies:
   flutter_test:

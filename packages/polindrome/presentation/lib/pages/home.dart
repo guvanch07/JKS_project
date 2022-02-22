@@ -1,37 +1,20 @@
+
+
+import 'package:domain/usecases/base_impl.dart';
 import 'package:flutter/material.dart';
-import 'package:polindrome/domain/usecases/base_impl.dart';
-import 'package:polindrome/presentation/widgets/text_field.dart';
+import 'package:presentation/widgets/text_field.dart';
 
+class MyHomePage extends StatefulWidget {
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-
-        primarySwatch: Colors.blue,
-      ),
-      home: const _MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-
-
-class _MyHomePage extends StatefulWidget {
-
-  const _MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<_MyHomePage> createState() => _MyHomePageState();
+  State<MyHomePage> createState() => MyHomePageState();
 }
 
-class _MyHomePageState extends State<_MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
   final TextEditingController _controller = TextEditingController();
 
   final PolindromeImpl _polindromeImpl = PolindromeImpl();
