@@ -39,8 +39,11 @@ dependencies:
 
 
   #local packages
+  # presentation:
+  #   path: packages/polindrome/presentation
+ #plazo_mx
   presentation:
-    path: packages/polindrome/presentation
+    path: packages/plazo_mx/features/login/presentation
 
 dev_dependencies:
   flutter_test:

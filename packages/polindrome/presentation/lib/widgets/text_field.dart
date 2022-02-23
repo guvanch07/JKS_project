@@ -1,22 +1,20 @@
 
-
-
 import 'package:flutter/material.dart';
 
 class TextFieldOfPolindrome extends StatelessWidget {
   const TextFieldOfPolindrome({
     Key? key,
-    required TextEditingController controller,
-  }) : _controller = controller, super(key: key);
+    required Function(String) onChanged,
+  }) : _onChanged = onChanged, super(key: key);
 
-  final TextEditingController _controller;
+  final Function(String) _onChanged;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: TextField(
-        controller: _controller,
+       onChanged: _onChanged,
         decoration: const InputDecoration(
           contentPadding:  EdgeInsets.all(15),
           focusedBorder:  OutlineInputBorder(
