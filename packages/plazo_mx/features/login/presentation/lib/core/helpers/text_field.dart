@@ -9,10 +9,12 @@ class SearchTextField extends StatelessWidget {
     required this.text,
     this.type,
     required this.obscure,
+    this.widget,
   }) : super(key: key);
   final String text;
   final TextInputType? type;
   final bool obscure;
+  final Widget? widget;
 
   @override
   Widget build(BuildContext context) {
@@ -22,17 +24,18 @@ class SearchTextField extends StatelessWidget {
         keyboardType: type,
         obscureText: obscure,
         decoration: InputDecoration(
-            fillColor: AppColors.card,
+          suffixIcon: widget,
+            fillColor: Colors.white,
             contentPadding: const EdgeInsets.all(16),
             focusedBorder:  const OutlineInputBorder(
                 borderRadius:  BorderRadius.all(Radius.circular(10.0)),
                 borderSide:  BorderSide(color: Colors.black)),
             enabledBorder: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                borderSide: BorderSide(color: AppColors.accentGreen)),
+                borderSide: BorderSide(color: AppColors.border)),
             border:  const OutlineInputBorder(
                 borderRadius: BorderRadius.all( Radius.circular(10.0)),
-                borderSide: BorderSide(color: AppColors.border)),
+                borderSide: BorderSide(color: AppColors.accentGreen)),
                 errorBorder: const OutlineInputBorder(
                 borderRadius:  BorderRadius.all(Radius.circular(10.0)),
                 borderSide: BorderSide(color: AppColors.errorColor)),

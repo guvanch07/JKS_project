@@ -18,12 +18,14 @@ class PrimaryButton extends StatelessWidget {
     final height = getHeightRatio(context);
     final width = getWidthRatio(context);
     return MaterialButton(
+    
       onPressed: onTap,
-      child: Text(text),
-      height: height * 56,
+      child: Text(text,style: TextStyle(fontSize: 24),),
+      height: height * 50,
       minWidth: width * 343,
       color: AppColors.accentOrange,
       textColor: Colors.white,
+     
     );
   }
 }
