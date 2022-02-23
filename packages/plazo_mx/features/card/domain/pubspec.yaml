@@ -1,5 +1,5 @@
 name: domain
-description: domain layer
+description: Presentation layer
 publish_to: none
 
 environment:
@@ -9,4 +9,4 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  meta: ^1.7.0
+  
