@@ -7,11 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import '../packages/polindrome/presentation/lib/pages/my_app.dart';
-
-
-
+import 'package:presentation/my_app.dart';
 
 
 void main() {

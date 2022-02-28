@@ -53,7 +53,7 @@ packages:
   domain:
     dependency: transitive
     description:
-      path: "packages/plazo_mx/features/login/domain"
+      path: "packages/plazo_mx/domain"
       relative: true
     source: path
     version: "0.0.0"
@@ -119,10 +119,17 @@ packages:
   presentation:
     dependency: "direct main"
     description:
-      path: "packages/plazo_mx/features/login/presentation"
+      path: "packages/plazo_mx/presentation"
       relative: true
     source: path
     version: "0.0.0"
+  rxdart:
+    dependency: transitive
+    description:
+      name: rxdart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.27.3"
   sky_engine:
     dependency: transitive
     description: flutter
