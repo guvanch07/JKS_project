@@ -1,8 +1,8 @@
 import 'package:domain/usecases/base_impl.dart';
 import 'package:flutter/material.dart';
-import 'package:presentation/state_man/bloc_state.dart';
+import 'package:presentation/state_man/data/bloc_state.dart';
 import 'package:presentation/state_man/home_bloc.dart';
-import 'package:presentation/state_man/home_data.dart';
+import 'package:presentation/state_man/data/home_data.dart';
 import 'package:presentation/widgets/text_field.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -79,7 +79,7 @@ class _BuildResult extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextFieldOfPolindrome(onChanged: bloc.setPalindromeString),
-            Text('Is palindrome=${screenData.isPalindrome}'),
+            Text('Is palindrome=${screenData.isPalindromeOrNot}'),
           ],
         ),
       );
