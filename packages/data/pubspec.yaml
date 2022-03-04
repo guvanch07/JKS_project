@@ -1,0 +1,16 @@
+name: data
+description: data layer
+publish_to: none
+
+environment:
+  sdk: ">=2.16.1 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  rxdart: ^0.27.3
+
+
+  domain:
+    path: ../domain
