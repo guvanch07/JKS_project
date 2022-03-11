@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/core/theme/theme_app.dart';
-import 'package:presentation/pages/login/with_stream/login.dart';
+import 'package:presentation/pages/login/home_login/main_login.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -11,6 +11,6 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light(),
-        home: const LoginPage());
+        home: const MyHomePageLogin());
   }
 }
