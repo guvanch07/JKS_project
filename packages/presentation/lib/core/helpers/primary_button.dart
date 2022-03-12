@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 import '../ratio/sizer_ratio.dart';
@@ -19,14 +17,16 @@ class PrimaryButton extends StatelessWidget {
     final width = getWidthRatio(context);
     return MaterialButton(
       disabledColor: Colors.red,
-      
+      splashColor: AppColors.accentGreen,
       onPressed: onTap,
-      child: Text(text,style: const TextStyle(fontSize: 24),),
+      child: Text(
+        text,
+        style: const TextStyle(fontSize: 24),
+      ),
       height: height * 50,
       minWidth: width * 343,
       color: AppColors.accentOrange,
       textColor: Colors.white,
-     
     );
   }
 }

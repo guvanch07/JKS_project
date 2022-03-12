@@ -6,6 +6,7 @@ import 'package:presentation/core/theme/theme_app.dart';
 
 class CardMainPage extends StatelessWidget {
   const CardMainPage({Key? key}) : super(key: key);
+  static const routeName = '/card';
 
   @override
   Widget build(BuildContext context) {
