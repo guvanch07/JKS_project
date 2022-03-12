@@ -28,13 +28,14 @@ void _initRepositoryModule() {
 
 void _initDioModule() {
   GetIt.I.registerSingleton(
-    dioBuilder('http://10.1.1.30/'),
-    instanceName: "plazo_url",
+    dioBuilder('http://jenkins-mobile.moneyman.ru/api/json?pretty=true'),
+    //instanceName: "plazo_url",
   );
 }
 
 void _initServiceModule() {
   GetIt.I.registerSingleton(
-    ApiService(GetIt.I.get<Dio>(instanceName: "plazo_url")),
+    ApiService(GetIt.I.get<Dio>(//instanceName: "plazo_url"
+        )),
   );
 }

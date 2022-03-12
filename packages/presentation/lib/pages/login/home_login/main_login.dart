@@ -3,9 +3,12 @@ import 'package:presentation/bloc/login/home_bloc.dart';
 import 'package:presentation/bloc/login/home_data.dart';
 import 'package:presentation/core/bloc/bloc_state.dart';
 import 'package:presentation/core/bloc/stream_palform.dart';
+import 'package:presentation/core/helpers/primary_button.dart';
+import 'package:presentation/widgets/text_field.dart';
 
 class MyHomePageLogin extends StatefulWidget {
   const MyHomePageLogin({Key? key}) : super(key: key);
+  static const routeName = '/login';
 
   @override
   State<MyHomePageLogin> createState() => _MyHomePageLoginState();
@@ -47,39 +50,27 @@ class _BuildResultState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 32, right: 32, top: 32),
-          child: ElevatedButton(
-            onPressed: bloc.getRegistration,
-            child: const Center(
-              child: Text("Get registration"),
-            ),
-          ),
-        ),
-        Text(screenData.registrationStep ?? ''),
-        TextFormField(
-          keyboardType: TextInputType.emailAddress,
+        const SizedBox(height: 50),
+        LoginTextField(
+          type: TextInputType.emailAddress,
           onChanged: bloc.onEmailChanged,
-          decoration: const InputDecoration(
-            hintText: 'Email',
-          ),
+          error: '',
+          obscure: false,
+          text: 'Email',
         ),
-        TextFormField(
-          keyboardType: TextInputType.phone,
+        const SizedBox(height: 30),
+        LoginTextField(
+          type: TextInputType.visiblePassword,
           onChanged: bloc.onPasswordChanged,
-          decoration: const InputDecoration(
-            hintText: 'Phone',
-          ),
+          error: '',
+          text: 'Password',
+          obscure: true,
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 32, top: 16, right: 32),
-          child: OutlinedButton(
-            onPressed: bloc.sendRegistration,
-            child: const Center(
-              child: Text("Send registration"),
-            ),
-          ),
-        ),
+        const Spacer(),
+        PrimaryButton(
+          onTap: () {},
+          text: "Login",
+        )
       ],
     );
   }
