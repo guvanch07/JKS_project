@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:domain/repository/base_repository.dart';
+import 'package:domain/core.domain/core.usecase/base_repository.dart';
 
 abstract class ApiBaseRepositoryImpl implements BaseRepository {
   final CancelToken? cancelToken;

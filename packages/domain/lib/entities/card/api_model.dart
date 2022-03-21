@@ -1,11 +1,10 @@
-import 'dart:convert';
+import 'package:domain/entities/card/jobs.dart';
+import 'package:domain/entities/card/overalload.dart';
 
-Welcome welcomeFromJson(String str) => Welcome.fromJson(json.decode(str));
+import 'asigned_label.dart';
 
-String welcomeToJson(Welcome data) => json.encode(data.toJson());
-
-class Welcome {
-  Welcome({
+class CardModel {
+  CardModel({
     required this.welcomeClass,
     required this.assignedLabels,
     required this.mode,
@@ -45,7 +44,7 @@ class Welcome {
   final bool useSecurity;
   final List<PrimaryView> views;
 
-  factory Welcome.fromJson(Map<String, dynamic> json) => Welcome(
+  factory CardModel.fromJson(Map<String, dynamic> json) => CardModel(
         welcomeClass: json["_class"],
         assignedLabels: List<AssignedLabel>.from(
             json["assignedLabels"].map((x) => AssignedLabel.fromJson(x))),
@@ -89,73 +88,5 @@ class Welcome {
         "useCrumbs": useCrumbs,
         "useSecurity": useSecurity,
         "views": List<dynamic>.from(views.map((x) => x.toJson())),
-      };
-}
-
-class AssignedLabel {
-  AssignedLabel({
-    required this.name,
-  });
-
-  String name;
-
-  factory AssignedLabel.fromJson(Map<String, dynamic> json) => AssignedLabel(
-        name: json["name"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "name": name,
-      };
-}
-
-class PrimaryView {
-  PrimaryView({
-    required this.primaryViewClass,
-    required this.name,
-    required this.url,
-    required this.color,
-  });
-
-  String primaryViewClass;
-  String name;
-  String url;
-  String color;
-
-  factory PrimaryView.fromJson(Map<String, dynamic> json) => PrimaryView(
-        primaryViewClass: json["_class"],
-        name: json["name"],
-        url: json["url"],
-        color: json["color"] == null ? null : json["color"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "_class": primaryViewClass,
-        "name": name,
-        "url": url,
-        "color": color == null ? null : color,
-      };
-}
-
-class OverallLoad {
-  OverallLoad();
-
-  factory OverallLoad.fromJson(Map<String, dynamic> json) => OverallLoad();
-
-  Map<String, dynamic> toJson() => {};
-}
-
-class UnlabeledLoad {
-  UnlabeledLoad({
-    required this.unlabeledLoadClass,
-  });
-
-  String unlabeledLoadClass;
-
-  factory UnlabeledLoad.fromJson(Map<String, dynamic> json) => UnlabeledLoad(
-        unlabeledLoadClass: json["_class"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "_class": unlabeledLoadClass,
       };
 }

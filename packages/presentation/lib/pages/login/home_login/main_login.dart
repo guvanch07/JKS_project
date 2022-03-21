@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:presentation/bloc/login/home_bloc.dart';
 import 'package:presentation/bloc/login/home_data.dart';
-import 'package:presentation/core/bloc/bloc_state.dart';
-import 'package:presentation/core/bloc/stream_palform.dart';
+import 'package:presentation/core/base_bloc_const/bloc_state.dart';
+import 'package:presentation/core/base_bloc_const/stream_palform.dart';
+
 import 'package:presentation/core/helpers/primary_button.dart';
 import 'package:presentation/widgets/text_field.dart';
+import 'package:dio/dio.dart';
 
 class MyHomePageLogin extends StatefulWidget {
   const MyHomePageLogin({Key? key}) : super(key: key);
@@ -68,9 +72,19 @@ class _BuildResultState extends StatelessWidget {
         ),
         const Spacer(),
         PrimaryButton(
-          onTap: () {},
+          onTap: () async {
+            final headersMap = <String, dynamic>{};
+            headersMap[HttpHeaders.userAgentHeader] =
+                "${Platform.operatingSystem} = APPLICATION".toUpperCase();
+            var response = await Dio().get(
+                'http://jenkins-mobile.moneyman.ru/api/json?pretty=true',
+                options: Options(
+                    headers: headersMap, contentType: 'application/json'));
+            print(response);
+          },
           text: "Login",
-        )
+        ),
+        const SizedBox(height: 20),
       ],
     );
   }

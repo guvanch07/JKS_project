@@ -1,4 +1,4 @@
-import 'package:domain/entities/api_base_request.dart';
+import 'package:domain/core.domain/core.model/api_base_request.dart';
 
 class HomeStepFields implements ApiBaseJsonRequest {
   final String? email;

@@ -2,7 +2,7 @@ import 'package:domain/usecase/login/get_login_usecase.dart';
 import 'package:domain/usecase/login/send_register_usecase.dart';
 import 'package:presentation/bloc/login/home_bloc.dart';
 import 'package:presentation/bloc/login/view_mapper.dart';
-import 'package:presentation/core/bloc/base_bloc.dart';
+import 'package:presentation/core/base_bloc_const/base_bloc.dart';
 
 abstract class HomeBloc extends BaseBloc {
   factory HomeBloc(

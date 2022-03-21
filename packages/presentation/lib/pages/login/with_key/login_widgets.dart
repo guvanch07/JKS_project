@@ -13,10 +13,7 @@ class _LoginButtonWithKey extends StatelessWidget {
     return PrimaryButton(
         onTap: () {
           if (formkey.currentState!.validate()) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const CardMainPage()),
-            );
+            Navigator.pushNamed(context, CardMainPage.routeName);
           }
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
