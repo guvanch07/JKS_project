@@ -20,6 +20,6 @@ class ApiLoginResponse implements LoginResponse {
     if (data is String) {
       jsonData = json.decode(data);
     }
-    return ApiLoginResponse(jsonData["data"], jsonData["step"]);
+    return ApiLoginResponse(jsonData["login"], jsonData["password"]);
   }
 }

@@ -1,8 +1,8 @@
 import 'package:data/repository/login/api_base_repository.dart';
 import 'package:data/service/api_service.dart';
 import 'package:dio/dio.dart';
-import 'package:domain/entities/api_login_respone.dart';
-import 'package:domain/entities/login_response.dart';
+import 'package:domain/entities/login/api_login_respone.dart';
+import 'package:domain/entities/login/login_response.dart';
 import 'package:domain/repository/login/login_repositoy.dart';
 
 class NetworkRepository extends ApiBaseRepositoryImpl
@@ -17,7 +17,7 @@ class NetworkRepository extends ApiBaseRepositoryImpl
   Future<LoginResponse> getLogin() {
     return _service
         .get(
-          path: 'mxcc-registration/gateway/REGISTRATION/',
+          path: 'http://jenkins-mobile.moneyman.ru/api/json?pretty=true',
           cancelToken: _cancelToken,
         )
         .then((value) => Future.value(ApiLoginResponse.fromJson(value.data)));
@@ -28,7 +28,7 @@ class NetworkRepository extends ApiBaseRepositoryImpl
     return _service
         .post(
           data: request,
-          path: 'mxcc-registration/gateway/REGISTRATION/',
+          path: 'http://jenkins-mobile.moneyman.ru/api/json?pretty=true',
           cancelToken: _cancelToken,
         )
         .then((value) => Future.value(ApiLoginResponse.fromJson(value.data)));

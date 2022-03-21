@@ -39,7 +39,5 @@ class BlocImmpl<D> extends BaseBloc<D> {
   }
 
   @override
-  void initState() {
-    // TODO: implement initState
-  }
+  void initState() {}
 }

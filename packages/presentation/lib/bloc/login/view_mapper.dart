@@ -1,4 +1,4 @@
-import 'package:domain/entities/home_step.dart';
+import 'package:domain/entities/login/home_step.dart';
 import 'package:presentation/bloc/login/home_bloc.dart';
 
 abstract class HomeViewMapper {

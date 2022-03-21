@@ -1,50 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:presentation/bloc/card/card_home_bloc.dart';
+import 'package:presentation/bloc/card/home_bloc.dart';
+import 'package:presentation/core/base_bloc_const/bloc_state.dart';
+import 'package:presentation/core/base_bloc_const/stream_palform.dart';
 import 'package:presentation/core/ratio/sizer_ratio.dart';
 import 'package:presentation/core/theme/theme_app.dart';
 
-class CardMainPage extends StatelessWidget {
+class CardMainPage extends StatefulWidget {
   const CardMainPage({Key? key}) : super(key: key);
-  static const routeName = '/card';
+  static const routeName = '/login';
+
+  @override
+  State<CardMainPage> createState() => _CardMainPageState();
+}
+
+class _CardMainPageState extends BlocState<CardMainPage, CardHomeBloc> {
+  @override
+  void initState() {
+    super.initState();
+    bloc.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-      child: Column(
-        children: const [
-          _CardItem(
-              countryName: 'Mexico',
-              maintitlle: 'Money',
-              flag: 'flags_mexico.svg',
-              title: "man"),
-          _CardItem(
-              countryName: 'Mexico',
-              maintitlle: 'plazo',
-              flag: 'flags_mexico.svg'),
-          _CardItem(
-              countryName: 'Spain',
-              maintitlle: 'Money',
-              flag: 'flag_espanol.svg',
-              title: "man",
-              color: AppColors.accentOrange),
-        ],
-      ),
-    ));
+    return StreamPlatformStackContent(
+      dataStream: bloc.dataStream,
+      children: (blocdata) {
+        final screenData = blocdata.data;
+        if (screenData is CardHomeData) {
+          return SafeArea(
+              child: ListView.separated(
+            itemBuilder: (context, index) {
+              return _CardItem(
+                countryName: screenData.cardModel?.jobs[index].name ?? "empty",
+                //flag: screenData.cardModel?.jobs[index].color ?? "nothing",
+                maintitlle:
+                    screenData.cardModel?.jobs[index].primaryViewClass ??
+                        "nothing",
+              );
+            },
+            itemCount: screenData.cardModel?.jobs.length ?? 1,
+            separatorBuilder: (BuildContext context, int index) {
+              return const SizedBox(height: 5);
+            },
+          ));
+        }
+      },
+    );
   }
 }
 
 class _CardItem extends StatelessWidget {
   const _CardItem({
     Key? key,
-    required this.flag,
+    //required this.flag,
     required this.maintitlle,
     this.title,
     this.color,
     required this.countryName,
   }) : super(key: key);
-  final String flag;
+  //final String flag;
   final String maintitlle;
   final String? title;
   final Color? color;
@@ -70,7 +87,7 @@ class _CardItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          SvgPicture.asset("assets/svg/$flag"),
+          //SvgPicture.asset(flag),
           const SizedBox(
             width: 15,
           ),

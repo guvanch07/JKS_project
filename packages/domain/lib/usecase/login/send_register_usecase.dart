@@ -1,6 +1,6 @@
-import 'package:domain/entities/home_step.dart';
+import 'package:domain/entities/login/home_step.dart';
 import 'package:domain/repository/login/login_repositoy.dart';
-import 'package:domain/usecase/login/usecase.dart';
+import 'package:domain/core.domain/core.usecase/usecase.dart';
 
 class SendRegistrationStepUseCase
     implements UseCaseParms<HomeStepFields, Future<void>> {
