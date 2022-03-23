@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/my_app.dart';
+import 'package:presentation/screen/my_app.dart';
 
 import 'di/injector.dart';
 
