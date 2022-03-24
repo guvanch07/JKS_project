@@ -1,15 +1,13 @@
 import 'package:domain/usecase/get_registration_use_case.dart';
 import 'package:get_it/get_it.dart';
-import 'package:presentation/screen/home/home_bloc.dart';
+import 'package:presentation/screen/login/bloc/login_bloc.dart';
 
 void initPresentationModule() {
-  _initHomeScreenModule();
-}
+  final sl = GetIt.I;
 
-void _initHomeScreenModule() {
-  GetIt.I.registerFactory<HomeBloc>(
-    () => HomeBloc(
-      GetIt.I.get<GetRegistrationStepUseCase>(),
+  sl.registerFactory(
+    () => LoginBloc(
+      sl.get<LoginStepUseCase>(),
     ),
   );
 }
