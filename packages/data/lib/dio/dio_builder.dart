@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
-import '../CancelInterceptor.dart';
-
 Dio dioBuilder(
   String baseUrl, {
   Map<String, dynamic>? headers,

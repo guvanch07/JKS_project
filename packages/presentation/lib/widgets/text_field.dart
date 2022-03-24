@@ -12,6 +12,8 @@ class LoginTextField extends StatelessWidget {
     this.onSaved,
     this.error,
     this.validator,
+    required this.keyState,
+    this.iniialValue,
   }) : super(key: key);
   final String text;
   final TextInputType? type;
@@ -21,12 +23,16 @@ class LoginTextField extends StatelessWidget {
   final Function(String?)? onSaved;
   final String? error;
   final String? Function(String?)? validator;
+  final GlobalKey<FormFieldState<dynamic>> keyState;
+  final String? iniialValue;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: TextFormField(
+        initialValue: iniialValue,
+        key: keyState,
         keyboardType: type,
         obscureText: obscure,
         onChanged: onChanged,
@@ -54,10 +60,7 @@ class LoginTextField extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
               borderSide: BorderSide(color: AppColors.accentOrange)),
           hintText: text,
-          hintStyle: Theme.of(context)
-              .textTheme
-              .headline2!
-              .copyWith(color: AppColors.textMain),
+          hintStyle: const TextStyle(color: AppColors.textMain, fontSize: 12),
         ),
       ),
     );

@@ -32,23 +32,5 @@ abstract class AppTheme {
         fontFamily: "Volte Rounded",
         cardColor: _LightColors.card,
         iconTheme: const IconThemeData(color: AppColors.iconColor),
-        textTheme: const TextTheme(
-          headline1: TextStyle(
-              color: AppColors.textMain,
-              fontSize: 22,
-              fontWeight: FontWeight.w600),
-          headline2: TextStyle(
-              color: AppColors.textMain,
-              fontSize: 16,
-              fontWeight: FontWeight.w600),
-          headline3: TextStyle(
-              color: AppColors.textMain,
-              fontSize: 19,
-              fontWeight: FontWeight.w700),
-          headline4: TextStyle(
-              color: AppColors.textMain,
-              fontSize: 15,
-              fontWeight: FontWeight.w700),
-        ),
       );
 }
