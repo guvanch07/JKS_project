@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
-import 'package:presentation/base/base_bloc.dart';
+import 'package:presentation/core/base_bloc/base_bloc.dart';
 
 abstract class BlocState<S extends StatefulWidget, B extends BaseBloc>
     extends State<S> {

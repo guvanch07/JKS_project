@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:presentation/base/bloc_data.dart';
+import 'package:presentation/core/base_bloc/bloc_data.dart';
 
 abstract class BaseBloc<D> {
   Stream<BlocData<D?>> get dataStream;

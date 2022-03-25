@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:presentation/core/ratio/sizer_ratio.dart';
-import 'package:presentation/core/theme/theme_app.dart';
+import 'package:presentation/core/theme/style_text.dart';
 
 class CardItem extends StatelessWidget {
   const CardItem({
     Key? key,
     //required this.flag,
     required this.maintitlle,
-    this.title,
-    this.color,
-    required this.countryName,
+    required this.color,
   }) : super(key: key);
   //final String flag;
   final String maintitlle;
-  final String? title;
-  final Color? color;
-  final String countryName;
+
+  final String color;
 
   @override
   Widget build(BuildContext context) {
@@ -36,74 +33,34 @@ class CardItem extends StatelessWidget {
         ],
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          //SvgPicture.asset(flag),
-          const SizedBox(
-            width: 15,
+          Container(
+            width: 16,
+            height: 16,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, color: stringToColor(color)),
           ),
-          _TitleHandler(
-              countryName: countryName,
-              maintitlle: maintitlle,
-              color: color,
-              title: title),
-          const Spacer(),
+          Text(stringToString(maintitlle), style: headline1),
           const Icon(Icons.arrow_forward_ios)
         ],
       ),
     );
   }
-}
 
-class _TitleHandler extends StatelessWidget {
-  const _TitleHandler({
-    Key? key,
-    required this.maintitlle,
-    this.title,
-    this.color,
-    required this.countryName,
-  }) : super(key: key);
-  final String maintitlle;
-  final String? title;
-  final Color? color;
-  final String countryName;
+  Color? stringToColor(String color) {
+    if (color.contains("red")) {
+      return Colors.red;
+    } else {
+      return Colors.blue;
+    }
+  }
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: 47,
-          height: 18,
-          decoration: BoxDecoration(
-            color: color ?? AppColors.accentGreen,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Center(
-              child: Text(countryName,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold))),
-        ),
-        Row(
-          children: [
-            Text(
-              maintitlle,
-              style: const TextStyle(
-                  color: AppColors.accentGreen,
-                  fontSize: 35,
-                  fontWeight: FontWeight.bold),
-            ),
-            Text(title ?? '',
-                style: const TextStyle(
-                    color: AppColors.textMain,
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold)),
-          ],
-        )
-      ],
-    );
+  String stringToString(String title) {
+    if (title.contains("moneyman")) {
+      return "Moneyman";
+    } else {
+      return "Plazo";
+    }
   }
 }

@@ -6,7 +6,7 @@ String validatePassword(String formPassword, String exceptionPassword) {
       r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
   RegExp reg = RegExp(pattern);
   if (!reg.hasMatch(formPassword)) {
-    return ErrorTextField.password_invalid;
+    return ErrorTextField.passwordInvalid;
   }
   return exceptionPassword;
 }
@@ -16,7 +16,7 @@ String validateEmail(String formEmail, String exceptionEmail) {
   String pattern = r'\w+@\W+\.\w+';
   RegExp reg = RegExp(pattern);
   if (!reg.hasMatch(formEmail)) {
-    return ErrorTextField.login_invalid;
+    return ErrorTextField.loginInvalid;
   }
 
   return exceptionEmail;

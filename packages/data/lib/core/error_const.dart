@@ -1,6 +1,6 @@
 class ErrorTextField {
-  static const login_invalid = "Invalid login";
-  static const password_invalid = "Invalid password";
-  static const login_short = "Login too short";
-  static const password_not_match = "Password does not match the requirements";
+  static const loginInvalid = "Invalid login";
+  static const passwordInvalid = "Invalid password";
+  static const loginShort = "Login too short";
+  static const passwordNotMatch = "Password does not match the requirements";
 }
