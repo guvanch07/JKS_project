@@ -7,29 +7,34 @@ import 'package:domain/repository/network_repository.dart';
 import 'package:get_it/get_it.dart';
 
 Future<void> initDataModule() async {
-  final sl = GetIt.I;
+  _initRepositoryModule();
+  _initApiModule();
+}
 
-  sl.registerSingleton<CancelToken>(
-    CancelToken(),
-  );
+void _initApiModule() {
+  GetIt.I.registerFactory<CancelToken>(() => CancelToken());
+  _initDioModule();
+  _initServiceModule();
+}
 
-  sl.registerSingleton<Dio>(
-    dioBuilder(
-      ApiHelperCore.baseUrl,
-      headers: ApiHelperCore.authHeader,
+void _initRepositoryModule() {
+  GetIt.I.registerFactory<INetworkRepository>(
+    () => NetworkRepository(
+      GetIt.I.get<ApiService>(),
+      GetIt.I.get<CancelToken>(),
     ),
   );
+}
 
-  sl.registerSingleton(
-    ApiService(
-      sl.get<Dio>(),
-    ),
+void _initDioModule() {
+  GetIt.I.registerSingleton(
+    dioBuilder(ApiHelperCore.baseUrl, headers: ApiHelperCore.authHeader),
+    instanceName: "plazo",
   );
+}
 
-  sl.registerSingleton<INetworkRepository>(
-    NetworkRepository(
-      sl.get<ApiService>(),
-      sl.get<CancelToken>(),
-    ),
+void _initServiceModule() {
+  GetIt.I.registerSingleton(
+    ApiService(GetIt.I.get<Dio>(instanceName: "plazo")),
   );
 }
