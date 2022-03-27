@@ -1,6 +1,6 @@
 class AuthException {
-  final String loginError;
-  final String passwordError;
+  final String? loginError;
+  final String? passwordError;
   AuthException(
     this.loginError,
     this.passwordError,

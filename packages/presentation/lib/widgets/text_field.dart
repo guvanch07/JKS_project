@@ -8,12 +8,12 @@ class LoginTextField extends StatelessWidget {
     this.type,
     required this.obscure,
     this.widget,
-    required this.onChanged,
+    this.onChanged,
     this.onSaved,
     this.error,
     this.validator,
-    required this.keyState,
-    this.iniialValue,
+    this.keyState,
+    this.focusNode,
   }) : super(key: key);
   final String text;
   final TextInputType? type;
@@ -23,21 +23,22 @@ class LoginTextField extends StatelessWidget {
   final Function(String?)? onSaved;
   final String? error;
   final String? Function(String?)? validator;
-  final GlobalKey<FormFieldState<dynamic>> keyState;
-  final String? iniialValue;
+  final GlobalKey<FormFieldState<dynamic>>? keyState;
+
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: TextFormField(
-        initialValue: iniialValue,
         key: keyState,
         keyboardType: type,
         obscureText: obscure,
         onChanged: onChanged,
         onSaved: onSaved,
-        validator: validator, //! it is only for second method
+        focusNode: focusNode,
+        validator: validator,
         decoration: InputDecoration(
           errorText: error,
           suffixIcon: widget,
@@ -49,16 +50,16 @@ class LoginTextField extends StatelessWidget {
           contentPadding: const EdgeInsets.all(16),
           focusedBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              borderSide: BorderSide(color: AppColors.border)),
+              borderSide: BorderSide(color: AppColors.accentGreen)),
           enabledBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              borderSide: BorderSide(color: AppColors.border)),
+              borderSide: BorderSide(color: AppColors.accentOrange)),
           border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              borderSide: BorderSide(color: AppColors.accentOrange)),
+              borderSide: BorderSide(color: AppColors.border)),
           errorBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              borderSide: BorderSide(color: AppColors.accentOrange)),
+              borderSide: BorderSide(color: AppColors.errorColor)),
           hintText: text,
           hintStyle: const TextStyle(color: AppColors.textMain, fontSize: 12),
         ),

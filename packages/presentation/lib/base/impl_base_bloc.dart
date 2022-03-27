@@ -31,6 +31,26 @@ class BlocImpl<D> implements BaseBloc<D> {
     }
   }
 
+  @protected
+  Future<void> launchPayLoad({
+    required Function action,
+    Function(dynamic)? errorAction,
+    bool showLoading = true,
+  }) async {
+    if (showLoading) {
+      handleData(isLoading: true);
+    }
+    try {
+      await action.call();
+    } catch (e) {
+      errorAction?.call(e);
+    } finally {
+      if (showLoading) {
+        handleData(isLoading: false);
+      }
+    }
+  }
+
   @override
   void initState() {}
 }

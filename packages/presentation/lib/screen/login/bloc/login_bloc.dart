@@ -1,6 +1,8 @@
+import 'dart:developer';
+
+import 'package:data/core/error_const.dart';
 import 'package:data/models/auth_exception.dart';
-import 'package:domain/model/login_step_field.dart';
-import 'package:domain/usecase/get_registration_use_case.dart';
+import 'package:domain/usecase/login_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/base/base_bloc.dart';
 import 'package:presentation/base/impl_base_bloc.dart';
@@ -10,7 +12,12 @@ abstract class LoginBloc implements BaseBloc {
   factory LoginBloc(
     LoginStepUseCase loginStepUseCase,
   ) =>
-      _LoginBloc(loginStepUseCase);
+      _LoginBloc(
+        loginStepUseCase,
+      );
+
+  String? validateTextEmail(String formEmail);
+  String? validateTextPassword(String formPassword);
 
   void login();
 
@@ -18,17 +25,25 @@ abstract class LoginBloc implements BaseBloc {
 
   void setPassword(String password);
 
-  GlobalKey<FormFieldState> get loginFormKey;
+  GlobalKey<FormState> get keyStore;
 
-  GlobalKey<FormFieldState> get passwordFormKey;
+  Map<String, String> get onSave;
 }
 
 class _LoginBloc extends BlocImpl implements LoginBloc {
+  @override
+  final GlobalKey<FormState> keyStore = GlobalKey<FormState>();
+
+  @override
+  Map<String, String> get onSave => <String, String>{};
+
   final LoginStepUseCase _loginStepUseCase;
 
-  _LoginBloc(this._loginStepUseCase);
+  _LoginBloc(
+    this._loginStepUseCase,
+  );
 
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   final _screenData = LoginData.init();
 
@@ -47,24 +62,20 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
 
   @override
   void login() async {
-    _isLoading = true;
-    updateData();
-
-    final authFields =
-        LoginParms(_screenData.loginInput, _screenData.passwordInput);
-
-    try {
-      await _loginStepUseCase(authFields).then((value) {
-        _screenData.exception == null;
-      });
-    } catch (e) {
-      if (e is AuthException) {
-        _screenData.exception == e;
-      }
-    } finally {
-      _isLoading = false;
-      updateData();
-    }
+    launchPayLoad(
+      action: () {
+        if (keyStore.currentState!.validate()) {
+          keyStore.currentState!.save();
+          log("sucsecc");
+          //! trigger of navigate
+        }
+      },
+      errorAction: (e) {
+        if (e is AuthException) {
+          _screenData.exception = e;
+        }
+      },
+    );
   }
 
   @override
@@ -80,15 +91,28 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
   @override
   void dispose() {
     super.dispose();
+
     _loginStepUseCase.dispose();
   }
 
   @override
-  GlobalKey<FormFieldState> get loginFormKey => _loginFieldKey;
+  String? validateTextEmail(String formEmail) {
+    if (formEmail.isEmpty) return "E-mail is requried.";
+    // String pattern = r'\w+@\W+\.\w+';
+    // RegExp reg = RegExp(pattern);
+    if (!formEmail.contains("@")) {
+      return ErrorTextField.login_invalid;
+    }
+    return null;
+  }
 
   @override
-  GlobalKey<FormFieldState> get passwordFormKey => _passwordFieldKey;
+  String? validateTextPassword(String formPassword) {
+    if (formPassword.isEmpty) return "password is requried.";
 
-  final _loginFieldKey = GlobalKey<FormFieldState>();
-  final _passwordFieldKey = GlobalKey<FormFieldState>();
+    if (formPassword.length < 6) {
+      return ErrorTextField.password_invalid;
+    }
+    return null;
+  }
 }
