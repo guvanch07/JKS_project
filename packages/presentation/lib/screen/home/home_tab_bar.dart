@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:presentation/core/theme/theme_app.dart';
-import 'package:presentation/screen/home/home_page.dart';
 
 const List<Tab> _myMainTabs = <Tab>[
   Tab(

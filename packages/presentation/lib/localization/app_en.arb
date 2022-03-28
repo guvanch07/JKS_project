@@ -1,0 +1,6 @@
+{
+  "appTitle": "mx_test_project",
+  "@appTitle": {
+    "description": "the application with jenkis"
+  }
+}
