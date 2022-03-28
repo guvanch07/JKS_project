@@ -47,9 +47,15 @@ class _LoginPageState extends BlocState<LoginPage, LoginBloc> {
             if (screenData.loginInput.isNotEmpty &&
                 screenData.passwordInput.isNotEmpty &&
                 screenData.exception == null) {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return const HomeTabBar();
-              }));
+              Navigator.push(
+                //! this naviagtion just for testing, soon i will impl naviagtion2 here
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const HomeTabBar();
+                  },
+                ),
+              );
             }
             return LoginPageWithKey(
               onChangedEmail: bloc.setLogin,

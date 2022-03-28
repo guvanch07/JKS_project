@@ -11,7 +11,4 @@ class CancelInterceptor extends Interceptor {
       ),
     );
   }
-
-  @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {}
 }

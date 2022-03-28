@@ -15,11 +15,12 @@ class LoginStepUseCase implements UseCaseParams<LoginParms, Future<void>> {
   );
 
   @override
-  Future<void> call(LoginParms parms) async =>
-      _repository.getJobs().then((value) {
-        _cache.jobs =
-            value!.data?.map((element) => Job.fromJson(element)).toList();
-      });
+  Future<void> call(LoginParms parms) async => _repository.getJobs().then(
+        (value) {
+          _cache.jobs =
+              value!.data?.map((element) => Job.fromJson(element)).toList();
+        },
+      );
 
   @override
   void dispose() {
