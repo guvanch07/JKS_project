@@ -1,0 +1,13 @@
+
+
+{
+  "appTitle": "Название приложения",
+  "textWithParam": "Текст с {param}",
+  "@textWithParam": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  }
+}

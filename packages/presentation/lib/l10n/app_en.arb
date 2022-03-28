@@ -1,0 +1,12 @@
+
+{
+  "appTitle": "App Title",
+  "textWithParam": "Text with {param}",
+  "@textWithParam": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  }
+}

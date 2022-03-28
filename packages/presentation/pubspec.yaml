@@ -17,6 +17,9 @@ dependencies:
     path: ../data
   flutter_svg: ^1.0.3
 
+flutter:
+  generate: true
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
