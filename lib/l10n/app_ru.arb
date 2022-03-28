@@ -1,13 +1,14 @@
 
-
 {
-  "appTitle": "Название приложения",
-  "textWithParam": "Текст с {param}",
-  "@textWithParam": {
-    "placeholders": {
-      "param": {
-        "type": "String"
-      }
-    }
-  }
+  "requiredField": "Обязательное поле",
+  "loginMinLength": "Минимальная длина 6 символов",
+  "invalidLogin": "Неверный логин",
+  "passwordNotMatch": "Пароль не соответствует требованиям",
+  "invalidPassword": "Неверный пароль",
+  "appTitle": "ДженкисТест",
+
+  "buttonLogin": "ВОЙТИ",
+  "labelLogin": "Логин",
+  "labelPassword": "Пароль"
+  
 }

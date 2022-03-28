@@ -23,6 +23,8 @@
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
+**/last_build_id
+**/filecache
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
@@ -33,7 +35,7 @@
 pubspec.lock
 analysis_options.yaml
 .metadata
-**/last_build_id
+
 
 # Web related
 lib/generated_plugin_registrant.dart
