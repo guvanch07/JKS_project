@@ -1,10 +1,10 @@
 import 'package:data/core/api_key.dart';
 import 'package:data/core/error_const.dart';
-import 'package:data/models/auth_exception.dart';
 import 'package:data/service/api_service.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/model/api_auth_response.dart';
 import 'package:domain/repository/network_repository.dart';
+import 'package:domain/model/api_exception.dart';
 
 import 'api_base_repository.dart';
 

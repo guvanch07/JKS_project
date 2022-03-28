@@ -1,23 +1,23 @@
-import 'dart:developer';
-
-import 'package:data/core/error_const.dart';
-import 'package:data/models/auth_exception.dart';
+import 'package:domain/model/api_exception.dart';
 import 'package:domain/usecase/login_usecase.dart';
+import 'package:domain/usecase/validation_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/base/base_bloc.dart';
 import 'package:presentation/base/impl_base_bloc.dart';
 import 'package:presentation/screen/login/bloc/login_data.dart';
+import 'package:presentation/screen/mapper/login_view_mapper.dart';
 
 abstract class LoginBloc implements BaseBloc {
   factory LoginBloc(
     LoginStepUseCase loginStepUseCase,
+    LoginValidationUseCase loginValidationUseCase,
+    LoginViewMapper loginViewMapper,
   ) =>
       _LoginBloc(
         loginStepUseCase,
+        loginValidationUseCase,
+        loginViewMapper,
       );
-
-  String? validateTextEmail(String formEmail);
-  String? validateTextPassword(String formPassword);
 
   void login();
 
@@ -25,57 +25,41 @@ abstract class LoginBloc implements BaseBloc {
 
   void setPassword(String password);
 
-  GlobalKey<FormState> get keyStore;
+  GlobalKey<FormFieldState> get loginFieldKey;
+
+  GlobalKey<FormFieldState> get passwordFieldKey;
 
   Map<String, String> get onSave;
 }
 
 class _LoginBloc extends BlocImpl implements LoginBloc {
-  @override
-  final GlobalKey<FormState> keyStore = GlobalKey<FormState>();
-
-  @override
-  Map<String, String> get onSave => <String, String>{};
-
   final LoginStepUseCase _loginStepUseCase;
+  final LoginValidationUseCase _loginValidationUseCase;
+  final LoginViewMapper _loginViewMapper;
 
   _LoginBloc(
     this._loginStepUseCase,
+    this._loginValidationUseCase,
+    this._loginViewMapper,
   );
+
+  @override
+  GlobalKey<FormFieldState> get loginFieldKey => GlobalKey<FormFieldState>();
+
+  @override
+  GlobalKey<FormFieldState> get passwordFieldKey => GlobalKey<FormFieldState>();
+
+  @override
+  Map<String, String> get onSave => <String, String>{};
 
   final bool _isLoading = false;
 
   final _screenData = LoginData.init();
 
-  void updateData() {
-    super.handleData(
-      isLoading: _isLoading,
-      data: _screenData.copy(),
-    );
-  }
-
   @override
   void initState() {
     super.initState();
-    updateData();
-  }
-
-  @override
-  void login() async {
-    launchPayLoad(
-      action: () {
-        if (keyStore.currentState!.validate()) {
-          keyStore.currentState!.save();
-          log("sucsecc");
-          //! trigger of navigate
-        }
-      },
-      errorAction: (e) {
-        if (e is AuthException) {
-          _screenData.exception = e;
-        }
-      },
-    );
+    _updateData();
   }
 
   @override
@@ -89,30 +73,51 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
   }
 
   @override
+  void login() async {
+    launchPayLoad(
+      action: () async {
+        _screenData.exception == null;
+        loginFieldKey.currentState?.validate();
+        passwordFieldKey.currentState?.validate();
+        loginFieldKey.currentState?.save();
+        passwordFieldKey.currentState?.save();
+
+        final requestData =
+            _loginViewMapper.mapScreenDataToRequest(_screenData);
+
+        await _loginValidationUseCase(
+          requestData,
+        );
+
+        await _loginStepUseCase(
+          requestData,
+        );
+
+        //! is it ok if navigate page here not in the ui???
+
+        _updateData();
+      },
+      errorAction: (e) {
+        if (e is AuthException) {
+          _screenData.exception = e;
+        }
+      },
+    );
+  }
+
+  void _updateData() {
+    super.handleData(
+      isLoading: _isLoading,
+      data: _screenData,
+    );
+  }
+
+  @override
   void dispose() {
     super.dispose();
-
     _loginStepUseCase.dispose();
-  }
-
-  @override
-  String? validateTextEmail(String formEmail) {
-    if (formEmail.isEmpty) return "E-mail is requried.";
-    // String pattern = r'\w+@\W+\.\w+';
-    // RegExp reg = RegExp(pattern);
-    if (!formEmail.contains("@")) {
-      return ErrorTextField.login_invalid;
-    }
-    return null;
-  }
-
-  @override
-  String? validateTextPassword(String formPassword) {
-    if (formPassword.isEmpty) return "password is requried.";
-
-    if (formPassword.length < 6) {
-      return ErrorTextField.password_invalid;
-    }
-    return null;
+    _loginValidationUseCase.dispose();
+    loginFieldKey.currentState?.dispose();
+    passwordFieldKey.currentState?.dispose();
   }
 }

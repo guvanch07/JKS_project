@@ -1,4 +1,4 @@
-import 'package:data/models/auth_exception.dart';
+import 'package:domain/model/api_exception.dart';
 
 class LoginData {
   String loginInput = '';
@@ -9,5 +9,5 @@ class LoginData {
 
   factory LoginData.init() => LoginData('', '', null);
 
-  LoginData copy() => LoginData(loginInput, passwordInput, exception?.copy());
+  LoginData copy() => LoginData(loginInput, passwordInput, exception);
 }
