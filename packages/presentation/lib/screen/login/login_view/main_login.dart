@@ -29,7 +29,6 @@ class _LoginPageState extends BlocState<LoginPage, LoginBloc> {
     return StreamPlatformStackContent(
         dataStream: bloc.dataStream,
         children: (blocData) {
-          //final screenData = blocData.data;
           return LoginPageWithKey(
             validateEmail: (value) => bloc.validateTextEmail(value ?? ''),
             validatePassword: (value) => bloc.validateTextPassword(value ?? ''),
