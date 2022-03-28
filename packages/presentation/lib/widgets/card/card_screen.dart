@@ -5,11 +5,10 @@ import 'package:presentation/core/theme/style_text.dart';
 class CardItem extends StatelessWidget {
   const CardItem({
     Key? key,
-    //required this.flag,
     required this.maintitlle,
     required this.color,
   }) : super(key: key);
-  //final String flag;
+
   final String maintitlle;
 
   final String color;
