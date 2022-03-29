@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:presentation/core/theme/theme_app.dart';
+import 'package:presentation/navigator/base_argumaents.dart';
+import 'package:presentation/navigator/base_page.dart';
 
 const List<Tab> _myMainTabs = <Tab>[
   Tab(text: "Card ES"),
@@ -11,6 +13,14 @@ const List<Tab> _myMainTabs = <Tab>[
 const List<Widget> _myWidgets = [TestSvg(), TestSvg(), TestSvg()];
 
 class HomeTabBar extends StatelessWidget {
+  static const routeName = "/Home";
+
+  static BasePage page({BaseArguments? arguments}) => BasePage(
+      key: const ValueKey(routeName),
+      name: routeName,
+      arguments: arguments,
+      builder: (context) => const HomeTabBar());
+
   const HomeTabBar({Key? key}) : super(key: key);
 
   @override

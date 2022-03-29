@@ -4,6 +4,7 @@ import 'package:domain/usecase/validation_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/base/base_bloc.dart';
 import 'package:presentation/base/impl_base_bloc.dart';
+import 'package:presentation/screen/home/home_tab_bar.dart';
 import 'package:presentation/screen/login/bloc/login_data.dart';
 import 'package:presentation/screen/mapper/login_view_mapper.dart';
 
@@ -18,6 +19,8 @@ abstract class LoginBloc implements BaseBloc {
         loginValidationUseCase,
         loginViewMapper,
       );
+
+  void navigateToHomePage();
 
   void login();
 
@@ -42,6 +45,11 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
     this._loginValidationUseCase,
     this._loginViewMapper,
   );
+
+  @override
+  void navigateToHomePage() {
+    appNavigator.push(HomeTabBar.page());
+  }
 
   @override
   GlobalKey<FormFieldState> get loginFieldKey => GlobalKey<FormFieldState>();
@@ -96,6 +104,8 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
         //! is it ok if navigate page here not in the ui???
 
         _updateData();
+
+        navigateToHomePage();
       },
       errorAction: (e) {
         if (e is AuthException) {

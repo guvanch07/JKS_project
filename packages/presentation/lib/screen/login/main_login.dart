@@ -3,6 +3,8 @@ import 'package:presentation/base/bloc_data.dart';
 import 'package:presentation/base/bloc_state.dart';
 import 'package:presentation/base/stream_platform_stack_content.dart';
 import 'package:presentation/core/helpers/primary_button.dart';
+import 'package:presentation/navigator/base_argumaents.dart';
+import 'package:presentation/navigator/base_page.dart';
 import 'package:presentation/screen/login/bloc/login_bloc.dart';
 import 'package:presentation/widgets/text_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,6 +13,15 @@ const String _login = "Login";
 const String _password = "Password";
 
 class LoginPage extends StatefulWidget {
+  static const routeName = '/LoginPage';
+
+  static BasePage page({BaseArguments? arguments}) => BasePage(
+        key: const ValueKey(routeName),
+        name: routeName,
+        arguments: arguments,
+        builder: (context) => const LoginPage(),
+      );
+
   const LoginPage({Key? key}) : super(key: key);
 
   @override
@@ -41,7 +52,6 @@ class _LoginPageState extends BlocState<LoginPage, LoginBloc> {
   }
 
   _loginPageItem(BlocData blocData) {
-    //! i read extract to metods is bad for performance, or am i wrong??
     final screenData = blocData.data;
     Scaffold(
       body: SafeArea(
