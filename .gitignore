@@ -25,13 +25,13 @@
 **/ios/Flutter/.last_build_id
 **/last_build_id
 **/filecache
+**/build
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
 .packages
 .pub-cache/
 .pub/
-/build/
 pubspec.lock
 analysis_options.yaml
 .metadata

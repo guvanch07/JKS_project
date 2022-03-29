@@ -3,9 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:presentation/core/theme/theme_app.dart';
 
 const List<Tab> _myMainTabs = <Tab>[
-  Tab(
-    text: "Card ES",
-  ),
+  Tab(text: "Card ES"),
   Tab(text: "Card MX"),
   Tab(text: "MMES"),
 ];
