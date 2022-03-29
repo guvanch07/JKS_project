@@ -22,7 +22,6 @@
 
 # Flutter/Dart/Pub related
 **/doc/api/
-**/ios/Flutter/.last_build_id
 **/last_build_id
 **/filecache
 **/build
