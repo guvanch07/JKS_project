@@ -13,21 +13,19 @@ class LoginValidationUseCase
   Future<bool> call(LoginParms params) {
     final authException = AuthException(null, null);
 
-    //! why Dart dont support forEach() metod???
-
-    for (var element in _validation.loginValidators) {
+    _validation.loginValidators.forEach((element) {
       if (!element.isValid(params.login)) {
         authException.loginError = element.runtimeType.toString();
-        break;
+        return;
       }
-    }
+    });
 
-    for (var element in _validation.passwordValidators) {
+    _validation.passwordValidators.forEach((element) {
       if (!element.isValid(params.password)) {
         authException.passwordError = element.runtimeType.toString();
-        break;
+        return;
       }
-    }
+    });
 
     if (authException.loginError != null &&
         authException.passwordError == null) {
