@@ -9,8 +9,8 @@ import 'package:get_it/get_it.dart';
 Future<void> initDataModule() async {
   final sl = GetIt.I;
 
-  sl.registerSingleton<CancelToken>(
-    CancelToken(),
+  sl.registerFactory<CancelToken>(
+    () => CancelToken(),
   );
 
   sl.registerSingleton<Dio>(

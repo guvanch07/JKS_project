@@ -1,95 +1,160 @@
-import 'package:data/models/auth_exception.dart';
-import 'package:domain/model/login_step_field.dart';
-import 'package:domain/usecase/get_registration_use_case.dart';
+import 'package:domain/model/api_exception.dart';
+import 'package:domain/usecase/login_usecase.dart';
 import 'package:flutter/material.dart';
-import 'package:presentation/base/bloc_base.dart';
-import 'package:presentation/base/bloc_base_impl.dart';
+import 'package:presentation/base/base_bloc.dart';
+import 'package:presentation/base/impl_base_bloc.dart';
+import 'package:presentation/screen/home/home_tab_bar.dart';
 
 import 'package:presentation/screen/login/bloc/login_data.dart';
+import 'package:domain/usecase/validation_usecase.dart';
+import 'package:presentation/screen/mapper/login_view_mapper.dart';
 
-abstract class LoginBloc implements BaseBloc {
+abstract class LoginBloc extends BaseBloc {
+  GlobalKey<FormFieldState> get loginFieldKey;
+
+  GlobalKey<FormFieldState> get passwordFieldKey;
+
+  FocusNode get loginFocusNode;
+
+  FocusNode get passwordFocusNode;
+
+  Map<String, String> get onSave;
+
   factory LoginBloc(
-    LoginStepUseCase loginStepUseCase,
+    LoginStepUseCase loginUseCase,
+    LoginValidationUseCase loginValidationUseCase,
+    LoginViewMapper loginViewMapper,
   ) =>
-      _LoginBloc(loginStepUseCase);
+      _LoginBloc(
+        loginUseCase,
+        loginValidationUseCase,
+        loginViewMapper,
+      );
+
+  void _navigateToHomePage();
 
   void login();
 
   void setLogin(String login);
 
   void setPassword(String password);
-
-  GlobalKey<FormFieldState> get loginFormKey;
-
-  GlobalKey<FormFieldState> get passwordFormKey;
 }
 
 class _LoginBloc extends BlocImpl implements LoginBloc {
-  final LoginStepUseCase _loginStepUseCase;
+  @override
+  Map<String, String> get onSave => <String, String>{};
 
-  _LoginBloc(this._loginStepUseCase);
+  @override
+  final GlobalKey<FormFieldState> loginFieldKey = GlobalKey<FormFieldState>();
 
-  bool _isLoading = false;
+  @override
+  final GlobalKey<FormFieldState> passwordFieldKey =
+      GlobalKey<FormFieldState>();
+
+  @override
+  final FocusNode loginFocusNode = FocusNode();
+
+  @override
+  final FocusNode passwordFocusNode = FocusNode();
 
   final _screenData = LoginData.init();
 
-  void updateData() {
-    super.handleData(
-      isLoading: _isLoading,
-      data: _screenData.copy(),
-    );
-  }
+  final LoginStepUseCase _loginUseCase;
+  final LoginValidationUseCase _loginValidationUseCase;
+  final LoginViewMapper _loginViewMapper;
+
+  _LoginBloc(
+    this._loginUseCase,
+    this._loginValidationUseCase,
+    this._loginViewMapper,
+  );
 
   @override
   void initState() {
     super.initState();
-    updateData();
+    _updateData();
+  }
+
+  void _updateData() {
+    super.handleData(
+      isLoading: isLoading,
+      data: _screenData,
+    );
+  }
+
+  @override
+  void _navigateToHomePage() {
+    appNavigator.popAndPush(
+      HomeTabBar.page(),
+    );
   }
 
   @override
   void login() async {
-    _isLoading = true;
-    updateData();
+    launchPayLoad(
+      action: () async {
+        _screenData.exception = null;
+        loginFieldKey.currentState?.validate();
+        passwordFieldKey.currentState?.validate();
 
-    final authFields =
-        LoginParms(_screenData.loginInput, _screenData.passwordInput);
+        final requestData =
+            _loginViewMapper.mapScreenDataToRequest(_screenData);
 
-    try {
-      await _loginStepUseCase(authFields).then((value) {
-        _screenData.exception == null;
-      });
-    } catch (e) {
-      if (e is AuthException) {
-        _screenData.exception == e;
-      }
-    } finally {
-      _isLoading = false;
-      updateData();
-    }
+        await _loginValidationUseCase(
+          requestData,
+        );
+
+        await _loginUseCase(
+          requestData,
+        );
+
+        _updateData();
+
+        _navigateToHomePage();
+      },
+      errorAction: (e) {
+        if (e is AuthException) {
+          _screenData.exception = e;
+          if (loginFieldKey.currentState != true &&
+              !loginFieldKey.currentState!.validate()) {
+            loginFocusNode.requestFocus();
+          }
+          if (passwordFieldKey.currentState != true &&
+              !passwordFieldKey.currentState!.validate()) {
+            passwordFocusNode.requestFocus();
+          }
+          _updateData();
+        }
+      },
+    );
   }
 
   @override
   void setLogin(String login) {
+    if (_screenData.exception?.loginError != null) {
+      _screenData.exception?.loginError = null;
+      loginFieldKey.currentState?.validate();
+    }
     _screenData.loginInput = login;
+    _updateData();
   }
 
   @override
   void setPassword(String password) {
+    if (_screenData.exception?.passwordError != null) {
+      _screenData.exception?.passwordError = null;
+      passwordFieldKey.currentState?.validate();
+    }
     _screenData.passwordInput = password;
+    _updateData();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _loginStepUseCase.dispose();
+    _loginUseCase.dispose();
+    _loginValidationUseCase.dispose();
+    loginFocusNode.dispose();
+    passwordFocusNode.dispose();
   }
-
-  @override
-  GlobalKey<FormFieldState> get loginFormKey => _loginFieldKey;
-
-  @override
-  GlobalKey<FormFieldState> get passwordFormKey => _passwordFieldKey;
-
-  final _loginFieldKey = GlobalKey<FormFieldState>();
-  final _passwordFieldKey = GlobalKey<FormFieldState>();
 }

@@ -1,7 +1,8 @@
 import 'package:domain/model/list_jobs_to_chache.dart';
 import 'package:domain/repository/network_repository.dart';
-import 'package:domain/usecase/get_registration_use_case.dart';
-import 'package:domain/usecase/home_usecase.dart';
+import 'package:domain/usecase/login_usecase.dart';
+import 'package:domain/usecase/validation_usecase.dart';
+import 'package:domain/validator/login_step_validation_schema.dart';
 import 'package:get_it/get_it.dart';
 
 Future<void> initDomainModule() async {
@@ -9,6 +10,10 @@ Future<void> initDomainModule() async {
 
   sl.registerSingleton<JobsToCache>(
     JobsToCache(),
+  );
+
+  sl.registerSingleton<LoginValidation>(
+    LoginValidation(),
   );
 
   sl.registerFactory(
@@ -19,8 +24,8 @@ Future<void> initDomainModule() async {
   );
 
   sl.registerFactory(
-    () => HomeUseCase(
-      sl.get<INetworkRepository>(),
+    () => LoginValidationUseCase(
+      sl.get<LoginValidation>(),
     ),
   );
 }

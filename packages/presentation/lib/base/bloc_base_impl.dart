@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:flutter/widgets.dart';
-import 'package:presentation/base/bloc_base.dart';
+import 'package:presentation/base/base_bloc.dart';
 import 'package:presentation/base/bloc_data.dart';
+import 'package:get_it/get_it.dart';
+import 'package:presentation/navigator/app_navigator.dart';
 
 class BlocImpl<D> implements BaseBloc<D> {
-  //final appNavigator = GetIt.I.get<AppNavigator>();
+  final appNavigator = GetIt.I.get<AppNavigator>();
 
   final _blocData = BlocData.init();
 
