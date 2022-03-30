@@ -31,7 +31,7 @@ abstract class LoginBloc extends BaseBloc {
         loginViewMapper,
       );
 
-  void navigateToHomePage();
+  void _navigateToHomePage();
 
   void login();
 
@@ -83,7 +83,7 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
   }
 
   @override
-  void navigateToHomePage() {
+  void _navigateToHomePage() {
     appNavigator.popAndPush(
       HomeTabBar.page(),
     );
@@ -110,16 +110,16 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
 
         _updateData();
 
-        navigateToHomePage();
+        _navigateToHomePage();
       },
       errorAction: (e) {
         if (e is AuthException) {
           _screenData.exception = e;
-          if (loginFieldKey.currentState != null &&
+          if (loginFieldKey.currentState != true &&
               !loginFieldKey.currentState!.validate()) {
             loginFocusNode.requestFocus();
           }
-          if (passwordFieldKey.currentState != null &&
+          if (passwordFieldKey.currentState != true &&
               !passwordFieldKey.currentState!.validate()) {
             passwordFocusNode.requestFocus();
           }
