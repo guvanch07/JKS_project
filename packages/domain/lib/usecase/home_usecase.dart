@@ -1,7 +1,7 @@
 import 'package:domain/core/extension/title_extension.dart';
 import 'package:domain/model/job.dart';
 import 'package:domain/repository/network_repository.dart';
-import 'package:domain/usecase/usecase.dart';
+import 'package:domain/usecase/base_usecase.dart';
 
 class HomeUseCase implements UseCaseParams<TitleOfTabBar, List<Job>?> {
   final INetworkRepository _repository;
