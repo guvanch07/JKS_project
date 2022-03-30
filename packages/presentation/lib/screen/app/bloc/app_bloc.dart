@@ -4,7 +4,7 @@ import 'package:presentation/base/impl_base_bloc.dart';
 
 import 'package:presentation/navigator/base_page.dart';
 import 'package:presentation/screen/app/bloc/app_data.dart';
-import 'package:presentation/screen/login/main_login.dart';
+import 'package:presentation/screen/home/home_tab_bar.dart';
 
 abstract class AppBloc extends BaseBloc {
   factory AppBloc() => _AppBloc();
@@ -103,7 +103,7 @@ class _AppBloc extends BlocImpl implements AppBloc {
 
   BasePage _currentPage() {
     if (_appData.pages.isEmpty) {
-      _appData.pages.add(LoginPage.page());
+      _appData.pages.add(HomeTabBar.page());
     }
     return _appData.pages.last;
   }

@@ -115,12 +115,12 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
       errorAction: (e) {
         if (e is AuthException) {
           _screenData.exception = e;
-          if (loginFieldKey.currentState != true &&
-              !loginFieldKey.currentState!.validate()) {
+          if (loginFieldKey.currentState != null &&
+              loginFieldKey.currentState!.validate() != true) {
             loginFocusNode.requestFocus();
           }
-          if (passwordFieldKey.currentState != true &&
-              !passwordFieldKey.currentState!.validate()) {
+          if (passwordFieldKey.currentState != null &&
+              passwordFieldKey.currentState!.validate() != true) {
             passwordFocusNode.requestFocus();
           }
           _updateData();
