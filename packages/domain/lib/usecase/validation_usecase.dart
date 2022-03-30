@@ -2,6 +2,7 @@ import 'package:domain/model/api_exception.dart';
 import 'package:domain/model/login_step_field.dart';
 import 'package:domain/usecase/base_usecase.dart';
 import 'package:domain/validator/login_step_validation_schema.dart';
+import 'package:collection/collection.dart';
 
 class LoginValidationUseCase
     implements UseCaseParams<LoginParms, Future<bool>> {
@@ -13,25 +14,29 @@ class LoginValidationUseCase
   Future<bool> call(LoginParms params) {
     final authException = AuthException(null, null);
 
-    _validation.loginValidators.forEach((element) {
-      if (!element.isValid(params.login)) {
-        authException.loginError = element.runtimeType.toString();
-        return;
-      }
-    });
+    final failedLoginValidator = _validation.loginValidators.firstWhereOrNull(
+      (validator) => !validator.isValid(params.login),
+    );
 
-    _validation.passwordValidators.forEach((element) {
-      if (!element.isValid(params.password)) {
-        authException.passwordError = element.runtimeType.toString();
-        return;
-      }
-    });
+    final failedPasswordValidator =
+        _validation.passwordValidators.firstWhereOrNull(
+      (validator) => !validator.isValid(params.password),
+    );
 
-    if (authException.loginError != null &&
-        authException.passwordError == null) {
-      return Future.error(authException);
-    } else {
+    if (failedLoginValidator != null) {
+      authException.loginError =
+          "login.${failedLoginValidator.runtimeType.toString()}";
+    }
+
+    if (failedPasswordValidator != null) {
+      authException.passwordError =
+          "password.${failedPasswordValidator.runtimeType.toString()}";
+    }
+
+    if (failedLoginValidator == null && failedPasswordValidator == null) {
       return Future.value(true);
+    } else {
+      return Future.error(authException);
     }
   }
 

@@ -1,37 +1,25 @@
 import 'dart:async';
 import 'package:flutter/widgets.dart';
-import 'package:presentation/navigator/app_navigator.dart';
-import 'base_bloc.dart';
-import 'bloc_data.dart';
+import 'package:presentation/base/base_bloc.dart';
+import 'package:presentation/base/bloc_data.dart';
 import 'package:get_it/get_it.dart';
+import 'package:presentation/navigator/app_navigator.dart';
 
 class BlocImpl<D> implements BaseBloc<D> {
   final appNavigator = GetIt.I.get<AppNavigator>();
-  @override
-  Stream<BlocData<D?>> get dataStream => _data.stream;
 
   final _blocData = BlocData.init();
 
   final _data = StreamController<BlocData<D?>>();
 
+  bool isLoading = false;
+
+  @override
+  Stream<BlocData<D?>> get dataStream => _data.stream;
+
   @override
   void dispose() {
     _data.close();
-  }
-
-  @protected
-  void handleData({
-    bool? isLoading,
-    bool? isValid,
-    D? data,
-  }) {
-    if (!_data.isClosed) {
-      _blocData.updateParams(
-        isLoading: isLoading,
-        data: data,
-      );
-      _data.add(_blocData.copy<D>());
-    }
   }
 
   @protected
@@ -51,6 +39,21 @@ class BlocImpl<D> implements BaseBloc<D> {
       if (showLoading) {
         handleData(isLoading: false);
       }
+    }
+  }
+
+  @protected
+  void handleData({
+    bool? isLoading,
+    bool? isValid,
+    D? data,
+  }) {
+    if (!_data.isClosed) {
+      _blocData.updateParams(
+        isLoading: isLoading,
+        data: data,
+      );
+      _data.add(_blocData.copy<D>());
     }
   }
 

@@ -3,4 +3,5 @@ class AuthException {
   String? passwordError;
 
   AuthException(this.loginError, this.passwordError);
+  AuthException copy() => AuthException(loginError, passwordError);
 }
