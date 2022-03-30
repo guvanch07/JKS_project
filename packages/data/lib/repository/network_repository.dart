@@ -19,19 +19,21 @@ class NetworkRepository extends ApiBaseRepositoryImpl
   ) : super(cancelToken: _cancelToken);
 
   @override
+  ApiAuthorizationResponse? getdata;
+
+  @override
   Future<ApiAuthorizationResponse?> getJobs() => _service
           .get(
-            path: ApiHelperCore.pathUrl,
-            cancelToken: _cancelToken,
-          )
-          .then(
-            (value) =>
-                Future.value(ApiAuthorizationResponse.fromJson(value.data)),
-          )
-          .onError((error, stackTrace) {
+        path: ApiHelperCore.pathUrl,
+        cancelToken: _cancelToken,
+      )
+          .then((value) {
+        getdata = ApiAuthorizationResponse.fromJson(value.data);
+        return Future.value(getdata);
+      }).onError((error, stackTrace) {
         if (error is DioError && error.response?.statusCode == 401) {
           return Future.error(AuthException(
-              ErrorTextField.login_invalid, ErrorTextField.password_invalid));
+              ErrorTextField.loginInvalid, ErrorTextField.passwordInvalid));
         } else {
           return Future.error(error!);
         }

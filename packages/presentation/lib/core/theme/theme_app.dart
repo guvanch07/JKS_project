@@ -5,7 +5,7 @@ abstract class AppColors {
   static const textMain = Color(0xff4C4C4C);
   static const card = Colors.white;
   static const mainbgc = Color(0xFFF5F5F5);
-  static const accentGreen = Color(0xff9EDC15);
+  static const accentGreen = Color(0xff87C009);
   static const iconColor = Color(0xff4C4C4C);
   static const border = Color(0xffD3D2D2);
   static const errorColor = Color(0xffFF4B4B);
@@ -26,11 +26,11 @@ abstract class AppTheme {
         scaffoldBackgroundColor: _LightColors.background,
         splashColor: accentColor,
         brightness: Brightness.light,
-        accentColor: accentColor,
         visualDensity: visualDensity,
         cardTheme: const CardTheme(color: AppColors.card),
         fontFamily: "Volte Rounded",
         cardColor: _LightColors.card,
         iconTheme: const IconThemeData(color: AppColors.iconColor),
+        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: accentColor),
       );
 }

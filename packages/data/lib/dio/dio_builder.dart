@@ -22,6 +22,6 @@ Dio dioBuilder(
 
   final dio = Dio(options);
   dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
-  // dio.interceptors.add(CancelInterceptor());
+
   return dio;
 }
