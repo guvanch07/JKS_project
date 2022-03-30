@@ -1,8 +1,9 @@
 import 'package:domain/core/extension/title_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:presentation/core/base_bloc/bloc_data.dart';
-import 'package:presentation/core/base_bloc/bloc_state.dart';
+import 'package:presentation/base/bloc_data.dart';
+import 'package:presentation/base/bloc_state.dart';
+
 import 'package:presentation/core/theme/style_text.dart';
 import 'package:presentation/screen/home/bloc/home_data.dart';
 import 'package:presentation/widgets/card/card_screen.dart';

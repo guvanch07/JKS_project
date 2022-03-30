@@ -1,7 +1,7 @@
-import 'package:presentation/core/base_bloc/base_bloc.dart';
+import 'package:presentation/base/bloc_base.dart';
+import 'package:presentation/base/bloc_base_impl.dart';
 import 'package:domain/core/extension/title_extension.dart';
 import 'package:domain/usecase/home_usecase.dart';
-import 'package:presentation/core/base_bloc/impl_base_bloc.dart';
 import 'package:presentation/screen/home/bloc/home_data.dart';
 
 abstract class HomeBloc extends BaseBloc {

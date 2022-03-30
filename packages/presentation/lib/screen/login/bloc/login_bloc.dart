@@ -2,8 +2,9 @@ import 'package:data/models/auth_exception.dart';
 import 'package:domain/model/login_step_field.dart';
 import 'package:domain/usecase/get_registration_use_case.dart';
 import 'package:flutter/material.dart';
-import 'package:presentation/core/base_bloc/base_bloc.dart';
-import 'package:presentation/core/base_bloc/impl_base_bloc.dart';
+import 'package:presentation/base/bloc_base.dart';
+import 'package:presentation/base/bloc_base_impl.dart';
+
 import 'package:presentation/screen/login/bloc/login_data.dart';
 
 abstract class LoginBloc implements BaseBloc {

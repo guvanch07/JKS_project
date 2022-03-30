@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/core/base_bloc/bloc_state.dart';
-import 'package:presentation/core/base_bloc/stream_platform_stack_content.dart';
+import 'package:presentation/base/bloc_state.dart';
+import 'package:presentation/base/stream_platform_stack_content.dart';
+
 import 'package:presentation/screen/home/home_tab_bar.dart';
 import 'package:presentation/screen/login/bloc/login_bloc.dart';
 import 'package:presentation/screen/login/bloc/login_data.dart';

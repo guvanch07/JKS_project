@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'bloc_data.dart';
 
 class StreamPlatformStackContent<SD> extends StatelessWidget {
@@ -13,9 +12,9 @@ class StreamPlatformStackContent<SD> extends StatelessWidget {
 
   const StreamPlatformStackContent({
     Key? key,
-    this.scaffoldKey,
     required this.dataStream,
     required this.children,
+    this.scaffoldKey,
     this.appBar,
     this.bottomNavigation,
     this.backgroundColor,
