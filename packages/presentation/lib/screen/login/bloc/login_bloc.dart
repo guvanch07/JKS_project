@@ -1,8 +1,8 @@
 import 'package:domain/model/api_exception.dart';
 import 'package:domain/usecase/login_usecase.dart';
 import 'package:flutter/material.dart';
-import 'package:presentation/base/base_bloc.dart';
-import 'package:presentation/base/impl_base_bloc.dart';
+import 'package:presentation/base/bloc_base.dart';
+import 'package:presentation/base/bloc_base_impl.dart';
 import 'package:presentation/screen/home/home_tab_bar.dart';
 
 import 'package:presentation/screen/login/bloc/login_data.dart';
