@@ -35,7 +35,7 @@ class NetworkRepository extends ApiBaseRepositoryImpl
           return Future.error(AuthException(
               ErrorTextField.loginInvalid, ErrorTextField.passwordInvalid));
         } else {
-          return Future.error(error!);
+          return Future.error(error ?? "error");
         }
       });
 }

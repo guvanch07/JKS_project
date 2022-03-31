@@ -1,7 +1,7 @@
-import 'package:presentation/base/bloc_base.dart';
-import 'package:presentation/base/bloc_base_impl.dart';
-import 'package:domain/core/extension/title_extension.dart';
+import 'package:presentation/base/base_bloc.dart';
+import 'package:domain/core/extension/title_exctention.dart';
 import 'package:domain/usecase/home_usecase.dart';
+import 'package:presentation/base/impl_base_bloc.dart';
 import 'package:presentation/screen/home/bloc/home_data.dart';
 
 abstract class HomeBloc extends BaseBloc {
@@ -12,7 +12,6 @@ abstract class HomeBloc extends BaseBloc {
 class _HomeBloc extends BlocImpl implements HomeBloc {
   final HomeUseCase _homeUseCase;
   final _screenData = HomeData.init();
-  final bool _isLoading = false;
 
   _HomeBloc(this._homeUseCase);
 
@@ -24,7 +23,7 @@ class _HomeBloc extends BlocImpl implements HomeBloc {
 
   void updateData() {
     super.handleData(
-      isLoading: _isLoading,
+      isLoading: isLoading,
       data: _screenData.copy(),
     );
   }

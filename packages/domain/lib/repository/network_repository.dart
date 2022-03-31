@@ -5,4 +5,5 @@ import 'base_repository.dart';
 abstract class INetworkRepository implements BaseRepository {
   ApiAuthorizationResponse? getdata;
   Future<ApiAuthorizationResponse?> getJobs();
+  ApiAuthorizationResponse? getdata;
 }

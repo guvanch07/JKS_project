@@ -1,5 +1,6 @@
 import 'package:domain/model/list_jobs_to_chache.dart';
 import 'package:domain/repository/network_repository.dart';
+import 'package:domain/usecase/home_usecase.dart';
 import 'package:domain/usecase/login_usecase.dart';
 import 'package:domain/usecase/validation_usecase.dart';
 import 'package:domain/validator/login_step_validation_schema.dart';
@@ -20,6 +21,12 @@ Future<void> initDomainModule() async {
     () => LoginStepUseCase(
       sl.get<INetworkRepository>(),
       sl.get<JobsToCache>(),
+    ),
+  );
+
+  sl.registerFactory(
+    () => HomeUseCase(
+      sl.get<INetworkRepository>(),
     ),
   );
 
