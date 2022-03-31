@@ -12,7 +12,6 @@ abstract class HomeBloc extends BaseBloc {
 class _HomeBloc extends BlocImpl implements HomeBloc {
   final HomeUseCase _homeUseCase;
   final _screenData = HomeData.init();
-  final bool _isLoading = false;
 
   _HomeBloc(this._homeUseCase);
 
@@ -24,7 +23,7 @@ class _HomeBloc extends BlocImpl implements HomeBloc {
 
   void updateData() {
     super.handleData(
-      isLoading: _isLoading,
+      isLoading: isLoading,
       data: _screenData.copy(),
     );
   }

@@ -30,17 +30,12 @@ class NetworkRepository extends ApiBaseRepositoryImpl
           .then((value) {
         getdata = ApiAuthorizationResponse.fromJson(value.data);
         return Future.value(getdata);
-      })
-          // .then(
-          //   (value) =>
-          //       Future.value(ApiAuthorizationResponse.fromJson(value.data)),
-          // )
-          .onError((error, stackTrace) {
+      }).onError((error, stackTrace) {
         if (error is DioError && error.response?.statusCode == 401) {
           return Future.error(AuthException(
               ErrorTextField.login_invalid, ErrorTextField.password_invalid));
         } else {
-          return Future.error(error!);
+          return Future.error(error ?? "error");
         }
       });
 }

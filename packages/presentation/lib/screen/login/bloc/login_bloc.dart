@@ -3,7 +3,6 @@ import 'package:domain/usecase/login_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/base/base_bloc.dart';
 import 'package:presentation/base/impl_base_bloc.dart';
-import 'package:presentation/screen/home/home_tab_bar.dart';
 
 import 'package:presentation/screen/login/bloc/login_data.dart';
 import 'package:domain/usecase/validation_usecase.dart';
@@ -31,7 +30,7 @@ abstract class LoginBloc extends BaseBloc {
         loginViewMapper,
       );
 
-  void _navigateToHomePage();
+  void navigateToHomePage();
 
   void login();
 
@@ -83,10 +82,10 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
   }
 
   @override
-  void _navigateToHomePage() {
-    appNavigator.popAndPush(
-      HomeTabBar.page(),
-    );
+  void navigateToHomePage() {
+    // appNavigator.popAndPush(
+    //   HomeTabBar.page(),
+    //);
   }
 
   @override
@@ -110,7 +109,7 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
 
         _updateData();
 
-        _navigateToHomePage();
+        navigateToHomePage();
       },
       errorAction: (e) {
         if (e is AuthException) {
