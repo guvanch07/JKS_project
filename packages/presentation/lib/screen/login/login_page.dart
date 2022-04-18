@@ -1,7 +1,7 @@
 part of 'main_login.dart';
 
-class _BuildLoginPage extends StatelessWidget {
-  const _BuildLoginPage({
+class BuildLoginPage extends StatelessWidget {
+  const BuildLoginPage({
     Key? key,
     required this.blocData,
     required this.bloc,
@@ -27,6 +27,7 @@ class _BuildLoginPage extends StatelessWidget {
               child: Text(appLocalizations?.labelLogin ?? ""),
             ),
             AppTextField(
+              key: Key("login"),
               isSuffixExsist: false,
               keyState: bloc.loginFieldKey,
               focusNode: bloc.loginFocusNode,
@@ -42,6 +43,7 @@ class _BuildLoginPage extends StatelessWidget {
               child: Text(appLocalizations?.labelPassword ?? ""),
             ),
             AppTextField(
+              key: Key("password"),
               isSuffixExsist: true,
               focusNode: bloc.passwordFocusNode,
               keyState: bloc.passwordFieldKey,
@@ -62,7 +64,11 @@ class _BuildLoginPage extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            Center(child: PrimaryButton(onTap: bloc.login, text: "Login")),
+            Center(
+                child: PrimaryButton(
+                    key: Key("login_button"),
+                    onTap: bloc.login,
+                    text: appLocalizations?.buttonLogin ?? "")),
             const SizedBox(height: 20)
           ],
         ),

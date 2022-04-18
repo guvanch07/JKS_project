@@ -1,5 +1,4 @@
 import 'package:data/core/api_key.dart';
-import 'package:data/core/error_const.dart';
 import 'package:data/service/api_service.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/model/api_auth_response.dart';
@@ -18,24 +17,32 @@ class NetworkRepository extends ApiBaseRepositoryImpl
     this._cancelToken,
   ) : super(cancelToken: _cancelToken);
 
+//! getJobs
   @override
-  ApiAuthorizationResponse? getdata;
+  Future<ApiAuthorizationResponse?> getJobs(String url) {
+    return _service
+        .get(path: url + ApiHelperCore.pathToken)
+        .then((response) => ApiAuthorizationResponse.fromJson(response.data));
+  }
 
+//! login
   @override
-  Future<ApiAuthorizationResponse?> getJobs() => _service
-          .get(
-        path: ApiHelperCore.pathUrl,
-        cancelToken: _cancelToken,
-      )
-          .then((value) {
-        getdata = ApiAuthorizationResponse.fromJson(value.data);
-        return Future.value(getdata);
-      }).onError((error, stackTrace) {
-        if (error is DioError && error.response?.statusCode == 401) {
-          return Future.error(AuthException(
-              ErrorTextField.login_invalid, ErrorTextField.password_invalid));
-        } else {
-          return Future.error(error ?? "error");
-        }
-      });
+  Future<ApiAuthorizationResponse?> login() {
+    return _service
+        .get(path: ApiHelperCore.pathToken, cancelToken: _cancelToken)
+        .then(
+          (value) => Future.value(
+            ApiAuthorizationResponse.fromJson(value.data),
+          ),
+        )
+        .onError((error, stackTrace) {
+      if (error is DioError && error.response?.statusCode == 401) {
+        return Future.error(
+          AuthException("errorLogin", "errorPassword"),
+        );
+      } else {
+        return Future.error(error!);
+      }
+    });
+  }
 }

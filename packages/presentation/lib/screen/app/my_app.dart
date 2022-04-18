@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/core/theme/style_text.dart';
-import 'package:presentation/screen/app/bloc/app_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:presentation/base/bloc_data.dart';
 import 'package:presentation/base/bloc_state.dart';
+import 'package:presentation/core/theme/style_text.dart';
+import 'package:presentation/screen/app/bloc/app_bloc.dart';
 import 'package:presentation/screen/app/bloc/app_data.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
@@ -15,8 +15,7 @@ class App extends StatefulWidget {
 
 class _AppState extends BlocState<App, AppBloc> {
   final _navigatorKey = GlobalKey<NavigatorState>();
-
-  final globalRootNavKey = GlobalKey<NavigatorState>();
+  final _globalRootNavKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
@@ -34,7 +33,7 @@ class _AppState extends BlocState<App, AppBloc> {
           elevation: 0.0,
         ),
       ),
-      navigatorKey: globalRootNavKey,
+      navigatorKey: _globalRootNavKey,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: _home(),
@@ -50,17 +49,14 @@ class _AppState extends BlocState<App, AppBloc> {
         if (appData is AppData) {
           return _content(context, blocData, appData);
         } else {
-          return Container();
+          return const SizedBox();
         }
       },
     );
   }
 
   Navigator _content(
-    BuildContext context,
-    BlocData? blocData,
-    AppData appData,
-  ) {
+      BuildContext context, BlocData? blocData, AppData appData) {
     return Navigator(
       key: _navigatorKey,
       pages: appData.pages.toList(),

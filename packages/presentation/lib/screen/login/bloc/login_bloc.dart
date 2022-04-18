@@ -1,11 +1,11 @@
 import 'package:domain/model/api_exception.dart';
 import 'package:domain/usecase/login_usecase.dart';
+import 'package:domain/usecase/validation_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/base/base_bloc.dart';
 import 'package:presentation/base/impl_base_bloc.dart';
-
+import 'package:presentation/screen/home/main_tab_bar.dart';
 import 'package:presentation/screen/login/bloc/login_data.dart';
-import 'package:domain/usecase/validation_usecase.dart';
 import 'package:presentation/screen/mapper/login_view_mapper.dart';
 
 abstract class LoginBloc extends BaseBloc {
@@ -20,7 +20,7 @@ abstract class LoginBloc extends BaseBloc {
   Map<String, String> get onSave;
 
   factory LoginBloc(
-    LoginStepUseCase loginUseCase,
+    LoginUseCase loginUseCase,
     LoginValidationUseCase loginValidationUseCase,
     LoginViewMapper loginViewMapper,
   ) =>
@@ -40,6 +40,18 @@ abstract class LoginBloc extends BaseBloc {
 }
 
 class _LoginBloc extends BlocImpl implements LoginBloc {
+  final LoginUseCase _loginUseCase;
+  final LoginValidationUseCase _loginValidationUseCase;
+  final LoginViewMapper _loginViewMapper;
+
+  _LoginBloc(
+    this._loginUseCase,
+    this._loginValidationUseCase,
+    this._loginViewMapper,
+  );
+
+  final _screenData = LoginData.init();
+
   @override
   Map<String, String> get onSave => <String, String>{};
 
@@ -56,18 +68,6 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
   @override
   final FocusNode passwordFocusNode = FocusNode();
 
-  final _screenData = LoginData.init();
-
-  final LoginStepUseCase _loginUseCase;
-  final LoginValidationUseCase _loginValidationUseCase;
-  final LoginViewMapper _loginViewMapper;
-
-  _LoginBloc(
-    this._loginUseCase,
-    this._loginValidationUseCase,
-    this._loginViewMapper,
-  );
-
   @override
   void initState() {
     super.initState();
@@ -83,9 +83,9 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
 
   @override
   void navigateToHomePage() {
-    // appNavigator.popAndPush(
-    //   HomeTabBar.page(),
-    //);
+    appNavigator.push(
+      MainTab.page(),
+    );
   }
 
   @override
@@ -108,7 +108,6 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
         );
 
         _updateData();
-
         navigateToHomePage();
       },
       errorAction: (e) {

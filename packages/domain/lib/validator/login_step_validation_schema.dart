@@ -12,6 +12,6 @@ class LoginValidation {
 
   final List<BaseValidator> passwordValidators = [
     RequiredFieldImpl(),
-    RegExpImpl('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*_)[a-zA-Z0-9_]+\$'),
+    RegExpImpl(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$'),
   ];
 }

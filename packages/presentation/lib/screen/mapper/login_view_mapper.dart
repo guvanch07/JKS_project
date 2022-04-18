@@ -1,5 +1,5 @@
+import 'package:domain/model/login_parms.dart';
 import 'package:presentation/screen/login/bloc/login_data.dart';
-import 'package:domain/model/login_step_field.dart';
 
 abstract class LoginViewMapper {
   factory LoginViewMapper() => _LoginViewMapper();

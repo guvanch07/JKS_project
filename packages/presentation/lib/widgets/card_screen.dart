@@ -11,7 +11,7 @@ class CardItem extends StatelessWidget {
 
   final String maintitlle;
 
-  final String color;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -37,22 +37,13 @@ class CardItem extends StatelessWidget {
           Container(
             width: 16,
             height: 16,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle, color: stringToColor(color)),
+            decoration: BoxDecoration(shape: BoxShape.circle, color: color),
           ),
           Text(stringToString(maintitlle), style: headline1),
           const Icon(Icons.arrow_forward_ios)
         ],
       ),
     );
-  }
-
-  Color? stringToColor(String color) {
-    if (color.contains("red")) {
-      return Colors.red;
-    } else {
-      return Colors.blue;
-    }
   }
 
   String stringToString(String title) {

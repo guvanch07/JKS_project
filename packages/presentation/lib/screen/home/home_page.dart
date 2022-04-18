@@ -1,19 +1,19 @@
-import 'package:domain/core/extension/title_exctention.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:presentation/base/bloc_data.dart';
 import 'package:presentation/base/bloc_state.dart';
 import 'package:presentation/core/theme/style_text.dart';
-import 'package:presentation/widgets/card/card_screen.dart';
+import 'package:presentation/screen/mapper/color_mapper.dart';
+import 'package:presentation/widgets/card_screen.dart';
+import 'package:get_it/get_it.dart';
 
-import 'bloc/home_bloc.dart';
-import 'bloc/home_data.dart';
+import 'bloc/home_page/home_bloc.dart';
+import 'bloc/home_page/home_data.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.project}) : super(key: key);
+  const HomePage({Key? key, required this.title}) : super(key: key);
 
-  final TitleOfTabBar project;
+  final String? title;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -23,7 +23,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
   @override
   void initState() {
     super.initState();
-    bloc.initJobs(widget.project);
+    bloc.getJobs(widget.title);
     bloc.initState();
   }
 
@@ -85,12 +85,16 @@ class _BuildInitialState extends StatelessWidget {
     required this.screenData,
   }) : super(key: key);
   final HomeData screenData;
+
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
         itemBuilder: (context, index) => CardItem(
-              maintitlle: screenData.jobs?[index].name ?? "empty",
-              color: screenData.jobs?[index].color ?? "empty",
+            maintitlle: screenData.jobs?[index].name ?? "empty",
+            color: GetIt.I
+                .get<ColorMapper>()
+                .getColorByName(screenData.jobs?[index].color)
+            //screenData.jobs?[index].color ?? "empty",
             ),
         separatorBuilder: (context, index) => const SizedBox(height: 5),
         itemCount: screenData.jobs?.length ?? 1);
