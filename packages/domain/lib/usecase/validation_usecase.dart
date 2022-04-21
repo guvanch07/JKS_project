@@ -1,5 +1,5 @@
 import 'package:domain/model/api_exception.dart';
-import 'package:domain/model/login_step_field.dart';
+import 'package:domain/model/login_parms.dart';
 import 'package:domain/usecase/base_usecase.dart';
 import 'package:domain/validator/login_step_validation_schema.dart';
 import 'package:collection/collection.dart';

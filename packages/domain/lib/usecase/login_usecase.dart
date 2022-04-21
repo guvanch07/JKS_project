@@ -1,27 +1,42 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:domain/model/auth_response_cache.dart';
 import 'package:domain/model/job.dart';
-import 'package:domain/model/login_step_field.dart';
+import 'package:domain/model/login_parms.dart';
+import 'package:domain/repository/local_base_repo.dart';
 import 'package:domain/repository/network_repository.dart';
-import 'package:domain/model/list_jobs_to_chache.dart';
+
 import 'base_usecase.dart';
 
-class LoginStepUseCase implements UseCaseParams<LoginParms, Future<void>> {
-  final INetworkRepository _repository;
-  final JobsToCache _cache;
+class LoginUseCase implements UseCaseParams<LoginParms, Future<void>> {
+  final INetworkRepository _remoteNetworkingrepository;
+  final AuthorizationResponseCache _cache;
+  final ILocalStorageRepo _localStorageRepository;
 
-  LoginStepUseCase(
-    this._repository,
+  LoginUseCase(
+    this._remoteNetworkingrepository,
     this._cache,
+    this._localStorageRepository,
   );
 
   @override
-  Future<void> call(LoginParms parms) async =>
-      _repository.getJobs().then((value) {
-        _cache.jobs =
-            value?.data?.map((element) => Job.fromJson(element)).toList();
-      });
+  Future<void> call(LoginParms params) async {
+    final String token =
+        "Basic ${base64.encode(utf8.encode("${params.login}:${params.password}"))}";
+    log(token);
+
+    await _localStorageRepository.setToken(token);
+
+    await _remoteNetworkingrepository.login().then((value) {
+      _cache.jobs =
+          value?.jobData?.map((element) => Job.fromJson(element)).toList();
+    });
+  }
 
   @override
   void dispose() {
-    _repository.dispose();
+    _remoteNetworkingrepository.dispose();
+    _localStorageRepository.dispose();
   }
 }

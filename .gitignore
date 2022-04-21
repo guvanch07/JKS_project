@@ -49,6 +49,9 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/ios/Podfile.lock
+/ios/Runner/Runner.xcworkspace
+/ios/Runner/Runner.xcodeproj
 packages/presentation/pubspec.lock
 packages/data/pubspec.lock
 packages/domain/pubspec.lock

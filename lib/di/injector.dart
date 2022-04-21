@@ -3,7 +3,7 @@ import 'package:presentation/di/presentation_injector.dart';
 import 'package:data/di/data_injector.dart';
 
 Future<void> initInjector() async {
-  initPresentationModule();
-  initDomainModule();
-  initDataModule();
+  await initPresentationModule();
+  await initDomainModule();
+  await initDataModule();
 }

@@ -50,7 +50,7 @@ class _LoginPageState extends BlocState<LoginPage, LoginBloc> {
     return StreamPlatformStackContent(
       dataStream: bloc.dataStream,
       children: (blocData) {
-        return _BuildLoginPage(
+        return BuildLoginPage(
           bloc: bloc,
           blocData: blocData,
           errorMapper: errorMapper,
