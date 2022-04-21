@@ -1,10 +1,7 @@
 import 'package:dio/dio.dart';
 
-Dio dioBuilder(
-  String baseUrl,
-  List<Interceptor> interceptors,
-  Map<String, dynamic>? headers,
-) {
+Dio dioBuilder(String baseUrl, List<Interceptor> interceptors,
+    {Map<String, dynamic>? headers}) {
   const timeout = 60000;
   final headersMap = headers ?? <String, dynamic>{};
   // headersMap[HttpHeaders.userAgentHeader] =

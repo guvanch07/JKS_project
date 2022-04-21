@@ -12,7 +12,6 @@ class TokenInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) async {
     options.headers['Authorization'] = await _localStorageRepository.getToken();
-
     return super.onRequest(options, handler);
   }
 
@@ -22,14 +21,15 @@ class TokenInterceptor extends Interceptor {
     ErrorInterceptorHandler handler,
   ) async {
     if (err.response?.statusCode == 401) {
-      //await _localStorageRepository.deleteToken();
+      await _localStorageRepository.deleteToken();
     }
-
     return super.onError(err, handler);
   }
 
-  // @override
-  // void onResponse(Response response, ResponseInterceptorHandler handler) {
-  //   super.onResponse(response, handler);
-  // }
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    //TODO impl response
+
+    super.onResponse(response, handler);
+  }
 }

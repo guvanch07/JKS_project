@@ -15,7 +15,7 @@ class _MainViewMapper implements MainViewMapper {
   @override
   List<Widget> mapJenkinsViewsToPages(List<JenkinsView> views) => views
       .map(
-        (view) => HomePage(title: view.name),
+        (view) => HomePage(title: view.name), //! giving the names from network
       )
       .toList();
 
