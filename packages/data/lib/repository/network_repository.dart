@@ -41,7 +41,7 @@ class NetworkRepository extends ApiBaseRepositoryImpl
           AuthException("errorLogin", "errorPassword"),
         );
       } else {
-        return Future.error(error!);
+        return Future.error(error ?? "error");
       }
     });
   }

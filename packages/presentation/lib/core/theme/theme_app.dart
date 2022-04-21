@@ -26,7 +26,6 @@ abstract class AppTheme {
         scaffoldBackgroundColor: _LightColors.background,
         splashColor: accentColor,
         brightness: Brightness.light,
-        accentColor: accentColor,
         visualDensity: visualDensity,
         cardTheme: const CardTheme(color: AppColors.card),
         fontFamily: "Volte Rounded",
