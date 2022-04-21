@@ -25,6 +25,7 @@
 **/last_build_id
 **/filecache
 **/build
+**/test.mocks.dart
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
