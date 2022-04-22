@@ -10,14 +10,4 @@ abstract class ApiHelperCore {
   static Map<String, dynamic> authHeader = {
     "Authorization": "Basic ${base64.encode(utf8.encode("$login:$password"))}"
   };
-  static String getAuthToken({String? login, String? password}) {
-    String token = 'Basic ' +
-        base64.encode(
-          utf8.encode(
-            (login ?? '') + ':' + (password ?? ''),
-          ),
-        );
-
-    return token;
-  }
 }
