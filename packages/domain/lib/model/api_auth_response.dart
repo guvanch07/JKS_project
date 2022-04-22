@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:domain/model/base_models/base_auth.dart';
 
 class ApiAuthorizationResponse implements BaseAuthorizationResponse {

@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 
-Dio dioBuilder(String baseUrl, List<Interceptor> interceptors,
-    {Map<String, dynamic>? headers}) {
+Dio dioBuilder(
+  String baseUrl,
+  List<Interceptor> listOfInterseptors, {
+  Map<String, dynamic>? headers,
+}) {
   const timeout = 60000;
   final headersMap = headers ?? <String, dynamic>{};
-  // headersMap[HttpHeaders.userAgentHeader] =
-  //     '${Platform.operatingSystem}-APPLICATION'.toUpperCase();
 
   final options = BaseOptions(
     baseUrl: baseUrl,
@@ -17,7 +18,7 @@ Dio dioBuilder(String baseUrl, List<Interceptor> interceptors,
   );
 
   final dio = Dio(options);
-  dio.interceptors.addAll(interceptors);
+  dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
   return dio;
 }
