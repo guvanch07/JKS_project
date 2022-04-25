@@ -13,8 +13,6 @@ abstract class AnalyticsEvent {
 class _AnalyticsEvent implements AnalyticsEvent {
   @override
   String adaptEventName(String event) {
-    //Replace dashes with underscores
-    //as event names may only contain alphanumeric characters and underscores
     final characters = event.toLowerCase().split('');
 
     for (int i = 0; i < characters.length; i++) {

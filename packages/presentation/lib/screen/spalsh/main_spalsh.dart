@@ -42,14 +42,14 @@ class _SplashScreenState extends BlocState<SplashScreen, SplashBloc> {
           child: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           SvgPicture.asset("assets/svg/jenkis.svg"),
-          SizedBox(height: 20),
-          Text("JenkisApp",
+          const SizedBox(height: 20),
+          const Text("JenkisApp",
               style: TextStyle(
                   fontSize: 32,
                   fontFamily: "Georgia",
                   color: Colors.white,
                   fontWeight: FontWeight.w700)),
-          Text("App for building something great",
+          const Text("App for building something great",
               style: TextStyle(
                   fontSize: 22,
                   color: Colors.white,

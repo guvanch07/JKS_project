@@ -4,11 +4,11 @@ import 'package:presentation/screen/login/main_login.dart';
 
 void main() {
   testWidgets("login_tester", (WidgetTester tester) async {
-    final loginTextField = find.byKey(ValueKey("login"));
-    final passwordTextField = find.byKey(ValueKey("password"));
-    final loginButton = find.byKey(ValueKey("login_button"));
+    final loginTextField = find.byKey(const ValueKey("login"));
+    final passwordTextField = find.byKey(const ValueKey("password"));
+    final loginButton = find.byKey(const ValueKey("login_button"));
 
-    await tester.pumpWidget(LoginPage());
+    await tester.pumpWidget(const LoginPage());
     await tester.enterText(loginTextField, "testing");
     await tester.enterText(passwordTextField, "testing");
     await tester.tap(loginButton);

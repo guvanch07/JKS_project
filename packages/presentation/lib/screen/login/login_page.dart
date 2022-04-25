@@ -27,7 +27,7 @@ class BuildLoginPage extends StatelessWidget {
               child: Text(appLocalizations?.labelLogin ?? ""),
             ),
             AppTextField(
-              key: Key("login"),
+              key: const Key("login"),
               isSuffixExsist: false,
               keyState: bloc.loginFieldKey,
               focusNode: bloc.loginFocusNode,
@@ -43,7 +43,7 @@ class BuildLoginPage extends StatelessWidget {
               child: Text(appLocalizations?.labelPassword ?? ""),
             ),
             AppTextField(
-              key: Key("password"),
+              key: const Key("password"),
               isSuffixExsist: true,
               focusNode: bloc.passwordFocusNode,
               keyState: bloc.passwordFieldKey,
@@ -66,7 +66,7 @@ class BuildLoginPage extends StatelessWidget {
             const Spacer(),
             Center(
                 child: PrimaryButton(
-                    key: Key("login_button"),
+                    key: const Key("login_button"),
                     onTap: bloc.login,
                     text: appLocalizations?.buttonLogin ?? "")),
             const SizedBox(height: 20)

@@ -28,19 +28,19 @@ void main() {
   }));
 
   testWidgets('get login', (tester) async {
-    await tester.pumpWidget(LoginPage());
+    await tester.pumpWidget(const LoginPage());
     await tester.pumpAndSettle();
 
-    final btnLoginFinder = find.byKey(Key('login_button'));
+    final btnLoginFinder = find.byKey(const Key('login_button'));
 
     expect(btnLoginFinder, findsNWidgets(1));
   });
 
   testWidgets('get login', (tester) async {
-    await tester.pumpWidget(LoginPage());
+    await tester.pumpWidget(const LoginPage());
     await tester.pumpAndSettle();
 
-    final btnSendRegistrationFinder = find.byKey(Key('login_button'));
+    final btnSendRegistrationFinder = find.byKey(const Key('login_button'));
 
     when(mockGetRegistrationStepUseCase.call(null)).thenAnswer(
       (realInvocation) => Future.value('login'),

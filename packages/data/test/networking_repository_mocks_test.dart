@@ -18,7 +18,7 @@ void main() {
         final cancelToken = MockCancelToken();
         final apiService = MockApiService();
         final repository = NetworkRepository(apiService, cancelToken);
-        final mockName = "test";
+        const mockName = "test";
 
         final Map<String, dynamic> mockJson = {
           "jobClass": "",
@@ -54,7 +54,7 @@ void main() {
         final cancelToken = MockCancelToken();
         final apiService = MockApiService();
         final repository = NetworkRepository(apiService, cancelToken);
-        final mockName = "test";
+        const mockName = "test";
 
         final error = DioError(
           requestOptions: RequestOptions(path: ''),
