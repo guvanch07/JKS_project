@@ -25,7 +25,7 @@
 **/last_build_id
 **/filecache
 **/build
-**/test.mocks
+**/mocks.dart
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
@@ -62,4 +62,4 @@ windows/
 
 packages/domain/test/domain_repo_test.mocks.dart
 packages/presentation/test/login_test.mocks.dart
-packages/data/test/networking_repository_mocks.mocks_test.dart
+packages/data/test/networking_repository_mocks.mocks.dart

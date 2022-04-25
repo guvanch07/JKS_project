@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'networking_repository_mocks.mocks_test.dart';
+import 'networking_repository_mocks.mocks.dart';
 
 @GenerateMocks([ApiService, CancelToken, DioError])
 void main() {
