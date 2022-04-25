@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:presentation/base/bloc_state.dart';
+import 'package:presentation/core/theme/style_text.dart';
 import 'package:presentation/core/theme/theme_app.dart';
+import 'package:presentation/core/utils/path/asset_path.dart';
 import 'package:presentation/navigator/base_argumaents.dart';
 import 'package:presentation/navigator/base_page.dart';
 import 'package:presentation/screen/spalsh/bloc/bloc_main.dart';
@@ -41,20 +43,11 @@ class _SplashScreenState extends BlocState<SplashScreen, SplashBloc> {
       body: SafeArea(
           child: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          SvgPicture.asset("assets/svg/jenkis.svg"),
+          SvgPicture.asset(AssetPath.assetWhenHasNotData),
           const SizedBox(height: 20),
-          const Text("JenkisApp",
-              style: TextStyle(
-                  fontSize: 32,
-                  fontFamily: "Georgia",
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700)),
+          const Text("JenkisApp", style: Styles.splashHeadLine1),
           const Text("App for building something great",
-              style: TextStyle(
-                  fontSize: 22,
-                  color: Colors.white,
-                  fontFamily: "Volte Rounded",
-                  fontWeight: FontWeight.w600)),
+              style: Styles.splashHeadLine2),
         ]),
       )),
     );

@@ -27,9 +27,10 @@ class _AppState extends BlocState<App, AppBloc> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        textTheme: const TextTheme(headline2: headline2), //! change error style
+        textTheme:
+            const TextTheme(headline2: Styles.headline2), //! change error style
         appBarTheme: const AppBarTheme(
-          titleTextStyle: headline1,
+          titleTextStyle: Styles.headline1,
           elevation: 0.0,
         ),
       ),
@@ -56,7 +57,10 @@ class _AppState extends BlocState<App, AppBloc> {
   }
 
   Navigator _content(
-      BuildContext context, BlocData? blocData, AppData appData) {
+    BuildContext context,
+    BlocData? blocData,
+    AppData appData,
+  ) {
     return Navigator(
       key: _navigatorKey,
       pages: appData.pages.toList(),

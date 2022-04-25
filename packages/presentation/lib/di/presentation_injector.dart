@@ -69,11 +69,14 @@ Future<void> initPresentationModule() async {
     ),
   );
 
-  sl.registerFactory<MainBloc>(() => MainBloc(
+  sl.registerFactory<MainBloc>(
+    () => MainBloc(
       sl.get<AnalyticsEvent>(),
       sl.get<AnalyticsService>(),
       sl.get<GetViewsUseCase>(),
-      sl.get<GetPrimaryViewUseCase>()));
+      sl.get<GetPrimaryViewUseCase>(),
+    ),
+  );
 
   //! **************************************** navigation ****************************************
   sl.registerSingleton<AppNavigator>(AppNavigatorImpl());

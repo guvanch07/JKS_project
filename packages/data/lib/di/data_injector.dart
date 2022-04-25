@@ -54,7 +54,6 @@ Future<void> initDataModule() async {
     dioBuilder(
       ApiHelperCore.baseUrl,
       listOfInterseptors,
-      //ApiHelperCore.authHeader,
     ),
   );
 

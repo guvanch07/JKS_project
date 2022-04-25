@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:presentation/core/theme/style_text.dart';
 import 'package:presentation/core/theme/theme_app.dart';
 
-class AppTextField extends StatefulWidget {
+bool _isHidden = true;
+
+class AppTextField extends StatelessWidget {
   const AppTextField({
     Key? key,
     required this.text,
@@ -26,37 +28,32 @@ class AppTextField extends StatefulWidget {
   final bool isSuffixExsist;
 
   @override
-  State<AppTextField> createState() => _AppTextFieldState();
-}
-
-class _AppTextFieldState extends State<AppTextField> {
-  bool _isHidden = true;
-
-  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: TextFormField(
-        key: widget.keyState,
-        keyboardType: widget.type,
-        obscureText: widget.obscure == _isHidden,
-        onChanged: widget.onChanged,
-        onSaved: widget.onSaved,
-        focusNode: widget.focusNode,
-        validator: widget.validator,
+        key: keyState,
+        keyboardType: type,
+        obscureText: obscure == _isHidden,
+        onChanged: onChanged,
+        onSaved: onSaved,
+        focusNode: focusNode,
+        validator: validator,
         decoration: InputDecoration(
-          suffixIcon: widget.isSuffixExsist
-              ? IconButton(
-                  color: AppColors.border,
-                  icon: Icon(
-                    _isHidden ? Icons.visibility : Icons.visibility_off,
-                  ),
-                  onPressed: () {
-                    setState(() => _isHidden = !_isHidden);
-                  },
-                )
+          suffixIcon: isSuffixExsist
+              ? StatefulBuilder(builder: (context, setState) {
+                  return IconButton(
+                    color: AppColors.border,
+                    icon: Icon(
+                      _isHidden ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      setState(() => _isHidden = !_isHidden);
+                    },
+                  );
+                })
               : const SizedBox(),
-          errorStyle: headline1.copyWith(color: AppColors.errorColor),
+          errorStyle: Styles.headline1.copyWith(color: AppColors.errorColor),
           focusColor: Colors.black,
           focusedErrorBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -75,7 +72,7 @@ class _AppTextFieldState extends State<AppTextField> {
           errorBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
               borderSide: BorderSide(color: AppColors.errorColor)),
-          hintText: widget.text,
+          hintText: text,
           hintStyle: const TextStyle(color: AppColors.textMain, fontSize: 12),
         ),
       ),

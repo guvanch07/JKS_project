@@ -21,7 +21,7 @@ class NetworkRepository extends ApiBaseRepositoryImpl
   @override
   Future<ApiAuthorizationResponse?> getJobs(String url) {
     return _service
-        .get(path: url + ApiHelperCore.pathToken)
+        .get(path: url)
         .then((response) => ApiAuthorizationResponse.fromJson(response.data));
   }
 

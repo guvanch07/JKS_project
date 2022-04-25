@@ -56,3 +56,8 @@ app.*.map.json
 packages/presentation/pubspec.lock
 packages/data/pubspec.lock
 packages/domain/pubspec.lock
+packages/presentation/test/login_test.mocks.dart
+packages/data/test/networking_repository_mocks.mocks_test.dart
+packages/domain/test/domain_repo_test.mocks.dart
+windows/
+web/

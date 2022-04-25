@@ -71,7 +71,7 @@ class _DefoultEmptyWidget extends StatelessWidget {
           SvgPicture.asset("assets/svg/catty.svg"),
           const Text(
             "Сорян, ничего не нашли",
-            style: headline1,
+            style: Styles.headline1,
           )
         ],
       ),
@@ -93,9 +93,7 @@ class _BuildInitialState extends StatelessWidget {
             maintitlle: screenData.jobs?[index].name ?? "empty",
             color: GetIt.I
                 .get<ColorMapper>()
-                .getColorByName(screenData.jobs?[index].color)
-            //screenData.jobs?[index].color ?? "empty",
-            ),
+                .getColorByName(screenData.jobs?[index].color)),
         separatorBuilder: (context, index) => const SizedBox(height: 5),
         itemCount: screenData.jobs?.length ?? 1);
   }

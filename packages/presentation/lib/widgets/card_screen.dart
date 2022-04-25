@@ -39,18 +39,10 @@ class CardItem extends StatelessWidget {
             height: 16,
             decoration: BoxDecoration(shape: BoxShape.circle, color: color),
           ),
-          Text(stringToString(maintitlle), style: headline1),
+          Text(maintitlle, style: Styles.headline1),
           const Icon(Icons.arrow_forward_ios)
         ],
       ),
     );
-  }
-
-  String stringToString(String title) {
-    if (title.contains("moneyman")) {
-      return "Moneyman";
-    } else {
-      return "Plazo";
-    }
   }
 }

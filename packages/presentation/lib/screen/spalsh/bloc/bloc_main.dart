@@ -11,7 +11,10 @@ abstract class SplashBloc extends BaseBloc {
     AnalyticsService analyticsService,
     TokenUseCase tokenUseCase,
   ) =>
-      _SplashBloc(analyticsService, tokenUseCase);
+      _SplashBloc(
+        analyticsService,
+        tokenUseCase,
+      );
 
   void navigateToMainPage();
   void navigateToLoginPage();
@@ -38,18 +41,23 @@ class _SplashBloc extends BlocImpl implements SplashBloc {
       navigateToMainPage();
     }
     _analyticsService.trackCustomEvent(
-        event: AnalyticsEvent.loginScreenOpenedEvent);
+      event: AnalyticsEvent.loginScreenOpenedEvent,
+    );
     navigateToLoginPage();
   }
 
   @override
   void navigateToLoginPage() {
-    appNavigator.popAndPush(LoginPage.page());
+    appNavigator.popAndPush(
+      LoginPage.page(),
+    );
   }
 
   @override
   void navigateToMainPage() {
-    appNavigator.popAndPush(MainTab.page());
+    appNavigator.popAndPush(
+      MainTab.page(),
+    );
   }
 
   @override
