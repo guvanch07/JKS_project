@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:presentation/base/bloc_data.dart';
 import 'package:presentation/base/bloc_state.dart';
 import 'package:presentation/core/theme/style_text.dart';
+import 'package:presentation/core/utils/path/asset_path.dart';
 import 'package:presentation/screen/mapper/color_mapper.dart';
 import 'package:presentation/widgets/card_screen.dart';
 import 'package:get_it/get_it.dart';
@@ -68,7 +69,7 @@ class _DefoultEmptyWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset("assets/svg/catty.svg"),
+          SvgPicture.asset(AssetPath.assetWhenHasNotData),
           const Text(
             "Сорян, ничего не нашли",
             style: Styles.headline1,
