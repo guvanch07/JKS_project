@@ -13,11 +13,7 @@ abstract class AnalyticsEvent {
 class _AnalyticsEvent implements AnalyticsEvent {
   @override
   String adaptEventName(String event) {
-    final characters = event.toLowerCase().split('');
-
-    for (int i = 0; i < characters.length; i++) {
-      characters[i].replaceAll("-", "_");
-    }
+    final characters = event.toLowerCase().replaceAll("-", "_").split('');
 
     return characters.join();
   }

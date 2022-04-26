@@ -7,6 +7,7 @@ abstract class ApiHelperCore {
   static const String login = "flutter_lab_test";
   static const String pathToken = "api/json";
   static const tokenKey = 'token';
+  static const tokenKey2 = 'token';
   static Map<String, dynamic> authHeader = {
     "Authorization": "Basic ${base64.encode(utf8.encode("$login:$password"))}"
   };

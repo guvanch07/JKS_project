@@ -4,7 +4,7 @@ import 'package:presentation/core/theme/theme_app.dart';
 
 bool _isHidden = true;
 
-class AppTextField extends StatelessWidget {
+class AppTextField extends StatefulWidget {
   const AppTextField({
     Key? key,
     required this.text,
@@ -28,30 +28,33 @@ class AppTextField extends StatelessWidget {
   final bool isSuffixExsist;
 
   @override
+  State<AppTextField> createState() => _AppTextFieldState();
+}
+
+class _AppTextFieldState extends State<AppTextField> {
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: TextFormField(
-        key: keyState,
-        keyboardType: type,
-        obscureText: obscure == _isHidden,
-        onChanged: onChanged,
-        onSaved: onSaved,
-        focusNode: focusNode,
-        validator: validator,
+        key: widget.keyState,
+        keyboardType: widget.type,
+        obscureText: widget.obscure == _isHidden,
+        onChanged: widget.onChanged,
+        onSaved: widget.onSaved,
+        focusNode: widget.focusNode,
+        validator: widget.validator,
         decoration: InputDecoration(
-          suffixIcon: isSuffixExsist
-              ? StatefulBuilder(builder: (context, setState) {
-                  return IconButton(
-                    color: AppColors.border,
-                    icon: Icon(
-                      _isHidden ? Icons.visibility : Icons.visibility_off,
-                    ),
-                    onPressed: () {
-                      setState(() => _isHidden = !_isHidden);
-                    },
-                  );
-                })
+          suffixIcon: widget.isSuffixExsist
+              ? IconButton(
+                  color: AppColors.border,
+                  icon: Icon(
+                    _isHidden ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() => _isHidden = !_isHidden);
+                  },
+                )
               : const SizedBox(),
           errorStyle: Styles.headline1.copyWith(color: AppColors.errorColor),
           focusColor: Colors.black,
@@ -72,7 +75,7 @@ class AppTextField extends StatelessWidget {
           errorBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
               borderSide: BorderSide(color: AppColors.errorColor)),
-          hintText: text,
+          hintText: widget.text,
           hintStyle: const TextStyle(color: AppColors.textMain, fontSize: 12),
         ),
       ),
