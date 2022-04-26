@@ -117,10 +117,10 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
               loginFieldKey.currentState!.validate() != true) {
             loginFocusNode.requestFocus();
           }
-          // if (passwordFieldKey.currentState != null &&
-          //     passwordFieldKey.currentState!.validate() != true) {
-          //   passwordFocusNode.requestFocus();
-          // }
+          if (passwordFieldKey.currentState != null &&
+              passwordFieldKey.currentState!.validate() != true) {
+            passwordFocusNode.requestFocus();
+          }
           _updateData();
         }
       },

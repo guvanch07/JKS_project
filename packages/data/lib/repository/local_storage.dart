@@ -26,7 +26,7 @@ class LocalStorageRepository implements ILocalStorageRepo, BaseRepository {
 
   @override
   Future saveToken(String newToken) async {
-    String? _token;
+    String? _token; //! it will be also onRequest
     log("new token $newToken");
     if (_token != newToken) {
       _token = newToken;

@@ -49,8 +49,8 @@ class BuildLoginPage extends StatelessWidget {
               keyState: bloc.passwordFieldKey,
               onSaved: (value) => bloc.onSave[_login] = value ?? "",
               obscure: true,
-              // validator: (value) => errorMapper.mapErrorToMessage(
-              //     context, screenData.exception?.passwordError),
+              validator: (value) => errorMapper.mapErrorToMessage(
+                  context, screenData.exception?.passwordError),
               onChanged: bloc.setPassword,
               text: _password,
             ),
