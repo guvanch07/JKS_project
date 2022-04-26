@@ -16,9 +16,7 @@ class _AnalyticsEvent implements AnalyticsEvent {
     final characters = event.toLowerCase().split('');
 
     for (int i = 0; i < characters.length; i++) {
-      if (characters[i] == '-') {
-        characters[i] = '_';
-      }
+      characters[i].replaceAll("-", "_");
     }
 
     return characters.join();
