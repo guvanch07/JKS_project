@@ -1,4 +1,5 @@
-import 'package:domain/core/token_helper/token_helper.dart';
+import 'dart:convert';
+
 import 'package:domain/model/auth_response_cache.dart';
 import 'package:domain/model/job.dart';
 import 'package:domain/model/login_parms.dart';
@@ -20,8 +21,12 @@ class LoginUseCase implements UseCaseParams<LoginParms, Future<void>> {
 
   @override
   Future<void> call(LoginParms params) async {
-    final String token = TokenHelperCore.getAuthToken(
-        login: params.login, password: params.password);
+    final String token = 'Basic ' +
+        base64.encode(
+          utf8.encode(
+            (params.login ?? '') + ':' + (params.password ?? ''),
+          ),
+        );
 
     await _localStorageRepository.setToken(token);
 

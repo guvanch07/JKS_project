@@ -18,7 +18,7 @@ Dio dioBuilder(
   );
 
   final dio = Dio(options);
-  dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+  dio.interceptors.addAll(listOfInterseptors);
 
   return dio;
 }

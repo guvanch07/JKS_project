@@ -3,12 +3,10 @@ import 'package:data/dio/dio_builder.dart';
 import 'package:data/dio/token_interceptor.dart';
 import 'package:data/repository/local_storage.dart';
 import 'package:data/repository/network_repository.dart';
-import 'package:data/repository/post_network_repo.dart';
 import 'package:data/service/api_service.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/repository/local_base_repo.dart';
 import 'package:domain/repository/network_repository.dart';
-import 'package:domain/repository/post_network_repo.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,13 +21,13 @@ Future<void> initDataModule() async {
     await SharedPreferences.getInstance(),
   );
 
-  // //! post.................
-  sl.registerSingleton<IPostNetworkRepository>(
-    PostNetworkRepository(
-      sl.get<ApiService>(),
-      sl.get<CancelToken>(),
-    ),
-  );
+  // // //! post.................
+  // sl.registerSingleton<IPostNetworkRepository>(
+  //   PostNetworkRepository(
+  //     sl.get<ApiService>(),
+  //     sl.get<CancelToken>(),
+  //   ),
+  // );
 
   sl.registerSingleton<ILocalStorageRepo>(
     LocalStorageRepository(
