@@ -23,7 +23,7 @@ Future<void> initDataModule() async {
     await SharedPreferences.getInstance(),
   );
 
-  //! post.................
+  // //! post.................
   sl.registerSingleton<IPostNetworkRepository>(
     PostNetworkRepository(
       sl.get<ApiService>(),

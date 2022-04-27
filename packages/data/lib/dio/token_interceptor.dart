@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:domain/repository/local_base_repo.dart';
 
@@ -29,14 +31,7 @@ class TokenManager extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     if (response.statusCode == 200) {
-      var data = Map<String, dynamic>.from(response.data);
-
-      if (data["token"] != null) {
-        //!save token
-        _localStorageRepository.saveToken(data.values.toString());
-      } else if (response.statusCode == 401) {
-        _localStorageRepository.deleteToken();
-      }
+      log('sucsess');
     }
     super.onResponse(response, handler);
   }

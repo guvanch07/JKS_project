@@ -33,7 +33,9 @@ class LoginValidationUseCase
           "password.${failedPasswordValidator.runtimeType.toString()}";
     }
 
-    if (failedLoginValidator == null && failedPasswordValidator == null) {
+    if (failedLoginValidator == null
+        //&& failedPasswordValidator == null
+        ) {
       return Future.value(true);
     } else {
       return Future.error(authException);

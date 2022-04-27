@@ -1,5 +1,5 @@
-import 'package:domain/validator/regexp_valid.dart';
 import 'package:domain/validator/base_validator.dart';
+import 'package:domain/validator/regexp_valid.dart';
 
 import 'length_valid.dart';
 import 'required_valid.dart';
