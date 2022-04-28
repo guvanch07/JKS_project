@@ -1,17 +1,15 @@
-import 'package:domain/validator/regexp_valid.dart';
-import 'package:domain/validator/base_validator.dart';
+import 'package:domain/validator/min_length_validator.dart';
+import 'package:domain/validator/required_field_validator.dart';
+import 'package:domain/validator/validator.dart';
 
-import 'length_valid.dart';
-import 'required_valid.dart';
-
-class LoginValidation {
-  final List<BaseValidator> loginValidators = [
-    RequiredFieldImpl(),
-    LengthImpl(6),
+class LoginStepValidationSchema {
+  final List<Validator> loginValidators = [
+    RequiredFieldValidator(),
+    MinLengthValidator(6),
   ];
 
-  final List<BaseValidator> passwordValidators = [
-    RequiredFieldImpl(),
-    RegExpImpl('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*_)[a-zA-Z0-9_]+\$'),
+  final List<Validator> passwordValidators = [
+    RequiredFieldValidator(),
+    //RegExpValidator('^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*_)[a-zA-Z0-9_]+\$'),
   ];
 }

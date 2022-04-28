@@ -25,6 +25,7 @@
 **/last_build_id
 **/filecache
 **/build
+**/mocks.dart
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
@@ -49,6 +50,17 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/ios/Podfile.lock
+/ios/Runner.xcworkspace
+/ios/Runner.xcodeproj
 packages/presentation/pubspec.lock
 packages/data/pubspec.lock
 packages/domain/pubspec.lock
+
+web/
+windows/
+
+packages/domain/test/domain_repo_test.mocks.dart
+packages/presentation/test/login_test.mocks.dart
+packages/data/test/networking_repository_mocks.mocks.dart
+packages/data/core/api_key.dart

@@ -1,15 +1,16 @@
-import 'package:presentation/base/base_bloc.dart';
-import 'package:domain/core/extension/title_exctention.dart';
 import 'package:domain/usecase/home_usecase.dart';
-import 'package:presentation/base/impl_base_bloc.dart';
+import 'package:domain/core/extension/string_extention.dart';
+import 'package:presentation/base/bloc_base.dart';
+import 'package:presentation/base/bloc_base_impl.dart';
 import 'package:presentation/screen/home/bloc/home_data.dart';
 
 abstract class HomeBloc extends BaseBloc {
-  void initJobs(TitleOfTabBar title);
   factory HomeBloc(HomeUseCase useCase) => _HomeBloc(useCase);
+
+  void getJobsByView(String? view);
 }
 
-class _HomeBloc extends BlocImpl implements HomeBloc {
+class _HomeBloc extends BaseBlocImpl implements HomeBloc {
   final HomeUseCase _homeUseCase;
   final _screenData = HomeData.init();
 
@@ -18,19 +19,20 @@ class _HomeBloc extends BlocImpl implements HomeBloc {
   @override
   void initState() {
     super.initState();
-    updateData();
+    _updateData();
   }
 
-  void updateData() {
+  @override
+  void getJobsByView(String? view) async {
+    _screenData.jobs = await _homeUseCase(view.orEmpty);
+    _updateData();
+  }
+
+  void _updateData() {
     super.handleData(
       isLoading: isLoading,
       data: _screenData.copy(),
     );
-  }
-
-  @override
-  void initJobs(TitleOfTabBar title) {
-    _screenData.jobs = _homeUseCase(title);
   }
 
   @override

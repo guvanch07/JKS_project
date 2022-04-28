@@ -1,4 +1,4 @@
-import 'package:domain/model/job.dart';
+import 'package:domain/model/job/job_model.dart';
 
 class HomeData {
   List<Job>? jobs;

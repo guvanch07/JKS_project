@@ -1,4 +1,4 @@
-import 'package:domain/model/api_exception.dart';
+import 'package:domain/model/auth/authorization_exception.dart';
 
 class LoginData {
   String loginInput = '';
