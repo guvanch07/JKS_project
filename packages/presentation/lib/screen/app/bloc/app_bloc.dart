@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/base/bloc_base.dart';
 import 'package:presentation/base/bloc_base_impl.dart';
-
-import 'package:presentation/navigator/base_page.dart';
 import 'package:presentation/screen/app/bloc/app_data.dart';
-import 'package:presentation/screen/spalsh/main_spalsh.dart';
+import 'package:presentation/base/bloc_base.dart';
+import 'package:presentation/navigator/base_page.dart';
+import 'package:presentation/screen/splash/splash.dart';
 
 abstract class AppBloc extends BaseBloc {
   factory AppBloc() => _AppBloc();
@@ -12,7 +11,7 @@ abstract class AppBloc extends BaseBloc {
   void handleRemoveRouteSettings(RouteSettings settings);
 }
 
-class _AppBloc extends BlocImpl implements AppBloc {
+class _AppBloc extends BaseBlocImpl implements AppBloc {
   final _appData = AppData.init();
 
   @override
@@ -103,7 +102,9 @@ class _AppBloc extends BlocImpl implements AppBloc {
 
   BasePage _currentPage() {
     if (_appData.pages.isEmpty) {
-      _appData.pages.add(SplashScreen.page());
+      _appData.pages.add(
+        SplashScreen.page(),
+      );
     }
     return _appData.pages.last;
   }

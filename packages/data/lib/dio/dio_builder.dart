@@ -1,15 +1,12 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 
 Dio dioBuilder(
-  String baseUrl, {
+  String baseUrl,
+  List<Interceptor> interceptors, {
   Map<String, dynamic>? headers,
 }) {
   const timeout = 60000;
   final headersMap = headers ?? <String, dynamic>{};
-  headersMap[HttpHeaders.userAgentHeader] =
-      '${Platform.operatingSystem}-APPLICATION'.toUpperCase();
 
   final options = BaseOptions(
     baseUrl: baseUrl,
@@ -21,7 +18,8 @@ Dio dioBuilder(
   );
 
   final dio = Dio(options);
-  dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+
+  dio.interceptors.addAll(interceptors);
 
   return dio;
 }

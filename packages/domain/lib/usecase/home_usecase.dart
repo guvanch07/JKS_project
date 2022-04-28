@@ -1,41 +1,43 @@
-import 'package:domain/model/auth_response_cache.dart';
-import 'package:domain/model/job.dart';
+import 'package:collection/collection.dart';
+import 'package:domain/model/auth/authorization_response_cache.dart';
+import 'package:domain/model/job/job_model.dart';
 import 'package:domain/repository/network_repository.dart';
 import 'package:domain/usecase/base_usecase.dart';
-import 'package:collection/collection.dart';
 
 class HomeUseCase implements UseCaseParams<String, Future<List<Job>?>> {
-  final INetworkRepository _remoteNetworkingRepository;
+  final INetworkRepository _repository;
   final AuthorizationResponseCache _cache;
 
-  HomeUseCase(
-    this._remoteNetworkingRepository,
-    this._cache,
-  );
+  HomeUseCase(this._repository, this._cache);
 
   @override
   Future<List<Job>?> call(String viewName) async {
     if (viewName == "all") {
-      final jobPoint = await _remoteNetworkingRepository.login().then((value) {
-        final jobs = value?.jobData?.map((data) => Job.fromJson(data)).toList();
-        _cache.jobs = jobs;
-        return jobs;
-      });
-      return _cache.jobs ?? jobPoint; //!returning
+      return _cache.jobs ??
+          await _repository.login().then(
+            (response) {
+              final jobs =
+                  response?.jobData?.map((e) => Job.fromJson(e)).toList();
+              _cache.jobs = jobs;
+              return jobs;
+            },
+          );
     } else {
-      final view =
-          _cache.views?.firstWhereOrNull((element) => element.name == viewName);
+      final view = _cache.views?.firstWhereOrNull(
+        (view) => view.name == viewName,
+      );
 
       return view != null
-          ? await _remoteNetworkingRepository.getJobs(view.url ?? "").then(
-              (value) =>
-                  value?.jobData?.map((data) => Job.fromJson(data)).toList())
+          ? await _repository.getJobsByView(view.url ?? '').then(
+                (response) =>
+                    response?.jobData?.map((e) => Job.fromJson(e)).toList(),
+              )
           : [];
     }
   }
 
   @override
   void dispose() {
-    _remoteNetworkingRepository.dispose();
+    _repository.dispose();
   }
 }

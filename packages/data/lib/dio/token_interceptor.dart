@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:domain/repository/local_base_repo.dart';
+import 'package:domain/repository/local_storage_repository.dart';
 
 class TokenInterceptor extends Interceptor {
-  final ILocalStorageRepo _localStorageRepository;
+  final ILocalStorageRepository _localStorageRepository;
 
   TokenInterceptor(this._localStorageRepository);
 
@@ -12,6 +12,7 @@ class TokenInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) async {
     options.headers['Authorization'] = await _localStorageRepository.getToken();
+
     return super.onRequest(options, handler);
   }
 
@@ -23,13 +24,7 @@ class TokenInterceptor extends Interceptor {
     if (err.response?.statusCode == 401) {
       await _localStorageRepository.deleteToken();
     }
+
     return super.onError(err, handler);
-  }
-
-  @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
-    //TODO impl response
-
-    super.onResponse(response, handler);
   }
 }

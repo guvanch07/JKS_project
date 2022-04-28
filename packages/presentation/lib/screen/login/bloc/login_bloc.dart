@@ -1,12 +1,12 @@
-import 'package:domain/model/api_exception.dart';
+import 'package:domain/model/auth/authorization_exception.dart';
 import 'package:domain/usecase/login_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/base/bloc_base.dart';
 import 'package:presentation/base/bloc_base_impl.dart';
-
+import 'package:presentation/mapper/login_view_mapper.dart';
 import 'package:presentation/screen/login/bloc/login_data.dart';
-import 'package:domain/usecase/validation_usecase.dart';
-import 'package:presentation/screen/mapper/login_view_mapper.dart';
+import 'package:domain/usecase/login_validation_usecase.dart';
+import 'package:presentation/screen/main/main.dart';
 
 abstract class LoginBloc extends BaseBloc {
   GlobalKey<FormFieldState> get loginFieldKey;
@@ -17,10 +17,8 @@ abstract class LoginBloc extends BaseBloc {
 
   FocusNode get passwordFocusNode;
 
-  Map<String, String> get onSave;
-
   factory LoginBloc(
-    LoginStepUseCase loginUseCase,
+    LoginUseCase loginUseCase,
     LoginValidationUseCase loginValidationUseCase,
     LoginViewMapper loginViewMapper,
   ) =>
@@ -39,10 +37,7 @@ abstract class LoginBloc extends BaseBloc {
   void setPassword(String password);
 }
 
-class _LoginBloc extends BlocImpl implements LoginBloc {
-  @override
-  Map<String, String> get onSave => <String, String>{};
-
+class _LoginBloc extends BaseBlocImpl implements LoginBloc {
   @override
   final GlobalKey<FormFieldState> loginFieldKey = GlobalKey<FormFieldState>();
 
@@ -58,7 +53,7 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
 
   final _screenData = LoginData.init();
 
-  final LoginStepUseCase _loginUseCase;
+  final LoginUseCase _loginUseCase;
   final LoginValidationUseCase _loginValidationUseCase;
   final LoginViewMapper _loginViewMapper;
 
@@ -83,9 +78,9 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
 
   @override
   void navigateToHomePage() {
-    // appNavigator.popAndPush(
-    //   HomeTabBar.page(),
-    //);
+    appNavigator.popAndPush(
+      MainPage.page(),
+    );
   }
 
   @override
@@ -115,11 +110,11 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
         if (e is AuthException) {
           _screenData.exception = e;
           if (loginFieldKey.currentState != null &&
-              loginFieldKey.currentState!.validate() != true) {
+              !loginFieldKey.currentState!.validate()) {
             loginFocusNode.requestFocus();
           }
           if (passwordFieldKey.currentState != null &&
-              passwordFieldKey.currentState!.validate() != true) {
+              !passwordFieldKey.currentState!.validate()) {
             passwordFocusNode.requestFocus();
           }
           _updateData();

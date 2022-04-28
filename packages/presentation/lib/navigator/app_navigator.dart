@@ -1,5 +1,4 @@
-import 'package:presentation/navigator/base_argumaents.dart';
-
+import 'base_arguments.dart';
 import 'base_page.dart';
 
 abstract class AppNavigator {

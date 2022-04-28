@@ -1,14 +1,11 @@
-
 {
   "requiredField": "Field is required",
   "loginMinLength": "Minimal length is 6 characters",
   "invalidLogin": "Invalid login",
   "passwordNotMatch": "Password not match the requirements",
   "invalidPassword": "Invalid password",
-  "appTitle": "JenkisTest",
 
   "buttonLogin": "LOGIN",
   "labelLogin": "Login",
   "labelPassword": "Password"
-  
 }

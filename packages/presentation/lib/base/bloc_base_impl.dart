@@ -5,7 +5,7 @@ import 'package:presentation/base/bloc_data.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/navigator/app_navigator.dart';
 
-class BlocImpl<D> implements BaseBloc<D> {
+class BaseBlocImpl<D> implements BaseBloc<D> {
   final appNavigator = GetIt.I.get<AppNavigator>();
 
   final _blocData = BlocData.init();

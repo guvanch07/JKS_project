@@ -1,12 +1,11 @@
 import 'package:data/core/api_key.dart';
-import 'package:data/core/error_const.dart';
+import 'package:data/repository/api_base_repository.dart';
 import 'package:data/service/api_service.dart';
 import 'package:dio/dio.dart';
-import 'package:domain/model/api_auth_response.dart';
-import 'package:domain/repository/network_repository.dart';
-import 'package:domain/model/api_exception.dart';
 
-import 'api_base_repository.dart';
+import 'package:domain/model/auth/api_authorization_response.dart';
+import 'package:domain/repository/network_repository.dart';
+import 'package:domain/model/auth/authorization_exception.dart';
 
 class NetworkRepository extends ApiBaseRepositoryImpl
     implements INetworkRepository {
@@ -19,23 +18,43 @@ class NetworkRepository extends ApiBaseRepositoryImpl
   ) : super(cancelToken: _cancelToken);
 
   @override
-  ApiAuthorizationResponse? getdata;
+  Future<ApiAuthorizationResponse?> login() {
+    return _service
+        .get(
+          path: ApiHelperCore.pathToken,
+          cancelToken: _cancelToken,
+        )
+        .then(
+          (value) => Future.value(
+            ApiAuthorizationResponse.fromJson(value.data),
+          ),
+        )
+        .onError(
+      (error, stackTrace) {
+        if (error is DioError && error.response?.statusCode == 401) {
+          return Future.error(
+            AuthException(
+              "login invalid",
+              "password invalid",
+            ),
+          );
+        } else {
+          return Future.error(error!);
+        }
+      },
+    );
+  }
 
   @override
-  Future<ApiAuthorizationResponse?> getJobs() => _service
-          .get(
-        path: ApiHelperCore.pathUrl,
-        cancelToken: _cancelToken,
-      )
-          .then((value) {
-        getdata = ApiAuthorizationResponse.fromJson(value.data);
-        return Future.value(getdata);
-      }).onError((error, stackTrace) {
-        if (error is DioError && error.response?.statusCode == 401) {
-          return Future.error(AuthException(
-              ErrorTextField.loginInvalid, ErrorTextField.passwordInvalid));
-        } else {
-          return Future.error(error ?? "error");
-        }
-      });
+  Future<ApiAuthorizationResponse?> getJobsByView(String url) {
+    return _service
+        .get(
+          path: url + ApiHelperCore.pathToken,
+        )
+        .then(
+          (response) => Future.value(
+            ApiAuthorizationResponse.fromJson(response.data),
+          ),
+        );
+  }
 }

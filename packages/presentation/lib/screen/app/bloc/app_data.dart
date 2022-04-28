@@ -1,5 +1,5 @@
 import 'package:presentation/navigator/base_page.dart';
-import 'package:presentation/screen/spalsh/main_spalsh.dart';
+import 'package:presentation/screen/splash/splash.dart';
 
 class AppData {
   final List<BasePage> pages;
