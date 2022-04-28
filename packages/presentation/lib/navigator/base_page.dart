@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:presentation/navigator/base_argumaents.dart';
+import 'package:presentation/navigator/base_arguments.dart';
 
 class BasePage<T extends BaseArguments> extends Page {
   const BasePage({
@@ -15,10 +15,10 @@ class BasePage<T extends BaseArguments> extends Page {
 
   @override
   Route createRoute(BuildContext context) => _AppRoute(
-        builder: builder,
-        showSlideAnim: showSlideAnim,
-        settings: this,
-      );
+    builder: builder,
+    showSlideAnim: showSlideAnim,
+    settings: this,
+  );
 }
 
 class _AppRoute extends MaterialPageRoute {
@@ -40,11 +40,11 @@ class _AppRoute extends MaterialPageRoute {
       );
     }
     return Theme.of(context).pageTransitionsTheme.buildTransitions(
-          this,
-          context,
-          animation,
-          secondaryAnimation,
-          child,
-        );
+      this,
+      context,
+      animation,
+      secondaryAnimation,
+      child,
+    );
   }
 }

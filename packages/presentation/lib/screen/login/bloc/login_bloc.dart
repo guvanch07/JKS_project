@@ -1,12 +1,12 @@
-import 'package:domain/model/api_exception.dart';
+import 'package:domain/model/auth/authorization_exception.dart';
 import 'package:domain/usecase/login_usecase.dart';
-import 'package:domain/usecase/validation_usecase.dart';
 import 'package:flutter/material.dart';
-import 'package:presentation/base/base_bloc.dart';
-import 'package:presentation/base/impl_base_bloc.dart';
-import 'package:presentation/screen/home/main_tab_bar.dart';
+import 'package:presentation/base/bloc_base.dart';
+import 'package:presentation/base/bloc_base_impl.dart';
+import 'package:presentation/mapper/login_view_mapper.dart';
 import 'package:presentation/screen/login/bloc/login_data.dart';
-import 'package:presentation/screen/mapper/login_view_mapper.dart';
+import 'package:domain/usecase/login_validation_usecase.dart';
+import 'package:presentation/screen/main/main.dart';
 
 abstract class LoginBloc extends BaseBloc {
   GlobalKey<FormFieldState> get loginFieldKey;
@@ -16,8 +16,6 @@ abstract class LoginBloc extends BaseBloc {
   FocusNode get loginFocusNode;
 
   FocusNode get passwordFocusNode;
-
-  Map<String, String> get onSave;
 
   factory LoginBloc(
     LoginUseCase loginUseCase,
@@ -39,22 +37,7 @@ abstract class LoginBloc extends BaseBloc {
   void setPassword(String password);
 }
 
-class _LoginBloc extends BlocImpl implements LoginBloc {
-  final LoginUseCase _loginUseCase;
-  final LoginValidationUseCase _loginValidationUseCase;
-  final LoginViewMapper _loginViewMapper;
-
-  _LoginBloc(
-    this._loginUseCase,
-    this._loginValidationUseCase,
-    this._loginViewMapper,
-  );
-
-  final _screenData = LoginData.init();
-
-  @override
-  Map<String, String> get onSave => <String, String>{};
-
+class _LoginBloc extends BaseBlocImpl implements LoginBloc {
   @override
   final GlobalKey<FormFieldState> loginFieldKey = GlobalKey<FormFieldState>();
 
@@ -67,6 +50,18 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
 
   @override
   final FocusNode passwordFocusNode = FocusNode();
+
+  final _screenData = LoginData.init();
+
+  final LoginUseCase _loginUseCase;
+  final LoginValidationUseCase _loginValidationUseCase;
+  final LoginViewMapper _loginViewMapper;
+
+  _LoginBloc(
+    this._loginUseCase,
+    this._loginValidationUseCase,
+    this._loginViewMapper,
+  );
 
   @override
   void initState() {
@@ -83,8 +78,8 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
 
   @override
   void navigateToHomePage() {
-    appNavigator.push(
-      MainTab.page(),
+    appNavigator.popAndPush(
+      MainPage.page(),
     );
   }
 
@@ -108,17 +103,18 @@ class _LoginBloc extends BlocImpl implements LoginBloc {
         );
 
         _updateData();
+
         navigateToHomePage();
       },
       errorAction: (e) {
         if (e is AuthException) {
           _screenData.exception = e;
           if (loginFieldKey.currentState != null &&
-              loginFieldKey.currentState!.validate() != true) {
+              !loginFieldKey.currentState!.validate()) {
             loginFocusNode.requestFocus();
           }
           if (passwordFieldKey.currentState != null &&
-              passwordFieldKey.currentState!.validate() != true) {
+              !passwordFieldKey.currentState!.validate()) {
             passwordFocusNode.requestFocus();
           }
           _updateData();

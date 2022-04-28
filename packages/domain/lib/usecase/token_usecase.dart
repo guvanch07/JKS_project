@@ -1,9 +1,8 @@
-import 'package:domain/repository/local_base_repo.dart';
-
-import 'base_usecase.dart';
+import 'package:domain/repository/local_storage_repository.dart';
+import 'package:domain/usecase/base_usecase.dart';
 
 class TokenUseCase implements UseCase<Future<bool>> {
-  final ILocalStorageRepo _repository;
+  final ILocalStorageRepository _repository;
 
   TokenUseCase(this._repository);
 
@@ -13,9 +12,9 @@ class TokenUseCase implements UseCase<Future<bool>> {
       const Duration(seconds: 3),
     );
 
-    final isToken = await _repository.getToken() != null;
+    final hasToken = await _repository.getToken() != null;
 
-    return Future.value(isToken);
+    return Future.value(hasToken);
   }
 
   @override

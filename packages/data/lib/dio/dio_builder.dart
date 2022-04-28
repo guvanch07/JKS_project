@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 Dio dioBuilder(
   String baseUrl,
-  List<Interceptor> listOfInterseptors, {
+  List<Interceptor> interceptors, {
   Map<String, dynamic>? headers,
 }) {
   const timeout = 60000;
@@ -18,7 +18,8 @@ Dio dioBuilder(
   );
 
   final dio = Dio(options);
-  dio.interceptors.addAll(listOfInterseptors);
+
+  dio.interceptors.addAll(interceptors);
 
   return dio;
 }
