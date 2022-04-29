@@ -4,8 +4,8 @@ abstract class AppColors {
   static const accentOrange = Color(0xffFF9D00);
   static const textMain = Color(0xff4C4C4C);
   static const card = Colors.white;
-  static const mainbgc = Color(0xFFF5F5F5);
-  static const accentGreen = Color(0xff87C009);
+  static const mainbgc = Color.fromRGBO(245, 245, 245, 1);
+  static const accentGreen = Color.fromRGBO(158, 220, 21, 1);
   static const iconColor = Color(0xff4C4C4C);
   static const border = Color(0xffD3D2D2);
   static const errorColor = Color(0xffFF4B4B);
@@ -17,7 +17,6 @@ abstract class _LightColors {
   static const card = AppColors.card;
 }
 
-/// Reference to the application theme.
 abstract class AppTheme {
   static const accentColor = AppColors.accentOrange;
   static final visualDensity = VisualDensity.adaptivePlatformDensity;
