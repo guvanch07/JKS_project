@@ -23,7 +23,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
   void initState() {
     super.initState();
     bloc.initState();
-    bloc.getJobsByView(widget.view);
+    bloc.getJobs(widget.view);
   }
 
   @override
@@ -46,7 +46,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
             } else {
               // ignore: prefer_is_empty
               if (screenData.jobs?.length == 0) {
-                return _BuildWhenEmpty(appLocalizations: appLocalizations);
+                return BuildWhenEmpty(appLocalizations: appLocalizations);
               } else {
                 return _BuildJobs(
                   colorMapper: colorMapper,
@@ -97,8 +97,8 @@ class _BuildJobs extends StatelessWidget {
       );
 }
 
-class _BuildWhenEmpty extends StatelessWidget {
-  const _BuildWhenEmpty({
+class BuildWhenEmpty extends StatelessWidget {
+  const BuildWhenEmpty({
     Key? key,
     required this.appLocalizations,
   }) : super(key: key);

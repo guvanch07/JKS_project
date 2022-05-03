@@ -3,6 +3,7 @@ import 'package:domain/usecase/get_primary_view_usecase.dart';
 import 'package:domain/usecase/home_usecase.dart';
 import 'package:domain/usecase/token_usecase.dart';
 import 'package:domain/usecase/login_usecase.dart';
+import 'package:domain/usecase/get_build_usecase.dart';
 import 'package:domain/usecase/login_validation_usecase.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:get_it/get_it.dart';
@@ -15,6 +16,7 @@ import 'package:presentation/mapper/login_view_mapper.dart';
 import 'package:presentation/mapper/main_view_mapper.dart';
 import 'package:presentation/navigator/app_navigator.dart';
 import 'package:presentation/screen/app/bloc/app_bloc.dart';
+import 'package:presentation/screen/build_screen/bloc/bloc_data.dart';
 import 'package:presentation/screen/home/bloc/home_bloc.dart';
 import 'package:presentation/screen/login/bloc/login_bloc.dart';
 import 'package:presentation/screen/main/bloc/main_bloc.dart';
@@ -72,6 +74,12 @@ Future<void> injectPresentationModule() async {
   sl.registerFactory(
     () => HomeBloc(
       sl.get<HomeUseCase>(),
+    ),
+  );
+//! build bloc
+  sl.registerFactory(
+    () => BuildBloc(
+      sl.get<BuildUseCase>(),
     ),
   );
 

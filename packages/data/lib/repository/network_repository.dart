@@ -4,11 +4,11 @@ import 'package:data/service/api_service.dart';
 import 'package:dio/dio.dart';
 
 import 'package:domain/model/auth/api_authorization_response.dart';
-import 'package:domain/repository/network_repository.dart';
+import 'package:domain/repository/login_network_repository.dart';
 import 'package:domain/model/auth/authorization_exception.dart';
 
 class NetworkRepository extends ApiBaseRepositoryImpl
-    implements INetworkRepository {
+    implements ILoginNetworkRepository {
   final ApiService _service;
   final CancelToken _cancelToken;
 
@@ -46,7 +46,7 @@ class NetworkRepository extends ApiBaseRepositoryImpl
   }
 
   @override
-  Future<ApiAuthorizationResponse?> getJobsByView(String url) {
+  Future<ApiAuthorizationResponse?> getJobs(String url) {
     return _service
         .get(
           path: url + ApiHelperCore.pathToken,

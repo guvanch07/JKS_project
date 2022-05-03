@@ -1,27 +1,90 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get_it/get_it.dart';
+import 'package:presentation/base/bloc_state.dart';
+import 'package:presentation/base/stream_platform_stack_content.dart';
 import 'package:presentation/core/helpers/primary_button.dart';
 import 'package:presentation/core/theme/style_text.dart';
 import 'package:presentation/core/theme/theme_app.dart';
 import 'package:presentation/navigator/app_navigator.dart';
 import 'package:presentation/navigator/base_arguments.dart';
 import 'package:presentation/navigator/base_page.dart';
+import 'package:presentation/screen/build_screen/bloc/bloc.dart';
+import 'package:presentation/screen/build_screen/bloc/bloc_data.dart';
+import 'package:presentation/screen/home/home.dart';
 import 'package:presentation/screen/main/main.dart';
 import 'package:presentation/widget/app_text_form_field.dart';
-import 'package:get_it/get_it.dart';
 
-final appNavigator = GetIt.I.get<AppNavigator>();
+class BuildPage extends StatefulWidget {
+  final String? title;
 
-class BuildScreen extends StatelessWidget {
   static const routeName = '/BuildPage';
 
   static BasePage page({BaseArguments? arguments, String? tittle}) => BasePage(
         key: const ValueKey(routeName),
         name: routeName,
         arguments: arguments,
-        builder: (context) => BuildScreen(tittle: tittle),
+        builder: (context) => BuildPage(title: tittle),
       );
 
-  const BuildScreen({
+  const BuildPage({
+    Key? key,
+    this.title,
+    this.jobName,
+  }) : super(key: key);
+
+  final String? jobName;
+
+  @override
+  State<BuildPage> createState() => _BuildPageState();
+}
+
+class _BuildPageState extends BlocState<BuildPage, BuildBloc> {
+  @override
+  void initState() {
+    super.initState();
+    bloc.initState();
+    bloc.getProperty(widget.jobName);
+  }
+
+  @override
+  void dispose() {
+    bloc.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    appLocalizations = AppLocalizations.of(context)!;
+    return Scaffold(
+      body: StreamPlatformStackContent(
+        dataStream: bloc.dataStream,
+        children: (blocData) {
+          final screenData = blocData.data;
+          if (screenData is BuildData) {
+            if (screenData.property == null) {
+              return const CircularProgressIndicator.adaptive();
+            } else {
+              // ignore: prefer_is_empty
+              if (screenData.property?.length == 0) {
+                return BuildWhenEmpty(appLocalizations: appLocalizations);
+              } else {
+                return _BuildScreen(
+                  tittle: widget.title,
+                );
+              }
+            }
+          }
+        },
+      ),
+    );
+  }
+}
+
+final appNavigator = GetIt.I.get<AppNavigator>();
+
+class _BuildScreen extends StatelessWidget {
+  const _BuildScreen({
     Key? key,
     this.tittle,
   }) : super(key: key);
