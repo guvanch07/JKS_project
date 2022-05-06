@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
-import 'package:domain/repository/local_storage_repository.dart';
+import 'package:domain/repository/cookie_repository.dart';
+import 'package:domain/core/extension/string_extention.dart';
 
 class CookieInterceptor extends Interceptor {
-  final ILocalStorageRepository _localStorageRepository;
+  final ICookieRepository _localStorageRepository;
 
   CookieInterceptor(this._localStorageRepository);
 
@@ -11,7 +14,8 @@ class CookieInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    options.headers['Authorization'] = await _localStorageRepository.getToken();
+    options.headers[HttpHeaders.cookieHeader] =
+        await _localStorageRepository.getCookie();
 
     return super.onRequest(options, handler);
   }
@@ -22,7 +26,7 @@ class CookieInterceptor extends Interceptor {
     ErrorInterceptorHandler handler,
   ) async {
     if (err.response?.statusCode == 401) {
-      await _localStorageRepository.deleteToken();
+      await _localStorageRepository.deleteCookie();
     }
 
     return super.onError(err, handler);
@@ -31,10 +35,9 @@ class CookieInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
     if (response.statusCode == 200) {
-      if (response.headers.map["set-cookie"] != null) {
-        //! save cookie
-        await _localStorageRepository.setToken("set-cookie");
-      }
+      final cookie = response.headers.map[HttpHeaders.setCookieHeader]?.first;
+
+      await _localStorageRepository.setCookie(cookie.orEmpty);
     }
     super.onResponse(response, handler);
   }

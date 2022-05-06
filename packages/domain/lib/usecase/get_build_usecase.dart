@@ -15,6 +15,7 @@ class BuildUseCase implements UseCaseParams<String, Future<List<Property>?>> {
         await _repository.getJobsProperty(name).then(
           (response) {
             final property = response?.jobProperty
+                //where((element)=> element.propertyClass == "hudson.model.ParametersDefinitionProperty")
                 ?.map((e) => Property.fromJson(e))
                 .toList();
 

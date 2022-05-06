@@ -1,12 +1,12 @@
 import 'package:data/core/api_key.dart';
 import 'package:data/dio/dio_builder.dart';
 import 'package:data/dio/token_interceptor.dart';
-import 'package:data/repository/local_storage_repository.dart';
+import 'package:data/repository/token_storage_repository.dart';
 import 'package:data/repository/network_repository.dart';
 import 'package:data/repository/property_repository.dart';
 import 'package:data/service/api_service.dart';
 import 'package:dio/dio.dart';
-import 'package:domain/repository/local_storage_repository.dart';
+import 'package:domain/repository/token_repository.dart';
 import 'package:domain/repository/login_network_repository.dart';
 import 'package:domain/repository/build_network_repository.dart';
 import 'package:get_it/get_it.dart';
@@ -23,15 +23,15 @@ Future<void> injectDataModule() async {
     await SharedPreferences.getInstance(),
   );
 
-  sl.registerSingleton<ILocalStorageRepository>(
-    LocalStorageRepository(
+  sl.registerSingleton<ITokenStorageRepository>(
+    TokenStorageRepository(
       sl.get<SharedPreferences>(),
     ),
   );
 
   sl.registerSingleton<TokenInterceptor>(
     TokenInterceptor(
-      sl.get<ILocalStorageRepository>(),
+      sl.get<ITokenStorageRepository>(),
     ),
   );
 

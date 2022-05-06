@@ -6,14 +6,15 @@ import 'package:presentation/base/stream_platform_stack_content.dart';
 import 'package:presentation/core/helpers/primary_button.dart';
 import 'package:presentation/core/theme/style_text.dart';
 import 'package:presentation/core/theme/theme_app.dart';
+import 'package:presentation/mapper/build_mapper/build_mapper.dart';
 import 'package:presentation/navigator/app_navigator.dart';
 import 'package:presentation/navigator/base_arguments.dart';
 import 'package:presentation/navigator/base_page.dart';
-import 'package:presentation/screen/build_screen/bloc/bloc.dart';
-import 'package:presentation/screen/build_screen/bloc/bloc_data.dart';
-import 'package:presentation/screen/home/home.dart';
+import 'package:presentation/screen/build_screen/bloc/bloc_build.dart';
+import 'package:presentation/screen/build_screen/bloc/bloc_build_data.dart';
 import 'package:presentation/screen/main/main.dart';
-import 'package:presentation/widget/app_text_form_field.dart';
+import 'package:presentation/widget/empty_screen.dart';
+import 'package:presentation/widget/text_fields/app_text_form_field.dart';
 
 class BuildPage extends StatefulWidget {
   final String? title;
@@ -30,10 +31,7 @@ class BuildPage extends StatefulWidget {
   const BuildPage({
     Key? key,
     this.title,
-    this.jobName,
   }) : super(key: key);
-
-  final String? jobName;
 
   @override
   State<BuildPage> createState() => _BuildPageState();
@@ -44,7 +42,7 @@ class _BuildPageState extends BlocState<BuildPage, BuildBloc> {
   void initState() {
     super.initState();
     bloc.initState();
-    bloc.getProperty(widget.jobName);
+    bloc.getProperty(widget.title);
   }
 
   @override
@@ -57,19 +55,32 @@ class _BuildPageState extends BlocState<BuildPage, BuildBloc> {
   Widget build(BuildContext context) {
     appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
+      backgroundColor: AppColors.mainbgc,
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () => appNavigator.popAndPush(MainPage.page()),
+            color: AppColors.textMain,
+            icon: const Icon(Icons.arrow_back_ios)),
+        elevation: 0,
+        title: Text(widget.title ?? "build", style: Styles.headline2),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+      ),
       body: StreamPlatformStackContent(
         dataStream: bloc.dataStream,
         children: (blocData) {
           final screenData = blocData.data;
           if (screenData is BuildData) {
             if (screenData.property == null) {
-              return const CircularProgressIndicator.adaptive();
+              return const Center(child: CircularProgressIndicator.adaptive());
             } else {
               // ignore: prefer_is_empty
               if (screenData.property?.length == 0) {
                 return BuildWhenEmpty(appLocalizations: appLocalizations);
               } else {
                 return _BuildScreen(
+                  appLocalizations: appLocalizations,
+                  blocData: screenData,
                   tittle: widget.title,
                 );
               }
@@ -82,87 +93,37 @@ class _BuildPageState extends BlocState<BuildPage, BuildBloc> {
 }
 
 final appNavigator = GetIt.I.get<AppNavigator>();
+final BuildMapper _mainViewMapper = GetIt.I.get<BuildMapper>();
 
 class _BuildScreen extends StatelessWidget {
   const _BuildScreen({
     Key? key,
     this.tittle,
+    required this.blocData,
+    this.appLocalizations,
   }) : super(key: key);
   final String? tittle;
+  final BuildData blocData;
+  final AppLocalizations? appLocalizations;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: AppColors.mainbgc,
-        appBar: AppBar(
-          leading: IconButton(
-              onPressed: () => appNavigator.popAndPush(MainPage.page()),
-              color: AppColors.textMain,
-              icon: const Icon(Icons.arrow_back_ios)),
-          elevation: 0,
-          title: Text(tittle ?? "build", style: Styles.headline2),
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-        ),
-        body: Column(
-          children: [
-            const BuildToogleButton(),
-            const Inputs(),
-            const Spacer(),
-            SafeArea(child: PrimaryButton(onTap: () {}, text: "Send"))
-          ],
-        ));
-  }
-}
-
-class BuildToogleButton extends StatefulWidget {
-  const BuildToogleButton({Key? key}) : super(key: key);
-
-  @override
-  State<BuildToogleButton> createState() => _BuildToogleButtonState();
-}
-
-class _BuildToogleButtonState extends State<BuildToogleButton> {
-  final List<bool> _selections = List.generate(2, (_) => false);
-
-  @override
-  Widget build(BuildContext context) {
+    final _callWidgetsFromMapper = _mainViewMapper.mapPropertyText(
+        blocData.property, blocData.onChangeValue);
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(bottom: 15.0, left: 15),
-          child: Text(
-            "Build Type",
-            style: Styles.headline1,
+        Expanded(
+            child: ListView.builder(
+                itemCount: _callWidgetsFromMapper.length,
+                itemBuilder: (context, index) {
+                  return _callWidgetsFromMapper[index];
+                })),
+        SafeArea(
+          child: PrimaryButton(
+            onTap: () {},
+            text: appLocalizations?.buttonLogin ?? "post",
           ),
-        ),
-        Center(
-          child: ToggleButtons(
-              borderColor: Colors.transparent,
-              borderRadius: BorderRadius.circular(5),
-              selectedColor: Colors.white,
-              disabledColor: AppColors.textMain,
-              disabledBorderColor: Colors.white,
-              fillColor: AppColors.accentGreen,
-              highlightColor: Colors.white,
-              borderWidth: 0,
-              onPressed: ((int index) {
-                setState(() {
-                  _selections[index] = !_selections[index];
-                });
-              }),
-              children: [
-                SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    //color: Colors.white,
-                    child: const Center(child: Text("1"))),
-                SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    //color: Colors.white,
-                    child: const Center(child: Text("2"))),
-              ],
-              isSelected: _selections),
         ),
       ],
     );
@@ -170,7 +131,11 @@ class _BuildToogleButtonState extends State<BuildToogleButton> {
 }
 
 class Inputs extends StatelessWidget {
-  const Inputs({Key? key}) : super(key: key);
+  const Inputs({
+    Key? key,
+    required this.buildData,
+  }) : super(key: key);
+  final BuildData buildData;
 
   @override
   Widget build(BuildContext context) {

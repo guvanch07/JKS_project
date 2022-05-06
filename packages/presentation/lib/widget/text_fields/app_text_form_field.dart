@@ -1,3 +1,4 @@
+import 'package:domain/core/extension/string_extention.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/core/theme/style_text.dart';
 import 'package:presentation/core/theme/theme_app.dart';
@@ -16,22 +17,37 @@ class AppTextField extends StatefulWidget {
     this.keyState,
     this.focusNode,
     required this.isSuffixExsist,
+    this.controller,
+    this.name,
   }) : super(key: key);
   final String text;
   final TextInputType? type;
   final bool obscure;
-  final Function(String)? onChanged;
-  final Function(String?)? onSaved;
+  final Function(String value)? onChanged;
+  final Function(String? text)? onSaved;
   final String? Function(String?)? validator;
   final GlobalKey? keyState;
   final FocusNode? focusNode;
   final bool isSuffixExsist;
+  final TextEditingController? controller;
+  final String? name;
 
   @override
   State<AppTextField> createState() => _AppTextFieldState();
 }
 
 class _AppTextFieldState extends State<AppTextField> {
+  void _onChange(String? text) {
+    if (widget.onChanged != null) {
+      widget.onChanged?.call(
+        text.orEmpty,
+      );
+    }
+    if (widget.onChanged != null) {
+      widget.onChanged?.call(text.orEmpty);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -39,8 +55,9 @@ class _AppTextFieldState extends State<AppTextField> {
       child: TextFormField(
         key: widget.keyState,
         keyboardType: widget.type,
+        controller: widget.controller,
         obscureText: widget.obscure == _isHidden,
-        onChanged: widget.onChanged,
+        onChanged: _onChange,
         onSaved: widget.onSaved,
         focusNode: widget.focusNode,
         validator: widget.validator,

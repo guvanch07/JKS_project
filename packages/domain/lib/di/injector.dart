@@ -1,7 +1,7 @@
 import 'package:domain/model/auth/authorization_response_cache.dart';
 import 'package:domain/model/propery/property_response_cahce.dart';
 import 'package:domain/repository/build_network_repository.dart';
-import 'package:domain/repository/local_storage_repository.dart';
+import 'package:domain/repository/token_repository.dart';
 import 'package:domain/repository/login_network_repository.dart';
 import 'package:domain/usecase/get_build_usecase.dart';
 import 'package:domain/usecase/get_primary_view_usecase.dart';
@@ -31,7 +31,7 @@ Future<void> injectDomainModule() async {
   sl.registerFactory(
     () => LoginUseCase(
       sl.get<ILoginNetworkRepository>(),
-      sl.get<ILocalStorageRepository>(),
+      sl.get<ITokenStorageRepository>(),
       sl.get<AuthorizationResponseCache>(),
     ),
   );
@@ -49,6 +49,7 @@ Future<void> injectDomainModule() async {
     ),
   );
 //! build
+
   sl.registerFactory(() => BuildUseCase(
         sl.get<IBuildNetworkRepository>(),
         sl.get<PropertyResponseCache>(),
@@ -56,7 +57,7 @@ Future<void> injectDomainModule() async {
 
   sl.registerFactory(
     () => TokenUseCase(
-      sl.get<ILocalStorageRepository>(),
+      sl.get<ITokenStorageRepository>(),
     ),
   );
 

@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:domain/repository/local_storage_repository.dart';
+import 'package:domain/repository/token_repository.dart';
 
 class TokenInterceptor extends Interceptor {
-  final ILocalStorageRepository _localStorageRepository;
+  final ITokenStorageRepository _localStorageRepository;
 
   TokenInterceptor(this._localStorageRepository);
 

@@ -1,17 +1,17 @@
-import 'package:domain/core/extension/string_extention.dart';
 import 'package:presentation/base/bloc_base.dart';
 import 'package:presentation/base/bloc_base_impl.dart';
-import 'package:presentation/screen/build_screen/bloc/bloc.dart';
+import 'package:presentation/screen/build_screen/bloc/bloc_build_data.dart';
 import 'package:domain/usecase/get_build_usecase.dart';
 
 abstract class BuildBloc extends BaseBloc {
   factory BuildBloc(BuildUseCase useCase) => _BuildBloc(useCase);
   void getProperty(String? propertyName);
+  void postButton(String? viewName, String? jobName, String? jobParams);
 }
 
 class _BuildBloc extends BaseBlocImpl implements BuildBloc {
   final BuildUseCase _buildUseCase;
-  final _screenData = BuildData.init();
+  final screenData = BuildData.init();
 
   _BuildBloc(this._buildUseCase);
 
@@ -23,14 +23,14 @@ class _BuildBloc extends BaseBlocImpl implements BuildBloc {
 
   @override
   void getProperty(String? jobName) async {
-    _screenData.property = await _buildUseCase(jobName.orEmpty);
+    screenData.property = await _buildUseCase(jobName ?? "empty");
     _updateData();
   }
 
   void _updateData() {
     super.handleData(
       isLoading: isLoading,
-      data: _screenData.copy(),
+      data: screenData.copy(),
     );
   }
 
@@ -38,5 +38,11 @@ class _BuildBloc extends BaseBlocImpl implements BuildBloc {
   void dispose() {
     super.dispose();
     _buildUseCase.dispose();
+  }
+
+  @override
+  void postButton(String? viewName, String? jobName, String? jobParams) async {
+    screenData.property = await _buildUseCase(jobName ?? "empty");
+    _updateData();
   }
 }

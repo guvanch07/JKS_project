@@ -8,7 +8,7 @@ import 'package:presentation/navigator/base_arguments.dart';
 import 'package:presentation/navigator/base_page.dart';
 import 'package:presentation/screen/login/bloc/login_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:presentation/widget/app_text_form_field.dart';
+import 'package:presentation/widget/text_fields/app_text_form_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -49,6 +49,7 @@ class _LoginPageState extends BlocState<LoginPage, LoginBloc> {
           bloc: bloc,
           blocData: blocData,
           errorMapper: errorMapper,
+          appLocalizations: appLocalizations,
         );
       },
     );

@@ -1,6 +1,6 @@
 import 'package:domain/repository/base_repository.dart';
 
-abstract class ILocalStorageRepository implements BaseRepository{
+abstract class ITokenStorageRepository implements BaseRepository {
   Future<bool> setToken(String token);
 
   Future<String?> getToken();

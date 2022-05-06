@@ -84,6 +84,7 @@ class _MainTabBar extends StatelessWidget {
               tabs: _mainViewMapper.mapJenkinsViewsToTabs(screenData.views),
               onTap: (index) {
                 final tabName = screenData.views[index].name ?? "";
+
                 bloc.trackTabClicked(tabName);
               },
             ),

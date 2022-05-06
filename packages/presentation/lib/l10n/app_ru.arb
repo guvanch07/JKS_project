@@ -6,6 +6,8 @@
   "invalidPassword": "Неверный пароль",
 
   "buttonLogin": "ВОЙТИ",
+  "empty": "Сорян ничего нет",
   "labelLogin": "Логин",
-  "labelPassword": "Пароль"
+  "labelPassword": "Пароль",
+  "buttonSend": "Отправить"
 }

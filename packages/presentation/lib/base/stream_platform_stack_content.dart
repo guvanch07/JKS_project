@@ -38,15 +38,8 @@ class StreamPlatformStackContent<SD> extends StatelessWidget {
           }
           return IgnorePointer(
             ignoring: data.isLoading,
-            child: Scaffold(
-              key: scaffoldKey,
-              resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-              appBar: appBar?.call(data),
-              backgroundColor: backgroundColor,
-              body: Stack(
-                children: child,
-              ),
-              bottomNavigationBar: bottomNavigation?.call(data),
+            child: Stack(
+              children: child,
             ),
           );
         } else {

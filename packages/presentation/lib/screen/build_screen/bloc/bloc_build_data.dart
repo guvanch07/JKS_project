@@ -4,6 +4,7 @@ class BuildData {
   List<Property>? property;
 
   BuildData(this.property);
+  void Function(String value)? onChangeValue;
 
   factory BuildData.init() => BuildData(null);
 
