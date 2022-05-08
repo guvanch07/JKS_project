@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'package:domain/model/auth/authorization_response_cache.dart';
 import 'package:domain/model/job/job_model.dart';
 import 'package:domain/model/params/login_step_fields.dart';
-import 'package:domain/repository/token_repository.dart';
+import 'package:domain/repository/local_storage_repository.dart';
 import 'package:domain/repository/login_network_repository.dart';
 import 'package:domain/usecase/base_usecase.dart';
 
 class LoginUseCase implements UseCaseParams<LoginParams, Future<void>> {
   final ILoginNetworkRepository _networkRepository;
-  final ITokenStorageRepository _localStorageRepository;
+  final ILocalStorageRepository _localStorageRepository;
   final AuthorizationResponseCache _cache;
 
   LoginUseCase(

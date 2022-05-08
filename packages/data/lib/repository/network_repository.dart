@@ -7,12 +7,12 @@ import 'package:domain/model/auth/api_authorization_response.dart';
 import 'package:domain/repository/login_network_repository.dart';
 import 'package:domain/model/auth/authorization_exception.dart';
 
-class NetworkRepository extends ApiBaseRepositoryImpl
+class LoginNetworkRepository extends ApiBaseRepositoryImpl
     implements ILoginNetworkRepository {
   final ApiService _service;
   final CancelToken _cancelToken;
 
-  NetworkRepository(
+  LoginNetworkRepository(
     this._service,
     this._cancelToken,
   ) : super(cancelToken: _cancelToken);

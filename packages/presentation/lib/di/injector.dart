@@ -26,10 +26,7 @@ import 'package:presentation/screen/splash/bloc/splash_bloc.dart';
 Future<void> injectPresentationModule() async {
   final sl = GetIt.I;
 
-  sl.registerSingleton<AppNavigator>(
-    AppNavigatorImpl(),
-  );
-
+  //! mapper
   sl.registerSingleton<LoginViewMapper>(
     LoginViewMapper(),
   );
@@ -49,11 +46,12 @@ Future<void> injectPresentationModule() async {
   sl.registerSingleton<MainViewMapper>(
     MainViewMapper(),
   );
-//! build
-  sl.registerSingleton<BuildMapper>(
-    BuildMapper(),
+
+  sl.registerSingleton<BuildScreenMapper>(
+    BuildScreenMapper(),
   );
 
+//! services
   sl.registerSingleton<FirebaseAnalytics>(
     FirebaseAnalytics.instance,
   );
@@ -68,6 +66,7 @@ Future<void> injectPresentationModule() async {
     ),
   );
 
+//! blocs
   sl.registerFactory(
     () => LoginBloc(
       sl.get<LoginUseCase>(),
@@ -81,7 +80,7 @@ Future<void> injectPresentationModule() async {
       sl.get<HomeUseCase>(),
     ),
   );
-//! build bloc
+
   sl.registerFactory(
     () => BuildBloc(
       sl.get<BuildUseCase>(),
@@ -106,5 +105,9 @@ Future<void> injectPresentationModule() async {
 
   sl.registerFactory<AppBloc>(
     () => AppBloc(),
+  );
+//! naviagtion
+  sl.registerSingleton<AppNavigator>(
+    AppNavigatorImpl(),
   );
 }

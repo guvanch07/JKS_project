@@ -14,7 +14,6 @@ import 'package:presentation/screen/build_screen/bloc/bloc_build.dart';
 import 'package:presentation/screen/build_screen/bloc/bloc_build_data.dart';
 import 'package:presentation/screen/main/main.dart';
 import 'package:presentation/widget/empty_screen.dart';
-import 'package:presentation/widget/text_fields/app_text_form_field.dart';
 
 class BuildPage extends StatefulWidget {
   final String? title;
@@ -93,7 +92,7 @@ class _BuildPageState extends BlocState<BuildPage, BuildBloc> {
 }
 
 final appNavigator = GetIt.I.get<AppNavigator>();
-final BuildMapper _mainViewMapper = GetIt.I.get<BuildMapper>();
+final BuildScreenMapper _mainViewMapper = GetIt.I.get<BuildScreenMapper>();
 
 class _BuildScreen extends StatelessWidget {
   const _BuildScreen({
@@ -124,43 +123,6 @@ class _BuildScreen extends StatelessWidget {
             onTap: () {},
             text: appLocalizations?.buttonLogin ?? "post",
           ),
-        ),
-      ],
-    );
-  }
-}
-
-class Inputs extends StatelessWidget {
-  const Inputs({
-    Key? key,
-    required this.buildData,
-  }) : super(key: key);
-  final BuildData buildData;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        SizedBox(height: 15),
-        Padding(
-          padding: EdgeInsets.all(15.0),
-          child: Text("Input 1", style: Styles.headline2),
-        ),
-        AppTextField(
-          isSuffixExsist: false,
-          obscure: false,
-          text: 'input1',
-        ),
-        SizedBox(height: 15),
-        Padding(
-          padding: EdgeInsets.all(15.0),
-          child: Text("Input 2", style: Styles.headline2),
-        ),
-        AppTextField(
-          isSuffixExsist: false,
-          obscure: false,
-          text: 'input2',
         ),
       ],
     );

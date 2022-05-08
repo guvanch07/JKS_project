@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:domain/repository/cookie_repository.dart';
 import 'package:domain/core/extension/string_extention.dart';
+import 'package:domain/repository/local_storage_repository.dart';
 
 class CookieInterceptor extends Interceptor {
-  final ICookieRepository _localStorageRepository;
+  final ILocalStorageRepository _localStorageRepository;
 
   CookieInterceptor(this._localStorageRepository);
 

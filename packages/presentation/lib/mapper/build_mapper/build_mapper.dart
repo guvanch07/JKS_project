@@ -6,8 +6,8 @@ import 'package:presentation/widget/toggle_button/toogle_with_title.dart';
 
 part 'widgets_build.dart';
 
-abstract class BuildMapper {
-  factory BuildMapper() => _BuildMapper();
+abstract class BuildScreenMapper {
+  factory BuildScreenMapper() => _BuildScreenMapper();
 
   List<Widget> mapPropertyText(
     List<Property>? data,
@@ -15,7 +15,7 @@ abstract class BuildMapper {
   );
 }
 
-class _BuildMapper implements BuildMapper {
+class _BuildScreenMapper implements BuildScreenMapper {
   @override
   List<Widget> mapPropertyText(
       List<Property>? data, void Function(String value)? onChangeValue) {
@@ -24,7 +24,7 @@ class _BuildMapper implements BuildMapper {
     final listResponse = data;
 
     if (listResponse == null) {
-      return [const SizedBox()];
+      return [Container(color: Colors.black)];
     }
 
     for (var buildBuilder in listResponse) {
@@ -46,7 +46,7 @@ class _BuildMapper implements BuildMapper {
           );
           break;
         default:
-          [const SizedBox()];
+          [Container(color: Colors.black)];
       }
     }
     return listWidgets;
