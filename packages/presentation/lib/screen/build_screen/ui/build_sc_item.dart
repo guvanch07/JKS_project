@@ -91,7 +91,7 @@ class _BuildPageState extends BlocState<BuildPage, BuildBloc> {
 }
 
 class _BuildScreen extends StatelessWidget {
-  _BuildScreen({
+  const _BuildScreen({
     Key? key,
     this.tittle,
     required this.blocData,
@@ -103,12 +103,11 @@ class _BuildScreen extends StatelessWidget {
   final AppLocalizations? appLocalizations;
   final BuildBloc bloc;
 
-  final BuildScreenMapper _mainViewMapper = GetIt.I.get<BuildScreenMapper>();
-
   @override
   Widget build(BuildContext context) {
-    final _callWidgetsFromMapper =
-        _mainViewMapper.mapPropertyText(blocData.property, bloc.onChangeValue);
+    final _callWidgetsFromMapper = GetIt.I
+        .get<BuildScreenMapper>()
+        .mapPropertyText(blocData.property, bloc.onChangeValue);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
