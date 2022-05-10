@@ -13,7 +13,7 @@ class CustomToggleWithTitle extends StatelessWidget {
   }) : super(key: key);
 
   final String? name;
-  final void Function(String value)? onChangeValue;
+  final void Function(String value, String nameWidget)? onChangeValue;
   final List<String> listNameButton;
   final int initialIndex;
 

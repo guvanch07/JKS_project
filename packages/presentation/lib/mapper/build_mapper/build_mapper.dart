@@ -11,14 +11,14 @@ abstract class BuildScreenMapper {
 
   List<Widget> mapPropertyText(
     List<Property>? data,
-    void Function(String value)? onChangeValue,
+    void Function(String value, String nameWidget)? onChangeValue,
   );
 }
 
 class _BuildScreenMapper implements BuildScreenMapper {
   @override
-  List<Widget> mapPropertyText(
-      List<Property>? data, void Function(String value)? onChangeValue) {
+  List<Widget> mapPropertyText(List<Property>? data,
+      void Function(String value, String nameWidget)? onChangeValue) {
     List<Widget> listWidgets = [];
 
     final listResponse = data;

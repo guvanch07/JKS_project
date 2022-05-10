@@ -14,4 +14,7 @@ abstract class ApiHelperCore {
   static const post = 'post';
   static String urlCrumbIssuer =
       'http://jenkins-mobile.moneyman.ru/crumbIssuer/api/json';
+
+  static String urlBuildToPost(String viewName, String jobName) =>
+      '/view/$viewName/job/$jobName/buildWithParameters/api/json?pretty=true';
 }

@@ -8,7 +8,7 @@ import 'package:presentation/navigator/base_arguments.dart';
 import 'package:presentation/navigator/base_page.dart';
 import 'package:presentation/screen/login/bloc/login_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:presentation/widget/text_fields/app_text_form_field.dart';
+import 'package:presentation/widget/text_fields/text_field_login.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -82,7 +82,7 @@ class _BuildLoginPage extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Text(appLocalizations?.labelLogin ?? ""),
             ),
-            AppTextField(
+            LoginTextField(
               //key: const Key("login"),
               isSuffixExsist: false,
               keyState: bloc.loginFieldKey,
@@ -98,7 +98,7 @@ class _BuildLoginPage extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               child: Text(appLocalizations?.labelPassword ?? ""),
             ),
-            AppTextField(
+            LoginTextField(
               //key: const Key("password"),
               isSuffixExsist: true,
               focusNode: bloc.passwordFocusNode,

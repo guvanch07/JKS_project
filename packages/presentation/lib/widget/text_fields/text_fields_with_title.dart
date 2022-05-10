@@ -12,7 +12,7 @@ class TextFieldWithTitleWidget extends StatelessWidget {
     this.defaultValue,
   }) : super(key: key);
 
-  final void Function(String value)? onChangeValue;
+  final void Function(String value, String widgetName)? onChangeValue;
   final String? hintText;
   final String? nameWidget;
   final String? defaultValue;
@@ -36,8 +36,6 @@ class TextFieldWithTitleWidget extends StatelessWidget {
           controller: defaultValue != null
               ? TextEditingController(text: defaultValue)
               : null,
-          isSuffixExsist: false,
-          obscure: false,
         ),
         const SizedBox(
           height: 24,

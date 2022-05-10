@@ -1,12 +1,17 @@
+import 'package:domain/model/job/job_info_model.dart';
 import 'package:domain/model/propery/property.dart';
 
 class BuildData {
   List<Property>? property;
+  JobInfoModel jobInfoModel;
+  Map<String, String> valueWidgets;
+  BuildData(
+    this.property,
+    this.jobInfoModel,
+    this.valueWidgets,
+  );
 
-  BuildData(this.property);
-  void Function(String value)? onChangeValue;
+  factory BuildData.init() => BuildData(null, JobInfoModel("", ""), {});
 
-  factory BuildData.init() => BuildData(null);
-
-  BuildData copy() => BuildData(property);
+  BuildData copy() => BuildData(property, jobInfoModel, valueWidgets);
 }

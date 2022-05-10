@@ -13,7 +13,7 @@ class CustomToggleButtonWidget extends StatefulWidget {
 
   final String? name;
 
-  final void Function(String value)? onChangeValue;
+  final void Function(String value, String nameWidget)? onChangeValue;
   final List<String> listNameButton;
   final int initialIndex;
 
@@ -33,8 +33,7 @@ class _CustomToggleButtonWidgetState extends State<CustomToggleButtonWidget> {
           listState[index] = true;
           if (widget.onChangeValue != null) {
             widget.onChangeValue!(
-              widget.listNameButton[index],
-            );
+                widget.listNameButton[index], widget.name ?? '');
           }
         },
       );
@@ -48,7 +47,8 @@ class _CustomToggleButtonWidgetState extends State<CustomToggleButtonWidget> {
     );
     listState[widget.initialIndex] = true;
     if (widget.onChangeValue != null) {
-      widget.onChangeValue!(widget.listNameButton[widget.initialIndex]);
+      widget.onChangeValue!(
+          widget.listNameButton[widget.initialIndex], widget.name ?? "");
     }
     super.initState();
   }

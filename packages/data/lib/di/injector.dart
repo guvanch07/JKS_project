@@ -19,7 +19,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> injectDataModule() async {
   final sl = GetIt.I;
 
-//! services
+  //! services
   sl.registerSingleton<SharedPreferences>(
     await SharedPreferences.getInstance(),
   );
@@ -42,7 +42,7 @@ Future<void> injectDataModule() async {
     ),
   );
 
-//! repositories
+  //! repositories
 
   sl.registerSingleton<ILocalStorageRepository>(
     LocalStorageRepository(
@@ -69,7 +69,7 @@ Future<void> injectDataModule() async {
     ),
   );
 
-//! interceptors
+  //! interceptors
 
   sl.registerFactory<CancelToken>(
     () => CancelToken(),

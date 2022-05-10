@@ -78,6 +78,7 @@ class _BuildPageState extends BlocState<BuildPage, BuildBloc> {
                 return BuildWhenEmpty(appLocalizations: appLocalizations);
               } else {
                 return _BuildScreen(
+                  bloc: bloc,
                   appLocalizations: appLocalizations,
                   blocData: screenData,
                   tittle: widget.title,
@@ -100,15 +101,17 @@ class _BuildScreen extends StatelessWidget {
     this.tittle,
     required this.blocData,
     this.appLocalizations,
+    required this.bloc,
   }) : super(key: key);
   final String? tittle;
   final BuildData blocData;
   final AppLocalizations? appLocalizations;
+  final BuildBloc bloc;
 
   @override
   Widget build(BuildContext context) {
-    final _callWidgetsFromMapper = _mainViewMapper.mapPropertyText(
-        blocData.property, blocData.onChangeValue);
+    final _callWidgetsFromMapper =
+        _mainViewMapper.mapPropertyText(blocData.property, bloc.onChangeValue);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -120,8 +123,8 @@ class _BuildScreen extends StatelessWidget {
                 })),
         SafeArea(
           child: PrimaryButton(
-            onTap: () {},
-            text: appLocalizations?.buttonLogin ?? "post",
+            onTap: bloc.postJenkisBuild,
+            text: appLocalizations?.localeName ?? "post",
           ),
         ),
       ],

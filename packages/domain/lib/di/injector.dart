@@ -8,6 +8,7 @@ import 'package:domain/usecase/get_primary_view_usecase.dart';
 import 'package:domain/usecase/home_usecase.dart';
 import 'package:domain/usecase/login_usecase.dart';
 import 'package:domain/usecase/login_validation_usecase.dart';
+import 'package:domain/usecase/post_build_usecase.dart';
 import 'package:domain/usecase/token_usecase.dart';
 import 'package:domain/validator/login_step_validation_schema.dart';
 import 'package:get_it/get_it.dart';
@@ -45,10 +46,18 @@ Future<void> injectDomainModule() async {
     ),
   );
 
-  sl.registerFactory(() => BuildUseCase(
-        sl.get<IBuildNetworkRepository>(),
-        sl.get<PropertyResponseCache>(),
-      ));
+  sl.registerFactory(
+    () => BuildUseCase(
+      sl.get<IBuildNetworkRepository>(),
+      sl.get<PropertyResponseCache>(),
+    ),
+  );
+
+  sl.registerFactory(
+    () => BuildJenkisUseCase(
+      sl.get<IBuildNetworkRepository>(),
+    ),
+  );
 
   sl.registerFactory(
     () => TokenUseCase(

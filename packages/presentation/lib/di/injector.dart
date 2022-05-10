@@ -4,6 +4,7 @@ import 'package:domain/usecase/home_usecase.dart';
 import 'package:domain/usecase/token_usecase.dart';
 import 'package:domain/usecase/login_usecase.dart';
 import 'package:domain/usecase/get_build_usecase.dart';
+import 'package:domain/usecase/post_build_usecase.dart';
 import 'package:domain/usecase/login_validation_usecase.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:get_it/get_it.dart';
@@ -84,6 +85,7 @@ Future<void> injectPresentationModule() async {
   sl.registerFactory(
     () => BuildBloc(
       sl.get<BuildUseCase>(),
+      sl.get<BuildJenkisUseCase>(),
     ),
   );
 

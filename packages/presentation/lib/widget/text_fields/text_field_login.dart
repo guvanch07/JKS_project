@@ -1,47 +1,66 @@
-import 'package:domain/core/extension/string_extention.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/core/theme/style_text.dart';
 import 'package:presentation/core/theme/theme_app.dart';
 
-bool _isHidden = true;
-
-class AppTextField extends StatefulWidget {
-  const AppTextField({
+class LoginTextField extends StatefulWidget {
+  const LoginTextField({
     Key? key,
     required this.text,
+    this.type,
+    required this.obscure,
     this.onChanged,
+    this.onSaved,
+    this.validator,
+    this.keyState,
+    this.focusNode,
+    required this.isSuffixExsist,
     this.controller,
     this.name,
   }) : super(key: key);
   final String text;
-
-  final Function(String value, String nameWidget)? onChanged;
-
+  final TextInputType? type;
+  final bool obscure;
+  final Function(String value)? onChanged;
+  final Function(String? text)? onSaved;
+  final String? Function(String?)? validator;
+  final GlobalKey? keyState;
+  final FocusNode? focusNode;
+  final bool isSuffixExsist;
   final TextEditingController? controller;
   final String? name;
 
   @override
-  State<AppTextField> createState() => _AppTextFieldState();
+  State<LoginTextField> createState() => _LoginTextFieldState();
 }
 
-class _AppTextFieldState extends State<AppTextField> {
-  void _onChange(String? text) {
-    if (widget.onChanged != null) {
-      widget.onChanged?.call(text.orEmpty, widget.name ?? "");
-    }
-    if (widget.onChanged != null) {
-      widget.onChanged?.call(text.orEmpty, widget.name ?? "");
-    }
-  }
+class _LoginTextFieldState extends State<LoginTextField> {
+  bool _isHidden = true;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: TextFormField(
+        key: widget.keyState,
+        keyboardType: widget.type,
         controller: widget.controller,
-        onChanged: _onChange,
+        obscureText: widget.obscure == _isHidden,
+        onChanged: widget.onChanged,
+        onSaved: widget.onSaved,
+        focusNode: widget.focusNode,
+        validator: widget.validator,
         decoration: InputDecoration(
+          suffixIcon: widget.isSuffixExsist
+              ? IconButton(
+                  color: AppColors.border,
+                  icon: Icon(
+                    _isHidden ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() => _isHidden = !_isHidden);
+                  },
+                )
+              : const SizedBox(),
           errorStyle: Styles.headline1.copyWith(color: AppColors.errorColor),
           focusColor: Colors.black,
           focusedErrorBorder: const OutlineInputBorder(

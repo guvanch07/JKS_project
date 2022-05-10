@@ -8,7 +8,7 @@ class _GetStringParametDefinition extends StatelessWidget {
   }) : super(key: key);
 
   final Property buildResponse;
-  final void Function(String value)? onChangeValue;
+  final void Function(String value, String nameWidget)? onChangeValue;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class _GetChoiceParameterDefinitions extends StatelessWidget {
   }) : super(key: key);
 
   final Property buildResponse;
-  final void Function(String value)? onChangeValue;
+  final void Function(String value, String nameWidget)? onChangeValue;
 
   @override
   Widget build(BuildContext context) {

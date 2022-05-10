@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:presentation/base/bloc_state.dart';
 import 'package:presentation/core/theme/style_text.dart';
 import 'package:presentation/core/theme/theme_app.dart';
+import 'package:presentation/core/utils/path/asset_path.dart';
 import 'package:presentation/navigator/base_arguments.dart';
 import 'package:presentation/navigator/base_page.dart';
 import 'package:presentation/screen/splash/bloc/splash_bloc.dart';
@@ -42,7 +43,7 @@ class _SplashScreenState extends BlocState<SplashScreen, SplashBloc> {
       body: SafeArea(
           child: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          SvgPicture.asset("assets/svg/jenkis.svg"),
+          SvgPicture.asset(AssetPath.logo),
           const SizedBox(height: 20),
           const Text("JenkisApp", style: Styles.splashHeadLine1),
           const Text("App for building something great",
