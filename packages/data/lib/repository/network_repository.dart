@@ -4,15 +4,17 @@ import 'package:data/service/api_service.dart';
 import 'package:dio/dio.dart';
 
 import 'package:domain/model/auth/api_authorization_response.dart';
-import 'package:domain/repository/login_network_repository.dart';
+import 'package:domain/model/job/build_jobs_jenkis.dart';
+import 'package:domain/model/propery/api_property.dart';
+import 'package:domain/repository/base_network_repository.dart';
 import 'package:domain/model/auth/authorization_exception.dart';
 
-class LoginNetworkRepository extends ApiBaseRepositoryImpl
-    implements ILoginNetworkRepository {
+class NetworkRepository extends ApiBaseRepositoryImpl
+    implements INetworkRepository {
   final ApiService _service;
   final CancelToken _cancelToken;
 
-  LoginNetworkRepository(
+  NetworkRepository(
     this._service,
     this._cancelToken,
   ) : super(cancelToken: _cancelToken);
@@ -57,4 +59,42 @@ class LoginNetworkRepository extends ApiBaseRepositoryImpl
           ),
         );
   }
+
+  @override
+  Future<ApiPropertyResponse?> getJobsProperty(String url) {
+    return _service
+        .get(path: ApiHelperCore.job + url + ApiHelperCore.pathToken)
+        .then((response) =>
+            Future.value(ApiPropertyResponse.fromJson(response.data)));
+  }
+
+  @override
+  Future<bool> isBuildPosted(BuildPostModel data) {
+    return _service
+        .post(
+          path: ApiHelperCore.urlBuildToPost(
+            data.jobInfoModel.view,
+            data.jobInfoModel.job,
+          ),
+          queryParameters: data.params,
+          cancelToken: cancelToken,
+        )
+        .then(
+          (response) => true,
+        );
+  }
+
+  @override
+  Future request({
+    required String path,
+    String? method,
+    Map<String, dynamic>? headers,
+  }) =>
+      _service.request(
+        path: path,
+        options: Options(
+          method: method,
+          headers: headers,
+        ),
+      );
 }

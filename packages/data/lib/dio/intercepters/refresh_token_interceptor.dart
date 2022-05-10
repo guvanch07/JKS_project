@@ -1,11 +1,11 @@
 import 'package:data/core/api_key.dart';
 import 'package:dio/dio.dart';
+import 'package:domain/repository/base_network_repository.dart';
 import 'package:domain/repository/local_storage_repository.dart';
-import 'package:domain/repository/request_network_repo.dart';
 
 class RefreshTokenInterceptor extends Interceptor {
   final ILocalStorageRepository _localStorageRepository;
-  final IRequestRepository _requestRepository;
+  final INetworkRepository _requestRepository;
   final String _urlToken;
   RefreshTokenInterceptor(
     this._localStorageRepository,
