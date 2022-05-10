@@ -7,12 +7,10 @@ import 'package:presentation/core/helpers/primary_button.dart';
 import 'package:presentation/core/theme/style_text.dart';
 import 'package:presentation/core/theme/theme_app.dart';
 import 'package:presentation/mapper/build_mapper/build_mapper.dart';
-import 'package:presentation/navigator/app_navigator.dart';
 import 'package:presentation/navigator/base_arguments.dart';
 import 'package:presentation/navigator/base_page.dart';
 import 'package:presentation/screen/build_screen/bloc/bloc_build.dart';
 import 'package:presentation/screen/build_screen/bloc/bloc_build_data.dart';
-import 'package:presentation/screen/main/main.dart';
 import 'package:presentation/widget/empty_screen.dart';
 
 class BuildPage extends StatefulWidget {
@@ -57,7 +55,7 @@ class _BuildPageState extends BlocState<BuildPage, BuildBloc> {
       backgroundColor: AppColors.mainbgc,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () => appNavigator.popAndPush(MainPage.page()),
+            onPressed: bloc.pop,
             color: AppColors.textMain,
             icon: const Icon(Icons.arrow_back_ios)),
         elevation: 0,
@@ -92,11 +90,8 @@ class _BuildPageState extends BlocState<BuildPage, BuildBloc> {
   }
 }
 
-final appNavigator = GetIt.I.get<AppNavigator>();
-final BuildScreenMapper _mainViewMapper = GetIt.I.get<BuildScreenMapper>();
-
 class _BuildScreen extends StatelessWidget {
-  const _BuildScreen({
+  _BuildScreen({
     Key? key,
     this.tittle,
     required this.blocData,
@@ -107,6 +102,8 @@ class _BuildScreen extends StatelessWidget {
   final BuildData blocData;
   final AppLocalizations? appLocalizations;
   final BuildBloc bloc;
+
+  final BuildScreenMapper _mainViewMapper = GetIt.I.get<BuildScreenMapper>();
 
   @override
   Widget build(BuildContext context) {

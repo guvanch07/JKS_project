@@ -1,8 +1,8 @@
+import 'package:domain/mapper/property_mapper.dart';
 import 'package:domain/model/auth/authorization_response_cache.dart';
 import 'package:domain/model/propery/property_response_cahce.dart';
-import 'package:domain/repository/build_network_repository.dart';
 import 'package:domain/repository/local_storage_repository.dart';
-import 'package:domain/repository/login_network_repository.dart';
+import 'package:domain/repository/base_network_repository.dart';
 import 'package:domain/usecase/get_build_usecase.dart';
 import 'package:domain/usecase/get_primary_view_usecase.dart';
 import 'package:domain/usecase/home_usecase.dart';
@@ -30,6 +30,11 @@ Future<void> injectDomainModule() async {
     LoginStepValidationSchema(),
   );
 
+//! mappers
+  sl.registerSingleton<PropertyApiMapper>(
+    PropertyApiMapper(),
+  );
+
 //! usecase
 
   sl.registerFactory(
@@ -40,7 +45,7 @@ Future<void> injectDomainModule() async {
 
   sl.registerFactory(
     () => LoginUseCase(
-      sl.get<ILoginNetworkRepository>(),
+      sl.get<INetworkRepository>(),
       sl.get<ILocalStorageRepository>(),
       sl.get<AuthorizationResponseCache>(),
     ),
@@ -48,14 +53,14 @@ Future<void> injectDomainModule() async {
 
   sl.registerFactory(
     () => BuildUseCase(
-      sl.get<IBuildNetworkRepository>(),
+      sl.get<INetworkRepository>(),
       sl.get<PropertyResponseCache>(),
     ),
   );
 
   sl.registerFactory(
     () => BuildJenkisUseCase(
-      sl.get<IBuildNetworkRepository>(),
+      sl.get<INetworkRepository>(),
     ),
   );
 
@@ -67,7 +72,7 @@ Future<void> injectDomainModule() async {
 
   sl.registerFactory(
     () => GetViewsUseCase(
-      sl.get<ILoginNetworkRepository>(),
+      sl.get<INetworkRepository>(),
       sl.get<AuthorizationResponseCache>(),
     ),
   );
@@ -80,7 +85,7 @@ Future<void> injectDomainModule() async {
 
   sl.registerFactory(
     () => HomeUseCase(
-      sl.get<ILoginNetworkRepository>(),
+      sl.get<INetworkRepository>(),
       sl.get<AuthorizationResponseCache>(),
     ),
   );

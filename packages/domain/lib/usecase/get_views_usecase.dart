@@ -1,11 +1,11 @@
 import 'package:domain/model/auth/authorization_response_cache.dart';
 import 'package:domain/model/job/job_model.dart';
 import 'package:domain/model/views/views_model.dart';
-import 'package:domain/repository/login_network_repository.dart';
+import 'package:domain/repository/base_network_repository.dart';
 import 'package:domain/usecase/base_usecase.dart';
 
 class GetViewsUseCase implements UseCase<Future<List<JenkinsView>>> {
-  final ILoginNetworkRepository _networkRepository;
+  final INetworkRepository _networkRepository;
   final AuthorizationResponseCache _cache;
 
   GetViewsUseCase(

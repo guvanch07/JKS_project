@@ -4,6 +4,7 @@ import 'package:presentation/screen/build_screen/bloc/bloc_build_data.dart';
 import 'package:domain/usecase/get_build_usecase.dart';
 import 'package:domain/usecase/post_build_usecase.dart';
 import 'package:domain/model/job/build_jobs_jenkis.dart';
+import 'package:presentation/screen/main/main.dart';
 
 abstract class BuildBloc extends BaseBloc {
   factory BuildBloc(
@@ -13,7 +14,7 @@ abstract class BuildBloc extends BaseBloc {
         buildJenkisUseCase,
       );
   void getProperty(String? propertyName);
-
+  void pop();
   void postJenkisBuild();
   void onChangeValue(String value, String nameWidget);
 }
@@ -62,5 +63,10 @@ class _BuildBloc extends BaseBlocImpl implements BuildBloc {
   @override
   void onChangeValue(String value, String nameWidget) {
     screenData.valueWidgets[nameWidget] = value;
+  }
+
+  @override
+  void pop() {
+    appNavigator.popAndPush(MainPage.page());
   }
 }

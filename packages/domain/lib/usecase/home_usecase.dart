@@ -1,11 +1,11 @@
 import 'package:collection/collection.dart';
 import 'package:domain/model/auth/authorization_response_cache.dart';
 import 'package:domain/model/job/job_model.dart';
-import 'package:domain/repository/login_network_repository.dart';
+import 'package:domain/repository/base_network_repository.dart';
 import 'package:domain/usecase/base_usecase.dart';
 
 class HomeUseCase implements UseCaseParams<String, Future<List<Job>?>> {
-  final ILoginNetworkRepository _repository;
+  final INetworkRepository _repository;
   final AuthorizationResponseCache _cache;
 
   HomeUseCase(this._repository, this._cache);
