@@ -23,6 +23,7 @@ import 'package:presentation/screen/home/bloc/home_bloc.dart';
 import 'package:presentation/screen/login/bloc/login_bloc.dart';
 import 'package:presentation/screen/main/bloc/main_bloc.dart';
 import 'package:presentation/screen/splash/bloc/splash_bloc.dart';
+import 'package:domain/usecase/interceptor_usecase.dart';
 
 Future<void> injectPresentationModule() async {
   final sl = GetIt.I;
@@ -106,7 +107,9 @@ Future<void> injectPresentationModule() async {
   );
 
   sl.registerFactory<AppBloc>(
-    () => AppBloc(),
+    () => AppBloc(
+      sl.get<InterceptorUseCase>(),
+    ),
   );
 //! naviagtion
   sl.registerSingleton<AppNavigator>(

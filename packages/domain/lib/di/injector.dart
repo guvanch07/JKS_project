@@ -1,11 +1,13 @@
 import 'package:domain/mapper/property_mapper.dart';
 import 'package:domain/model/auth/authorization_response_cache.dart';
 import 'package:domain/model/propery/property_response_cahce.dart';
+import 'package:domain/repository/interceptor_proxy.dart';
 import 'package:domain/repository/local_storage_repository.dart';
 import 'package:domain/repository/base_network_repository.dart';
 import 'package:domain/usecase/get_build_usecase.dart';
 import 'package:domain/usecase/get_primary_view_usecase.dart';
 import 'package:domain/usecase/home_usecase.dart';
+import 'package:domain/usecase/interceptor_usecase.dart';
 import 'package:domain/usecase/login_usecase.dart';
 import 'package:domain/usecase/login_validation_usecase.dart';
 import 'package:domain/usecase/post_build_usecase.dart';
@@ -87,6 +89,12 @@ Future<void> injectDomainModule() async {
     () => HomeUseCase(
       sl.get<INetworkRepository>(),
       sl.get<AuthorizationResponseCache>(),
+    ),
+  );
+
+  sl.registerSingleton<InterceptorUseCase>(
+    InterceptorUseCase(
+      sl.get<IInterceptorProxy>(),
     ),
   );
 }
