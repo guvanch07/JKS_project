@@ -1,14 +1,26 @@
 import 'package:domain/model/propery/property.dart';
+import 'package:collection/collection.dart';
 
-abstract class PropertyApiMapper {
-  factory PropertyApiMapper() => _PropertyApiMapper();
-  List listConverterToMap(List<dynamic> listToMap);
+abstract class Mapper<Input, Output> {
+  Output call(Input data);
 }
 
-class _PropertyApiMapper implements PropertyApiMapper {
+class PropertyApiMapper extends Mapper {
   @override
-  List listConverterToMap(List listToMap) {
-    final propertyToMap = listToMap.map(
+  List<Property>? call(dynamic data) {
+    if (data == null || data.isEmpty) {
+      return null;
+    }
+
+    final List property = data['property'];
+    final Map parameterDefinitions = property.firstWhereOrNull(
+      (element) => element.containsKey('parameterDefinitions'),
+    );
+
+    final List listParameterDefinitions =
+        parameterDefinitions['parameterDefinitions'];
+
+    final propertyToMap = listParameterDefinitions.map(
       (parameter) {
         String? description;
         String? name;

@@ -4,6 +4,7 @@ import 'package:data/dio/intercepters/cookie_interceptor.dart';
 import 'package:data/dio/intercepters/interceptor_proxy_impl.dart';
 import 'package:data/dio/intercepters/refresh_token_interceptor.dart';
 import 'package:data/dio/intercepters/token_interceptor.dart';
+import 'package:data/mapper/property_mapper.dart';
 import 'package:data/repository/local_storage_repository.dart';
 import 'package:data/repository/network_repository.dart';
 
@@ -70,10 +71,8 @@ Future<void> injectDataModule() async {
   );
 
   sl.registerSingleton<INetworkRepository>(
-    NetworkRepository(
-      sl.get<ApiService>(),
-      sl.get<CancelToken>(),
-    ),
+    NetworkRepository(sl.get<ApiService>(), sl.get<CancelToken>(),
+        sl.get<PropertyApiMapper>()),
   );
 
   //! services
@@ -92,5 +91,11 @@ Future<void> injectDataModule() async {
     ApiService(
       sl.get(instanceName: 'jobsApi'),
     ),
+  );
+
+  //!mapper
+
+  sl.registerSingleton<PropertyApiMapper>(
+    PropertyApiMapper(),
   );
 }

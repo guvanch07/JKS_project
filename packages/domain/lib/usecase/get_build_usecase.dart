@@ -11,17 +11,7 @@ class BuildUseCase implements UseCaseParams<String, Future<List<Property>?>> {
 
   @override
   Future<List<Property>?> call(String name) async {
-    return _cache.property ??
-        await _repository.getJobsProperty(name).then(
-          (response) {
-            final property = response?.jobProperty
-                ?.map((e) => Property.fromJson(e))
-                .toList();
-
-            _cache.property = property;
-            return property;
-          },
-        );
+    return _cache.property ?? await _repository.getJobsProperty(name);
   }
 
   @override

@@ -90,7 +90,7 @@ class _BuildPageState extends BlocState<BuildPage, BuildBloc> {
   }
 }
 
-class _BuildScreen extends StatelessWidget {
+class _BuildScreen extends StatefulWidget {
   const _BuildScreen({
     Key? key,
     this.tittle,
@@ -104,23 +104,35 @@ class _BuildScreen extends StatelessWidget {
   final BuildBloc bloc;
 
   @override
-  Widget build(BuildContext context) {
-    final _callWidgetsFromMapper = GetIt.I
+  State<_BuildScreen> createState() => _BuildScreenState();
+}
+
+class _BuildScreenState extends State<_BuildScreen> {
+  late List<Widget> _mapper;
+
+  @override
+  void initState() {
+    _mapper = GetIt.I
         .get<BuildScreenMapper>()
-        .mapPropertyText(blocData.property, bloc.onChangeValue);
+        .mapPropertyText(widget.blocData.property, widget.bloc.onChangeValue);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
             child: ListView.builder(
-                itemCount: _callWidgetsFromMapper.length,
+                itemCount: _mapper.length,
                 itemBuilder: (context, index) {
-                  return _callWidgetsFromMapper[index];
+                  return _mapper[index];
                 })),
         SafeArea(
           child: PrimaryButton(
-            onTap: bloc.postJenkisBuild,
-            text: appLocalizations?.localeName ?? "post",
+            onTap: widget.bloc.postJenkisBuild,
+            text: widget.appLocalizations?.localeName ?? "post",
           ),
         ),
       ],

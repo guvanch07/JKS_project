@@ -1,4 +1,3 @@
-import 'package:domain/mapper/property_mapper.dart';
 import 'package:domain/model/auth/authorization_response_cache.dart';
 import 'package:domain/model/propery/property_response_cahce.dart';
 import 'package:domain/repository/interceptor_proxy.dart';
@@ -30,11 +29,6 @@ Future<void> injectDomainModule() async {
 
   sl.registerSingleton<LoginStepValidationSchema>(
     LoginStepValidationSchema(),
-  );
-
-//! mappers
-  sl.registerSingleton<PropertyApiMapper>(
-    PropertyApiMapper(),
   );
 
 //! usecase
