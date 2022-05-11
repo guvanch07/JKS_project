@@ -1,11 +1,11 @@
 import 'package:domain/model/propery/property.dart';
 import 'package:collection/collection.dart';
 
-abstract class Mapper<Input, Output> {
+abstract class MapperData<Input, Output> {
   Output call(Input data);
 }
 
-class PropertyApiMapper extends Mapper {
+class PropertyApiMapper extends MapperData<dynamic, List<Property>?> {
   @override
   List<Property>? call(dynamic data) {
     if (data == null || data.isEmpty) {

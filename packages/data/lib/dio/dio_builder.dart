@@ -18,7 +18,5 @@ Dio dioBuilder(
 
   final dio = Dio(options);
 
-  //dio.interceptors.addAll(interceptors);
-
   return dio;
 }
