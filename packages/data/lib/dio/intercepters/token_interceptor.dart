@@ -2,16 +2,16 @@ import 'package:dio/dio.dart';
 import 'package:domain/repository/local_storage_repository.dart';
 
 class TokenInterceptor extends Interceptor {
-  final ILocalStorageRepository _localStorageRepository;
+  final ILocalStorageRepository _tokenStorageRepository;
 
-  TokenInterceptor(this._localStorageRepository);
+  TokenInterceptor(this._tokenStorageRepository);
 
   @override
   void onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    options.headers['Authorization'] = await _localStorageRepository.getToken();
+    options.headers['Authorization'] = await _tokenStorageRepository.getToken();
 
     return super.onRequest(options, handler);
   }
@@ -22,7 +22,7 @@ class TokenInterceptor extends Interceptor {
     ErrorInterceptorHandler handler,
   ) async {
     if (err.response?.statusCode == 401) {
-      await _localStorageRepository.deleteToken();
+      await _tokenStorageRepository.deleteToken();
     }
 
     return super.onError(err, handler);

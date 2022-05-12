@@ -8,7 +8,7 @@ import 'package:presentation/navigator/base_arguments.dart';
 import 'package:presentation/navigator/base_page.dart';
 import 'package:presentation/screen/login/bloc/login_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:presentation/widget/app_text_form_field.dart';
+import 'package:presentation/widget/text_fields/text_field_login.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -49,6 +49,7 @@ class _LoginPageState extends BlocState<LoginPage, LoginBloc> {
           bloc: bloc,
           blocData: blocData,
           errorMapper: errorMapper,
+          appLocalizations: appLocalizations,
         );
       },
     );
@@ -81,12 +82,10 @@ class _BuildLoginPage extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Text(appLocalizations?.labelLogin ?? ""),
             ),
-            AppTextField(
-              //key: const Key("login"),
+            LoginTextField(
               isSuffixExsist: false,
               keyState: bloc.loginFieldKey,
               focusNode: bloc.loginFocusNode,
-              //onSaved: (value) => bloc.onSave[_login] = value ?? "",
               obscure: false,
               validator: (value) => errorMapper.mapErrorToMessage(
                   context, screenData.exception?.loginError),
@@ -97,12 +96,10 @@ class _BuildLoginPage extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               child: Text(appLocalizations?.labelPassword ?? ""),
             ),
-            AppTextField(
-              //key: const Key("password"),
+            LoginTextField(
               isSuffixExsist: true,
               focusNode: bloc.passwordFocusNode,
               keyState: bloc.passwordFieldKey,
-              //onSaved: (value) => bloc.onSave[_login] = value ?? "",
               obscure: true,
               validator: (value) => errorMapper.mapErrorToMessage(
                   context, screenData.exception?.passwordError),
@@ -121,7 +118,6 @@ class _BuildLoginPage extends StatelessWidget {
             const Spacer(),
             Center(
                 child: PrimaryButton(
-                    //key: const Key("login_button"),
                     onTap: bloc.login,
                     text: appLocalizations?.buttonLogin ?? "")),
             const SizedBox(height: 20)

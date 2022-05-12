@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:presentation/base/bloc_state.dart';
 import 'package:presentation/base/stream_platform_stack_content.dart';
-import 'package:presentation/core/utils/path/asset_path.dart';
 import 'package:presentation/mapper/color_mapper.dart';
 import 'package:presentation/screen/home/bloc/home_bloc.dart';
 import 'package:presentation/screen/home/bloc/home_data.dart';
-
+import 'package:presentation/widget/empty_screen.dart';
 import 'package:presentation/widget/job_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,7 +22,7 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
   void initState() {
     super.initState();
     bloc.initState();
-    bloc.getJobsByView(widget.view);
+    bloc.getJobs(widget.view);
   }
 
   @override
@@ -47,10 +45,13 @@ class _HomePageState extends BlocState<HomePage, HomeBloc> {
             } else {
               // ignore: prefer_is_empty
               if (screenData.jobs?.length == 0) {
-                return _BuildWhenEmpty(appLocalizations: appLocalizations);
+                return BuildWhenEmpty(appLocalizations: appLocalizations);
               } else {
                 return _BuildJobs(
-                    colorMapper: colorMapper, screenData: screenData);
+                  colorMapper: colorMapper,
+                  screenData: screenData,
+                  bloc: bloc,
+                );
               }
             }
           }
@@ -65,10 +66,12 @@ class _BuildJobs extends StatelessWidget {
     Key? key,
     required this.colorMapper,
     required this.screenData,
+    required this.bloc,
   }) : super(key: key);
 
   final ColorMapper colorMapper;
   final HomeData screenData;
+  final HomeBloc bloc;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -81,41 +84,13 @@ class _BuildJobs extends StatelessWidget {
             itemCount: screenData.jobs?.length,
             itemBuilder: (BuildContext context, int index) {
               return JobCards(
+                onTap: () => bloc.navigateToBuildScreeen(index),
                 title: screenData.jobs?[index].name,
                 color: colorMapper.getColorByName(
                   screenData.jobs?[index].color,
                 ),
               );
             },
-          ),
-        ),
-      );
-}
-
-class _BuildWhenEmpty extends StatelessWidget {
-  const _BuildWhenEmpty({
-    Key? key,
-    required this.appLocalizations,
-  }) : super(key: key);
-
-  final AppLocalizations appLocalizations;
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Center(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 100),
-                child: SvgPicture.asset(AssetPath.cat),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 40),
-                child: Text(
-                  appLocalizations.buttonLogin,
-                ),
-              ),
-            ],
           ),
         ),
       );

@@ -2,12 +2,14 @@ import 'package:domain/usecase/home_usecase.dart';
 import 'package:domain/core/extension/string_extention.dart';
 import 'package:presentation/base/bloc_base.dart';
 import 'package:presentation/base/bloc_base_impl.dart';
+import 'package:presentation/screen/build_screen/ui/build_sc_item.dart';
 import 'package:presentation/screen/home/bloc/home_data.dart';
 
 abstract class HomeBloc extends BaseBloc {
   factory HomeBloc(HomeUseCase useCase) => _HomeBloc(useCase);
 
-  void getJobsByView(String? view);
+  void getJobs(String? view);
+  void navigateToBuildScreeen(int index);
 }
 
 class _HomeBloc extends BaseBlocImpl implements HomeBloc {
@@ -23,7 +25,7 @@ class _HomeBloc extends BaseBlocImpl implements HomeBloc {
   }
 
   @override
-  void getJobsByView(String? view) async {
+  void getJobs(String? view) async {
     _screenData.jobs = await _homeUseCase(view.orEmpty);
     _updateData();
   }
@@ -39,5 +41,11 @@ class _HomeBloc extends BaseBlocImpl implements HomeBloc {
   void dispose() {
     super.dispose();
     _homeUseCase.dispose();
+  }
+
+  @override
+  void navigateToBuildScreeen(int index) {
+    appNavigator
+        .popAndPush(BuildPage.page(tittle: _screenData.jobs?[index].name));
   }
 }

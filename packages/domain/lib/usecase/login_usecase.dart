@@ -3,7 +3,7 @@ import 'package:domain/model/auth/authorization_response_cache.dart';
 import 'package:domain/model/job/job_model.dart';
 import 'package:domain/model/params/login_step_fields.dart';
 import 'package:domain/repository/local_storage_repository.dart';
-import 'package:domain/repository/network_repository.dart';
+import 'package:domain/repository/base_network_repository.dart';
 import 'package:domain/usecase/base_usecase.dart';
 
 class LoginUseCase implements UseCaseParams<LoginParams, Future<void>> {

@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:presentation/core/theme/style_text.dart';
 import 'package:presentation/core/theme/theme_app.dart';
 
-bool _isHidden = true;
-
-class AppTextField extends StatefulWidget {
-  const AppTextField({
+class LoginTextField extends StatefulWidget {
+  const LoginTextField({
     Key? key,
     required this.text,
     this.type,
@@ -16,22 +14,28 @@ class AppTextField extends StatefulWidget {
     this.keyState,
     this.focusNode,
     required this.isSuffixExsist,
+    this.controller,
+    this.name,
   }) : super(key: key);
   final String text;
   final TextInputType? type;
   final bool obscure;
-  final Function(String)? onChanged;
-  final Function(String?)? onSaved;
+  final Function(String value)? onChanged;
+  final Function(String? text)? onSaved;
   final String? Function(String?)? validator;
   final GlobalKey? keyState;
   final FocusNode? focusNode;
   final bool isSuffixExsist;
+  final TextEditingController? controller;
+  final String? name;
 
   @override
-  State<AppTextField> createState() => _AppTextFieldState();
+  State<LoginTextField> createState() => _LoginTextFieldState();
 }
 
-class _AppTextFieldState extends State<AppTextField> {
+class _LoginTextFieldState extends State<LoginTextField> {
+  bool _isHidden = true;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -39,6 +43,7 @@ class _AppTextFieldState extends State<AppTextField> {
       child: TextFormField(
         key: widget.keyState,
         keyboardType: widget.type,
+        controller: widget.controller,
         obscureText: widget.obscure == _isHidden,
         onChanged: widget.onChanged,
         onSaved: widget.onSaved,

@@ -6,6 +6,8 @@
   "invalidPassword": "Invalid password",
 
   "buttonLogin": "LOGIN",
+  "empty": "Sorry, empty here",
   "labelLogin": "Login",
-  "labelPassword": "Password"
+  "labelPassword": "Password",
+  "buttonSend": "Post"
 }

@@ -23,6 +23,12 @@ abstract class ApiService {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   });
+
+  Future<Response<T>> request<T>({
+    required String path,
+    Options? options,
+    CancelToken? cancelToken,
+  });
 }
 
 class _ApiService implements ApiService {
@@ -67,5 +73,17 @@ class _ApiService implements ApiService {
         cancelToken: cancelToken,
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
+      );
+
+  @override
+  Future<Response<T>> request<T>({
+    required String path,
+    Options? options,
+    CancelToken? cancelToken,
+  }) =>
+      _dio.request(
+        path,
+        options: options,
+        cancelToken: cancelToken,
       );
 }
