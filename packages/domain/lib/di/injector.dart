@@ -1,6 +1,7 @@
 import 'package:domain/model/auth/authorization_response_cache.dart';
 import 'package:domain/model/propery/property_response_cahce.dart';
 import 'package:domain/repository/interceptor_proxy.dart';
+import 'package:domain/repository/local_db_repository.dart';
 import 'package:domain/repository/local_storage_repository.dart';
 import 'package:domain/repository/base_network_repository.dart';
 import 'package:domain/usecase/get_build_usecase.dart';
@@ -50,7 +51,7 @@ Future<void> injectDomainModule() async {
   sl.registerFactory(
     () => BuildUseCase(
       sl.get<INetworkRepository>(),
-      sl.get<PropertyResponseCache>(),
+      sl.get<ILocalDBRepository>(),
     ),
   );
 

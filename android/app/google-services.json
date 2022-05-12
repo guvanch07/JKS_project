@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "364152217027",
+    "project_id": "jenkisproject",
+    "storage_bucket": "jenkisproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364152217027:android:5ef3a5a56b0d9581cbf176",
+        "android_client_info": {
+          "package_name": "com.example.polidrome"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "364152217027-7imj4osd79q5kop9d5ctogdov3f9al48.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmGSE3xhfQBmx9_d1Edz3w5bQELNw2W8Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "364152217027-7imj4osd79q5kop9d5ctogdov3f9al48.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "364152217027-ajgskepvkpg3ontdfhtgjsbcjdqt1ku4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.polidrome"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

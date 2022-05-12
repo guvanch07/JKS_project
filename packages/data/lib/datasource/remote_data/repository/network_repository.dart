@@ -1,6 +1,6 @@
 import 'package:data/core/api_key.dart';
-import 'package:data/mapper/property_mapper.dart';
-import 'package:data/repository/api_base_repository.dart';
+import 'package:data/datasource/remote_data/mapper/property_mapper.dart';
+import 'package:data/datasource/remote_data/repository/api_base_repository.dart';
 import 'package:data/service/api_service.dart';
 import 'package:dio/dio.dart';
 
