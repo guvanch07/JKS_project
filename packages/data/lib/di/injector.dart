@@ -107,7 +107,9 @@ Future<void> injectDataModule() async {
   //! database
 
   sl.registerSingletonAsync<Database>(
-    () => LocalDBInit(nameDB: 'jenkis', version: 1).db,
+    () => LocalDBInit(
+            nameDB: ApiHelperCore.nameDB, version: ApiHelperCore.version)
+        .db,
   );
 
   sl.registerSingletonWithDependencies<ILocalDBRepository>(
