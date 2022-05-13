@@ -15,4 +15,8 @@ abstract class ApiHelperCore {
 
   static String urlBuildToPost(String viewName, String jobName) =>
       '/view/$viewName/job/$jobName/buildWithParameters/api/json?pretty=true';
+
+  //! database helepers
+  static const String nameDB = 'jenkis';
+  static const int version = 1;
 }

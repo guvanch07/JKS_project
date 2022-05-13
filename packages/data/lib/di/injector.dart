@@ -1,14 +1,18 @@
 import 'package:data/core/api_key.dart';
+import 'package:data/datasource/locally_data/init/database_sql.dart';
+import 'package:data/datasource/locally_data/repository/local_db_repository.dart';
+import 'package:data/datasource/remote_data/mapper/property_mapper.dart';
 import 'package:data/dio/dio_builder.dart';
 import 'package:data/dio/intercepters/cookie_interceptor.dart';
 import 'package:data/dio/intercepters/interceptor_proxy_impl.dart';
 import 'package:data/dio/intercepters/refresh_token_interceptor.dart';
 import 'package:data/dio/intercepters/token_interceptor.dart';
-import 'package:data/mapper/property_mapper.dart';
-import 'package:data/repository/local_storage_repository.dart';
-import 'package:data/repository/network_repository.dart';
+import 'package:data/datasource/locally_data/repository/local_storage_repository.dart';
+import 'package:data/datasource/remote_data/repository/network_repository.dart';
 
 import 'package:data/service/api_service.dart';
+import 'package:domain/repository/local_db_repository.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/repository/base_network_repository.dart';
 import 'package:domain/repository/interceptor_proxy.dart';
@@ -76,6 +80,7 @@ Future<void> injectDataModule() async {
   );
 
   //! services
+
   sl.registerSingleton<SharedPreferences>(
     await SharedPreferences.getInstance(),
   );
@@ -98,4 +103,18 @@ Future<void> injectDataModule() async {
   sl.registerSingleton<PropertyApiMapper>(
     PropertyApiMapper(),
   );
+
+  //! database
+
+  sl.registerSingletonAsync<Database>(
+    () => LocalDBInit(
+            nameDB: ApiHelperCore.nameDB, version: ApiHelperCore.version)
+        .db,
+  );
+
+  sl.registerSingletonWithDependencies<ILocalDBRepository>(
+      () => LocalDBRepository(
+            sl.get<Database>(),
+          ),
+      dependsOn: [Database]);
 }
