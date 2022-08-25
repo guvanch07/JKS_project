@@ -7,6 +7,7 @@ import 'package:domain/usecase/get_build_usecase.dart';
 import 'package:domain/usecase/post_build_usecase.dart';
 import 'package:domain/usecase/login_validation_usecase.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+//import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/internal/analytics_event.dart';
 import 'package:presentation/internal/analytics_service.dart';
@@ -23,11 +24,8 @@ import 'package:presentation/screen/home/bloc/home_bloc.dart';
 import 'package:presentation/screen/login/bloc/login_bloc.dart';
 import 'package:presentation/screen/main/bloc/main_bloc.dart';
 import 'package:presentation/screen/splash/bloc/splash_bloc.dart';
-import 'package:domain/usecase/interceptor_usecase.dart';
 
-Future<void> injectPresentationModule() async {
-  final sl = GetIt.I;
-
+Future<void> injectPresentationModule(GetIt sl) async {
   //! mapper
   sl.registerSingleton<LoginViewMapper>(
     LoginViewMapper(),
@@ -107,9 +105,7 @@ Future<void> injectPresentationModule() async {
   );
 
   sl.registerFactory<AppBloc>(
-    () => AppBloc(
-      sl.get<InterceptorUseCase>(),
-    ),
+    () => AppBloc(),
   );
 //! naviagtion
   sl.registerSingleton<AppNavigator>(

@@ -1,54 +1,69 @@
-import 'package:data/datasource/locally_data/models/struct_of_db.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:domain/model/propery/parametrs_def.dart';
+import 'package:domain/model/propery/api_build_models.dart';
+import 'package:path/path.dart';
 
-abstract class LocalDBInit {
-  factory LocalDBInit({required int version, required String nameDB}) =>
-      _LocalDBInit(
-        version: version,
-        nameDB: nameDB,
-      );
-  Future<Database> get db;
-  Future<Database> initLocalDB();
-  Future<void> openTable(Database db);
-  Future<void> createTables(Database db);
+class InitDataBase {
+  static const String _jobTableName = JenkinsDatabaseConstants.jobTableName;
+  static const String _parametersbTableName =
+      JenkinsDatabaseConstants.parametersbTableName;
+  static Database? _database;
+
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+
+    _database = await _initDataBase();
+
+    return _database!;
+  }
+
+  Future<Database> _initDataBase() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(
+      dbPath,
+      JenkinsDatabaseConstants.filePath,
+    );
+
+    return openDatabase(
+      path,
+      version: JenkinsDatabaseConstants.databaseVersion,
+      onCreate: _onCreate,
+    );
+  }
+
+  Future<void> _onCreate(Database db, int version) async {
+    const String idType = 'INTEGER PRIMARY KEY';
+    const String integerType = 'INTEGER NOT NULL';
+    const String textType = 'TEXT';
+    const String jobTableId = ApiBuildDataFields.screenId;
+    const String parametersTableId = "_id";
+
+    await db.execute('''
+      CREATE TABLE $_jobTableName(
+        $jobTableId $idType,
+        ${ApiBuildDataFields.description} $textType,
+        ${ApiBuildDataFields.displayName} $textType
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE $_parametersbTableName(
+        $jobTableId $integerType,
+        $parametersTableId $idType,
+        ${ParameterDefinitionsFields.type} $textType,
+        ${ParameterDefinitionsFields.defaultValue} $textType,
+        ${ParameterDefinitionsFields.description} $textType,
+        ${ParameterDefinitionsFields.choices} $textType,
+        ${ParameterDefinitionsFields.name} $textType,
+        'FOREIGN KEY ($jobTableId) REFERENCES $_jobTableName($jobTableId)'
+      )
+    ''');
+  }
 }
 
-class _LocalDBInit implements LocalDBInit {
-  final int version;
-  final String nameDB;
-  Database? _db;
-
-  _LocalDBInit({
-    required this.version,
-    required this.nameDB,
-  });
-  @override
-  Future<Database> get db async {
-    if (_db != null) return _db!;
-
-    _db = await initLocalDB();
-    return _db!;
-  }
-
-  @override
-  Future<Database> initLocalDB() async {
-    final databasesPath = await getDatabasesPath();
-    String path = LocalDBStructure.getPath(databasesPath, nameDB);
-
-    return await openDatabase(path,
-        version: version,
-        onOpen: (db) async => await openTable(db),
-        onCreate: (Database db, int version) async => await createTables(db));
-  }
-
-  @override
-  Future<void> openTable(Database db) async {
-    await db.execute(LocalDBStructure.queryForeignKeysOn());
-  }
-
-  @override
-  Future<void> createTables(Database db) async {
-    await db.execute(LocalDBStructure.queryForeignKeysOn());
-    await db.execute(LocalDBStructure.queryCreatePropertyJobs());
-  }
+abstract class JenkinsDatabaseConstants {
+  static const String filePath = 'jenkins_database.db';
+  static const int databaseVersion = 1;
+  static const String jobTableName = 'JenkinsBuildData';
+  static const String parametersbTableName = 'ParametersData';
 }

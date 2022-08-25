@@ -59,6 +59,8 @@ packages/domain/pubspec.lock
 
 web/
 windows/
+mocos/
+linux/
 
 packages/domain/test/domain_repo_test.mocks.dart
 packages/presentation/test/login_test.mocks.dart

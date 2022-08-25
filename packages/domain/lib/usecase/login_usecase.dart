@@ -8,7 +8,7 @@ import 'package:domain/usecase/base_usecase.dart';
 
 class LoginUseCase implements UseCaseParams<LoginParams, Future<void>> {
   final INetworkRepository _networkRepository;
-  final ILocalStorageRepository _localStorageRepository;
+  final ILocalRepository _localStorageRepository;
   final AuthorizationResponseCache _cache;
 
   LoginUseCase(
@@ -26,7 +26,7 @@ class LoginUseCase implements UseCaseParams<LoginParams, Future<void>> {
           ),
         );
 
-    await _localStorageRepository.setToken(token);
+    await _localStorageRepository.saveToken(token);
 
     await _networkRepository.login().then((response) {
       _cache.jobs = response?.jobData?.map((e) => Job.fromJson(e)).toList();

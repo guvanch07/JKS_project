@@ -2,7 +2,7 @@ import 'package:domain/repository/local_storage_repository.dart';
 import 'package:domain/usecase/base_usecase.dart';
 
 class TokenUseCase implements UseCase<Future<bool>> {
-  final ILocalStorageRepository _repository;
+  final ILocalRepository _repository;
 
   TokenUseCase(this._repository);
 

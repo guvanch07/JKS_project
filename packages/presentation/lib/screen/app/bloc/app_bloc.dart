@@ -1,4 +1,3 @@
-import 'package:domain/usecase/interceptor_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/base/bloc_base.dart';
 import 'package:presentation/base/bloc_base_impl.dart';
@@ -7,23 +6,20 @@ import 'package:presentation/screen/app/bloc/app_data.dart';
 import 'package:presentation/screen/splash/splash.dart';
 
 abstract class AppBloc extends BaseBloc {
-  factory AppBloc(InterceptorUseCase interceptorInitUseCase) =>
-      _AppBloc(interceptorInitUseCase);
+  factory AppBloc() => _AppBloc();
 
   void handleRemoveRouteSettings(RouteSettings settings);
 }
 
 class _AppBloc extends BaseBlocImpl implements AppBloc {
   final _appData = AppData.init();
-  final InterceptorUseCase _interceptorInitUseCase;
-  _AppBloc(
-    this._interceptorInitUseCase,
-  );
+
+  _AppBloc();
 
   @override
   void initState() {
     super.initState();
-    _interceptorInitUseCase();
+
     _initNavHandler();
     _updateData();
   }

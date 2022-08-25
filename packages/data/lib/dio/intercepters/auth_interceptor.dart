@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:domain/repository/local_storage_repository.dart';
 
-class TokenInterceptor extends Interceptor {
-  final ILocalStorageRepository _tokenStorageRepository;
+class AuthInterceptor extends Interceptor {
+  final ILocalRepository _tokenStorageRepository;
 
-  TokenInterceptor(this._tokenStorageRepository);
+  AuthInterceptor(this._tokenStorageRepository);
 
   @override
   void onRequest(

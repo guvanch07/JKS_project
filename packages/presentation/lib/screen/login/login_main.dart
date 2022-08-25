@@ -72,7 +72,7 @@ class _BuildLoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenData = blocData.data;
+   
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -88,7 +88,7 @@ class _BuildLoginPage extends StatelessWidget {
               focusNode: bloc.loginFocusNode,
               obscure: false,
               validator: (value) => errorMapper.mapErrorToMessage(
-                  context, screenData.exception?.loginError),
+                  context, blocData.data.exception?.loginError),
               onChanged: bloc.setLogin,
               text: appLocalizations?.labelLogin ?? "",
             ),
@@ -102,7 +102,7 @@ class _BuildLoginPage extends StatelessWidget {
               keyState: bloc.passwordFieldKey,
               obscure: true,
               validator: (value) => errorMapper.mapErrorToMessage(
-                  context, screenData.exception?.passwordError),
+                  context, blocData.data.exception?.passwordError),
               onChanged: bloc.setPassword,
               text: appLocalizations?.labelPassword ?? "Password",
             ),

@@ -1,33 +1,28 @@
 import 'package:data/core/api_key.dart';
-import 'package:data/datasource/remote_data/mapper/property_mapper.dart';
 import 'package:data/datasource/remote_data/repository/api_base_repository.dart';
 import 'package:data/service/api_service.dart';
 import 'package:dio/dio.dart';
 
 import 'package:domain/model/auth/api_authorization_response.dart';
-import 'package:domain/model/job/build_jobs_jenkis.dart';
-import 'package:domain/model/propery/property.dart';
+import 'package:domain/model/propery/api_build_models.dart';
+import 'package:domain/model/propery/api_crumb.dart';
+import 'package:domain/model/propery/post_model.dart';
 import 'package:domain/repository/base_network_repository.dart';
 import 'package:domain/model/auth/authorization_exception.dart';
 
 class NetworkRepository extends ApiBaseRepositoryImpl
     implements INetworkRepository {
   final ApiService _service;
-  final CancelToken _cancelToken;
-  final PropertyApiMapper propertyApiMapper;
 
   NetworkRepository(
     this._service,
-    this._cancelToken,
-    this.propertyApiMapper,
-  ) : super(cancelToken: _cancelToken);
+  ) : super();
 
   @override
   Future<ApiAuthorizationResponse?> login() {
     return _service
         .get(
-          path: ApiHelperCore.pathToken,
-          cancelToken: _cancelToken,
+          path: ApiHelperCore.dataPath,
         )
         .then(
           (value) => Future.value(
@@ -54,39 +49,12 @@ class NetworkRepository extends ApiBaseRepositoryImpl
   Future<ApiAuthorizationResponse?> getJobs(String url) {
     return _service
         .get(
-          path: url + ApiHelperCore.pathToken,
+          path: url + ApiHelperCore.dataPath,
         )
         .then(
           (response) => Future.value(
             ApiAuthorizationResponse.fromJson(response.data),
           ),
-        );
-  }
-
-  @override
-  Future<List<Property>?> getJobsProperty(String url) {
-    return _service
-        .get(path: ApiHelperCore.job + url + ApiHelperCore.pathToken)
-        .then(
-          (response) => Future.value(
-            propertyApiMapper(response.data),
-          ),
-        );
-  }
-
-  @override
-  Future<bool> isBuildPosted(BuildPostModel data) {
-    return _service
-        .post(
-          path: ApiHelperCore.urlBuildToPost(
-            data.jobInfoModel.view,
-            data.jobInfoModel.job,
-          ),
-          queryParameters: data.params,
-          cancelToken: cancelToken,
-        )
-        .then(
-          (response) => true,
         );
   }
 
@@ -103,4 +71,47 @@ class NetworkRepository extends ApiBaseRepositoryImpl
           headers: headers,
         ),
       );
+
+  @override
+  Future fetchBuildData(String url) {
+    return _service
+        .get(
+      path: ApiHelperCore.getBuildDataPath(url),
+    )
+        .then(
+      (response) {
+        return Future.value(
+          ApiBuildDataModel.fromJson(response.data),
+        );
+      },
+    );
+  }
+
+  @override
+  Future fetchCrumbData() {
+    return _service
+        .get(
+          path: ApiHelperCore.crumbPath,
+        )
+        .then(
+          (response) => Future.value(
+            ApiCrumbResponseModel.fromJson(response.data),
+          ),
+        );
+  }
+
+  @override
+  Future<bool> sendBuildData(PostRequestModel postRequestModel) {
+    return _service
+        .post(
+          path: ApiHelperCore.getBuildJobUrl(
+            viewName: postRequestModel.jobView,
+            jobName: postRequestModel.jobName,
+          ),
+          queryParameters: postRequestModel.getQueryParameters,
+        )
+        .then(
+          (response) => true,
+        );
+  }
 }

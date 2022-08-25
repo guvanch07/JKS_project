@@ -3,7 +3,7 @@ import 'package:presentation/base/bloc_base_impl.dart';
 import 'package:presentation/screen/build_screen/bloc/bloc_build_data.dart';
 import 'package:domain/usecase/get_build_usecase.dart';
 import 'package:domain/usecase/post_build_usecase.dart';
-import 'package:domain/model/job/build_jobs_jenkis.dart';
+import 'package:domain/model/propery/post_model.dart';
 
 abstract class BuildBloc extends BaseBloc {
   factory BuildBloc(
@@ -52,10 +52,7 @@ class _BuildBloc extends BaseBlocImpl implements BuildBloc {
 
   @override
   void postJenkisBuild() {
-    final request = BuildPostModel(
-      screenData.jobInfoModel,
-      screenData.valueWidgets,
-    );
+    final request = PostRequestModel();
     _buildJenkisUseCase(request);
   }
 

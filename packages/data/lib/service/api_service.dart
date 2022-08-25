@@ -29,12 +29,21 @@ abstract class ApiService {
     Options? options,
     CancelToken? cancelToken,
   });
+
+  addInterceptor({required List<Interceptor> interceptors});
 }
 
 class _ApiService implements ApiService {
   final Dio _dio;
 
   _ApiService(this._dio);
+
+  @override
+  addInterceptor({
+    required List<Interceptor> interceptors,
+  }) {
+    _dio.interceptors.addAll(interceptors);
+  }
 
   @override
   Future<Response<T>> get<T>({
@@ -48,7 +57,6 @@ class _ApiService implements ApiService {
         path,
         queryParameters: queryParameters,
         options: options,
-        cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
       );
 

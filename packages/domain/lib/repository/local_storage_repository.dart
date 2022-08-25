@@ -1,19 +1,18 @@
+import 'package:domain/model/propery/api_build_models.dart';
 import 'package:domain/repository/base_repository.dart';
 
-abstract class ILocalStorageRepository implements BaseRepository {
-  Future<String?> getPassword();
-  Future<String?> getLogin();
+abstract class ILocalRepository implements BaseRepository {
   Future<String?> getToken();
+  Future<String?> getCrumb();
   Future<String?> getCookie();
-  Future<String?> getCrumbRequestField();
+
+  Future<void> saveToken(String token);
+  Future<void> saveCrumb(String crumb);
+  Future<void> saveCookie(String cookie);
+
   Future<void> deleteToken();
-  Future<void> deleteCookie();
-  Future<void> deleteCrumb();
-  Future<void> deleteLogin();
-  Future<void> deletePassword();
-  Future<bool> setToken(String token);
-  Future<bool> setCookie(String token);
-  Future<void> setLogin(String login);
-  Future<void> setPassword(String password);
-  Future<void> setCrumbRequestField(String crumbRequestField);
+
+  Future<ApiBuildDataModel> updateSqfData(ApiBuildDataModel buildDataModel);
+  Future<ApiBuildDataModel?> readSqfData(String screenName);
+  Future<ApiBuildDataModel> createSqfData(ApiBuildDataModel buildDataModel);
 }

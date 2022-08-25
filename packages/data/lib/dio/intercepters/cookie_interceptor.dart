@@ -5,7 +5,7 @@ import 'package:domain/core/extension/string_extention.dart';
 import 'package:domain/repository/local_storage_repository.dart';
 
 class CookieInterceptor extends Interceptor {
-  final ILocalStorageRepository _localStorageRepository;
+  final ILocalRepository _localStorageRepository;
 
   CookieInterceptor(this._localStorageRepository);
 
@@ -26,7 +26,7 @@ class CookieInterceptor extends Interceptor {
     ErrorInterceptorHandler handler,
   ) async {
     if (err.response?.statusCode == 401) {
-      await _localStorageRepository.deleteCookie();
+      await _localStorageRepository.deleteToken();
     }
 
     return super.onError(err, handler);
@@ -37,7 +37,7 @@ class CookieInterceptor extends Interceptor {
     if (response.statusCode == 200) {
       final cookie = response.headers.map[HttpHeaders.setCookieHeader]?.first;
 
-      await _localStorageRepository.setCookie(cookie.orEmpty);
+      await _localStorageRepository.saveCookie(cookie.orEmpty);
     }
     super.onResponse(response, handler);
   }

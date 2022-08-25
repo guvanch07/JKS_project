@@ -1,101 +1,92 @@
 import 'package:data/core/api_key.dart';
+import 'package:data/datasource/locally_data/db/data_base.dart';
 import 'package:data/datasource/locally_data/init/database_sql.dart';
-import 'package:data/datasource/locally_data/repository/local_db_repository.dart';
 import 'package:data/datasource/remote_data/mapper/property_mapper.dart';
 import 'package:data/dio/dio_builder.dart';
 import 'package:data/dio/intercepters/cookie_interceptor.dart';
-import 'package:data/dio/intercepters/interceptor_proxy_impl.dart';
-import 'package:data/dio/intercepters/refresh_token_interceptor.dart';
-import 'package:data/dio/intercepters/token_interceptor.dart';
+import 'package:data/dio/intercepters/crumb_interceptor.dart';
+import 'package:data/dio/intercepters/auth_interceptor.dart';
 import 'package:data/datasource/locally_data/repository/local_storage_repository.dart';
 import 'package:data/datasource/remote_data/repository/network_repository.dart';
 
 import 'package:data/service/api_service.dart';
-import 'package:domain/repository/local_db_repository.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/repository/base_network_repository.dart';
-import 'package:domain/repository/interceptor_proxy.dart';
 import 'package:domain/repository/local_storage_repository.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<void> injectDataModule() async {
-  final sl = GetIt.I;
-
-  //! interceptors
-
-  sl.registerSingleton<RefreshTokenInterceptor>(
-    RefreshTokenInterceptor(
-      sl.get<ILocalStorageRepository>(),
-      sl.get<INetworkRepository>(),
-      ApiHelperCore.urlCrumbIssuer,
-    ),
-  );
-
-  sl.registerSingleton<IInterceptorProxy>(
-    InterceptorProxy(
-      sl.get<Dio>(instanceName: 'jobsApi'),
-      [
-        sl.get<LogInterceptor>(),
-        sl.get<TokenInterceptor>(),
-        sl.get<RefreshTokenInterceptor>(),
-        sl.get<CookieInterceptor>(),
-      ],
-    ),
-  );
-
-  sl.registerFactory<CancelToken>(
-    () => CancelToken(),
-  );
-
-  sl.registerFactory<TokenInterceptor>(
-    (() => TokenInterceptor(
-          sl.get<ILocalStorageRepository>(),
-        )),
-  );
-
-  sl.registerFactory<LogInterceptor>(
-    () => LogInterceptor(requestBody: true, responseBody: true),
-  );
-
-  sl.registerFactory<CookieInterceptor>(
-    () => CookieInterceptor(
-      sl.get<ILocalStorageRepository>(),
-    ),
-  );
-
-  //! repositories
-
-  sl.registerSingleton<ILocalStorageRepository>(
-    LocalStorageRepository(
-      sl.get<SharedPreferences>(),
-    ),
-  );
-
-  sl.registerSingleton<INetworkRepository>(
-    NetworkRepository(sl.get<ApiService>(), sl.get<CancelToken>(),
-        sl.get<PropertyApiMapper>()),
-  );
-
-  //! services
-
+Future<void> injectDataModule(GetIt sl) async {
   sl.registerSingleton<SharedPreferences>(
     await SharedPreferences.getInstance(),
   );
 
-  sl.registerLazySingleton<Dio>(
-    () => dioBuilder(
-      ApiHelperCore.baseUrl,
+  sl.registerSingleton<Database>(
+    await InitDataBase().database,
+  );
+
+  sl.registerSingleton<SqfliteDatabase>(
+    SqfliteDatabase(
+      db: sl.get<Database>(),
     ),
-    instanceName: 'jobsApi',
+  );
+
+  sl.registerSingleton<ILocalRepository>(
+    LocalRepository(
+      sl.get<SharedPreferences>(),
+      sl.get<SqfliteDatabase>(),
+    ),
+  );
+
+  GetIt.I.registerSingleton<LogInterceptor>(
+    LogInterceptor(
+      requestBody: true,
+      responseBody: true,
+    ),
+  );
+
+  sl.registerSingleton<AuthInterceptor>(
+    AuthInterceptor(
+      sl.get<ILocalRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<CookieInterceptor>(
+    CookieInterceptor(
+      sl.get<ILocalRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<Dio>(
+    dioBuilder(ApiHelperCore.baseUrl),
   );
 
   sl.registerSingleton<ApiService>(
-    ApiService(
-      sl.get(instanceName: 'jobsApi'),
+    ApiService(sl.get<Dio>()),
+  );
+
+  sl.registerLazySingleton<INetworkRepository>(
+    () => NetworkRepository(
+      sl.get<ApiService>(),
     ),
+  );
+
+  sl.registerSingleton<CrumbInterceptor>(
+    CrumbInterceptor(
+      sl.get<ILocalRepository>(),
+      sl.get<INetworkRepository>(),
+    ),
+  );
+
+  sl.get<ApiService>().addInterceptor(
+    interceptors: [
+      sl.get<AuthInterceptor>(),
+      sl.get<CrumbInterceptor>(),
+      sl.get<CookieInterceptor>(),
+      sl.get<LogInterceptor>(),
+    ],
   );
 
   //!mapper
@@ -103,18 +94,4 @@ Future<void> injectDataModule() async {
   sl.registerSingleton<PropertyApiMapper>(
     PropertyApiMapper(),
   );
-
-  //! database
-
-  sl.registerSingletonAsync<Database>(
-    () => LocalDBInit(
-            nameDB: ApiHelperCore.nameDB, version: ApiHelperCore.version)
-        .db,
-  );
-
-  sl.registerSingletonWithDependencies<ILocalDBRepository>(
-      () => LocalDBRepository(
-            sl.get<Database>(),
-          ),
-      dependsOn: [Database]);
 }

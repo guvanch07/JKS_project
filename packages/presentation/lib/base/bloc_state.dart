@@ -23,3 +23,10 @@ abstract class BlocState<S extends StatefulWidget, B extends BaseBloc>
   @protected
   late AppLocalizations appLocalizations;
 }
+
+abstract class BlocStateless<B extends BaseBloc> extends StatelessWidget {
+  @protected
+  final B bloc = GetIt.I.get<B>();
+
+  BlocStateless({Key? key}) : super(key: key);
+}
